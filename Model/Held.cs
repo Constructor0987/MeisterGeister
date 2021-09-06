@@ -3417,7 +3417,7 @@ namespace MeisterGeister.Model
                     //Raufen, Ringen
                     var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent(Talente.Raufen, false, out var taw));
                     waffen.Add(raufen);
-                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Raufen, false, out taw));
+                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Ringen, false, out taw));
                     waffen.Add(ringen);
                     return waffen;
                 }
@@ -3426,7 +3426,7 @@ namespace MeisterGeister.Model
                     //Raufen, Ringen
                     var raufen = new KämpferNahkampfwaffe(this, Waffe.Raufen, GetHeldTalent(Talente.Raufen, false, out var taw));
                     waffen.Add(raufen);
-                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Raufen, false, out taw));
+                    var ringen = new KämpferNahkampfwaffe(this, Waffe.Ringen, GetHeldTalent(Talente.Ringen, false, out taw));
                     waffen.Add(ringen);
                 }
                 return waffen;
