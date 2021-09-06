@@ -267,7 +267,7 @@ namespace MeisterGeister.ViewModel.Inventar
             get { return selectedNahkampfwaffe; }
             set
             {
-                Set(ref selectedNahkampfwaffe, value);
+                Set(ref selectedNahkampfwaffe, value); 
             }
         }
         public Model.Fernkampfwaffe SelectedFernkampfwaffe
