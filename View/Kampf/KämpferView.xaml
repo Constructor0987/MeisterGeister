@@ -278,24 +278,6 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="100" Header="AT / PA" IsReadOnly="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <ItemsControl Grid.Column="10" ItemsSource="{Binding Ausrüstung.Held_BFAusrüstung.Held_Waffe.KämpferWaffen}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
-                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
-                                                            <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Margin="12,0,0,0" Height="14" Width="14"/>
-                                                            <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Header="TP">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
