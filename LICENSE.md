@@ -13,6 +13,10 @@ furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
+MeisterGeister is a non-commercial fan-project for the Pen&Paper role playing 
+game "Das Schwarze Auge". 
+Company Ulisses has the trademark right on the role playing game.
+
 In addition, we would kindly ask all developers to share all changes with the 
 MeisterGeister-team so that the entire community benefits from the 
 improvements, adjustments and innovations.
