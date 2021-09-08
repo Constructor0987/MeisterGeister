@@ -12,6 +12,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         private Held _held;
         private Waffe _waffe;
         private Held_Talent _talent;
+        private Held_Ausrüstung _ha; 
         private Gegner_Angriff _gegner_angriff;
 
         public KämpferNahkampfwaffe(Held_Ausrüstung ha, bool bestesTalent = false)
@@ -22,6 +23,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 throw new ArgumentNullException("Held_Ausrüstung enthält keinen Held oder keine Waffe.");
             _held = ha.Held;
             _waffe = ha.Ausrüstung.Waffe;
+            _ha = ha;
             if (bestesTalent)
                 _talent = ha.Held_BFAusrüstung.Held_Waffe.BestesHeldTalent;
             else
@@ -65,6 +67,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         //        return _held;
         //    }
         //}
+
+        public Held_Ausrüstung ha
+        {
+            get { return _ha; }
+        }
 
         public Talent Talent
         {
