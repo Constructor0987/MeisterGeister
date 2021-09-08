@@ -264,7 +264,32 @@
                                     </DataGridTemplateColumn.Header>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                            <StackPanel>
+                                                <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}">
+                                                    <ViewGeneral:TextBoxModInfo.Style>
+                                                        <Style TargetType="ViewGeneral:TextBoxModInfo" >
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ha, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ViewGeneral:TextBoxModInfo.Style>
+                                                </ViewGeneral:TextBoxModInfo>
+
+                                                <ItemsControl ItemsSource="{Binding ha.Held_BFAusrüstung.Held_Waffe.KämpferWaffen}" 
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                              Visibility="{Binding ha, Converter={StaticResource InverseBooleanToVisibilityConverter1}}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/nahkampf_03.png" Height="14" Width="14" />
+                                                                <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListeAT}" WertName="AT-Wert" StartWert="{Binding AttackeOhneMod}" Wert="{Binding AT}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -274,7 +299,32 @@
                                     </DataGridTemplateColumn.Header>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                            <StackPanel>
+                                                <ViewGeneral:TextBoxModInfo ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" >
+                                                    <ViewGeneral:TextBoxModInfo.Style>
+                                                        <Style TargetType="ViewGeneral:TextBoxModInfo" >
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ha, Converter={StaticResource IsNullOrEmptyConverter}}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ViewGeneral:TextBoxModInfo.Style>
+                                                </ViewGeneral:TextBoxModInfo>
+
+                                                <ItemsControl ItemsSource="{Binding ha.Held_BFAusrüstung.Held_Waffe.KämpferWaffen}" 
+                                                              VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                              Visibility="{Binding ha, Converter={StaticResource InverseBooleanToVisibilityConverter1}}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal" ToolTip="{Binding Talent.Talentname}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                                <Image Source="/DSA%20MeisterGeister;component/Images/Icons/schild.png" Height="14" Width="14" />
+                                                                <ViewGeneral:TextBoxModInfo Margin="2,0,0,0" ModListe="{Binding ModifikatorenListePA}" WertName="PA-Wert" StartWert="{Binding ParadeOhneMod}" Wert="{Binding PA}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
