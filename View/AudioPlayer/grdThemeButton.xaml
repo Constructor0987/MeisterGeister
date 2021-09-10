@@ -23,7 +23,10 @@
             </ToggleButton.Style>
             <ToggleButton.Content>
                 <StackPanel>
-                    <Label Name="lblName" Content="{Binding Theme.Name}" Padding="2,0,0,0" >
+                    <Label Name="lblName" Padding="2,0,0,0" >
+                        <Label.Content>
+                            <AccessText TextWrapping="Wrap" Text="{Binding Theme.Name}"/>
+                        </Label.Content>
                         <Label.Style>
                             <Style TargetType="Label">
                                 <Setter Property="FontWeight" Value="Normal" />

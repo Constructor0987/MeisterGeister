@@ -4162,6 +4162,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         void OnSuchTextEditorThemeLöschenClick(object obj)
         {
             SuchTextEditorTheme = "";
+
+            EditorThemeListBoxItemListe = lbiThemeListNeuErstellen();
+            EditorListBoxItemListe = lbiPlaylistListNeuErstellen();
+            ErwPlayerThemeListe = ThemeErwPlayerListeNeuErstellen();
+            Refresh();
+            FilterThemeEditorPlaylistListe();
+            FilterErwPlayerThemeListe();
         }
 
         private Base.CommandBase _onSuchTextEditorPlaylistLöschen;
