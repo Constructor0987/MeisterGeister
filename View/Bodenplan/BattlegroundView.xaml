@@ -410,7 +410,7 @@
                     VerticalAlignment="Bottom"
                     Background="{Binding BackgroundBrush, UpdateSourceTrigger=PropertyChanged}"
                     LimitToContent="True"
-                    MaxZoom="2"
+                    MaxZoom="1.5"
                     MaxZoomDelta="2"
                     MinZoom="0.05"
                     Mode="Original"
