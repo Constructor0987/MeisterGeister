@@ -1436,13 +1436,18 @@
                                                         Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding ki.LichtquellePixelRadius, UpdateSourceTrigger=PropertyChanged}"
                                                         Height="{Binding ki.LichtquellePixelRadius, UpdateSourceTrigger=PropertyChanged}"
-                                                        Opacity="0.5"
+                                                        Opacity="0.3"
                                                         Stroke="#FFF0FC00"
                                                         StrokeThickness="2">
                                                         <Ellipse.Fill>
                                                             <RadialGradientBrush>
+                                                                <GradientStop Offset=".3" Color="#FFF0FC00" />
+                                                                <GradientStop Offset=".5" Color="#CFF0FC00" />
+                                                                <GradientStop Offset=".6" Color="#9FF0FC00" />
+                                                                <GradientStop Offset=".8" Color="#5FF0FC00" />
+                                                                <GradientStop Offset=".9" Color="#3FF0FC00" />
+                                                                <GradientStop Offset=".95" Color="#1FF0FC00" />
                                                                 <GradientStop Offset="1" Color="Transparent" />
-                                                                <GradientStop Offset=".8" Color="#FFF0FC00" />
                                                             </RadialGradientBrush>
                                                         </Ellipse.Fill>
                                                         <Ellipse.Style>

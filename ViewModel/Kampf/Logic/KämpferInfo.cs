@@ -325,7 +325,18 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         public bool IstUnsichtbar
         {
             get { return _istUnsichtbar; }
-            set { Set(ref _istUnsichtbar, value); (Kämpfer as Wesen).Opacity = value ? .1 : 1;   }
+            set 
+            { Set(ref _istUnsichtbar, value); 
+                (Kämpfer as Wesen).Opacity = value ? .1 : 1;
+                Opacity_Spieler = value ? 0 : 1;
+            }
+        }
+
+        private double _opacity_Spieler = 1;
+        public double Opacity_Spieler
+        {
+            get { return _opacity_Spieler; }
+            set { Set(ref _opacity_Spieler, value);  }
         }
 
         private double _lichtquelleMeter = 0;
