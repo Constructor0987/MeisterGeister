@@ -167,7 +167,7 @@
                                                 Height="{Binding TurnMarkerDurchmesser, FallbackValue=200, TargetNullValue=200}" 
                                                 Width="{Binding TurnMarkerDurchmesser, FallbackValue=200, TargetNullValue=200}" 
                                                 VerticalAlignment="Top"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 RenderTransformOrigin="0.5,0.5"
                                                 Source="{Binding PictureUrl}" >
                                                 <Image.RenderTransform>
@@ -206,13 +206,17 @@
                                                 Data="{Binding SightAreaGeometryData}"
                                                 Fill="Yellow"
                                                 IsHitTestVisible="False"
-                                                Opacity="0.2"
                                                 Stroke="Yellow"
                                                 StrokeThickness="1">
                                                 <Path.Style>
                                                     <Style TargetType="Path">
+                                                        <Setter Property="Opacity" Value="0.2" />
                                                         <Setter Property="Visibility" Value="Collapsed" />
                                                         <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ki.IstUnsichtbar}" Value="true">
+                                                                <Setter Property="Opacity" Value="0" />
+                                                            </DataTrigger>
+                                                            
                                                             <MultiDataTrigger>
                                                                 <MultiDataTrigger.Conditions>
                                                                     <Condition Binding="{Binding DataContext.ShowSightArea, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, UpdateSourceTrigger=PropertyChanged}" Value="True" />
@@ -234,13 +238,18 @@
                                                 Canvas.Top="{Binding ki.LightCreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                 Width="{Binding ki.LichtquellePixelRadius}"
                                                 Height="{Binding ki.LichtquellePixelRadius}"
-                                                Opacity="0.25"
+                                                Opacity="0.20"
                                                 Stroke="#FFF0FC00"
                                                 StrokeThickness="2">
                                                 <Ellipse.Fill>
                                                     <RadialGradientBrush>
+                                                        <GradientStop Offset=".3" Color="#FFF0FC00" />
+                                                        <GradientStop Offset=".5" Color="#CFF0FC00" />
+                                                        <GradientStop Offset=".6" Color="#9FF0FC00" />
+                                                        <GradientStop Offset=".8" Color="#5FF0FC00" />
+                                                        <GradientStop Offset=".9" Color="#3FF0FC00" />
+                                                        <GradientStop Offset=".95" Color="#1FF0FC00" />
                                                         <GradientStop Offset="1" Color="Transparent" />
-                                                        <GradientStop Offset=".8" Color="#FFF0FC00" />
                                                     </RadialGradientBrush>
                                                 </Ellipse.Fill>
                                                 <Ellipse.Style>
@@ -255,7 +264,7 @@
                                             </Ellipse>
 
                                             <!--  Frame for Heroe Picture  -->
-                                            <Border  x:Name="brdCreaturePic"
+                                            <Border x:Name="brdCreaturePic"
                                                         Canvas.Left="{Binding CreatureXPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureYPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding CreatureWidthPic, UpdateSourceTrigger=PropertyChanged}"
@@ -267,7 +276,7 @@
                                                     Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
                                                 </Border.RenderTransform>
                                                 <Border.Background>
-                                                    <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill" >
+                                                    <ImageBrush Opacity="{Binding ki.Opacity_Spieler}" Stretch="Fill" >
                                                         <ImageBrush.ImageSource>
                                                             <Binding 
                                                                 Converter="{StaticResource ImagePathConverter}"
@@ -290,6 +299,7 @@
                                                 </Border.Background>
                                             </Border>
                                             <Rectangle
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                         Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding CreatureWidth, UpdateSourceTrigger=PropertyChanged}"
@@ -347,7 +357,7 @@
                                                 FontSize="17"
                                                 FontWeight="Normal"
                                                 IsHitTestVisible="False"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 TextAlignment="Center"
                                                 Visibility="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                                                 <TextBlock.Style>
@@ -377,7 +387,7 @@
                                                 Background="#FF3DD81A"
                                                 Maximum="{Binding LebensenergieMax}"
                                                 Minimum="0"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 Orientation="Vertical"
                                                 Visibility="{Binding ShowLebensbalken, Converter={StaticResource BooleanToVisibilityConverter1}, UpdateSourceTrigger=PropertyChanged}"
                                                 Value="{Binding LebensenergieAktuell}" />
@@ -389,7 +399,7 @@
                                                 Width="40"
                                                 Height="40"
                                                 Margin="0,-32,0,0"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
                                                 Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
                                                 <Image.Style>
@@ -414,7 +424,7 @@
                                                 Canvas.Top="{Binding CreatureNameY}"
                                                 Width="50"
                                                 Height="50"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}"
                                                 Visibility="{Binding DataContext.ShowCreaturePos, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
                                                 <Image.Style>
@@ -435,7 +445,7 @@
                                                 Width="40"
                                                 Height="40"
                                                 Margin="-35,30,0,0"
-                                                Opacity="{Binding Opacity}"
+                                                Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png">
                                                 <Image.Style>
                                                     <Style TargetType="Image">

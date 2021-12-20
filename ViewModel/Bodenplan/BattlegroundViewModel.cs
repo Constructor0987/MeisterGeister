@@ -2176,6 +2176,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BackgroundOffsetY = bgO.ZDisplayY;
                 BackgroundOffsetSize = (bgO as ImageObject).ObjectSize;
                 (bgO as BattlegroundBaseObject).IsVisible = false;
+
             }
             else
             {
@@ -2801,8 +2802,14 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BattlegroundBaseObject bg0MP4 = BattlegroundObjects.Where(t => t is MP4Object).Where(t => (t as MP4Object).IsBackgroundPicture).FirstOrDefault();
                 if (bg0MP4 != null)
                     SetBackgroundClick(bg0MP4);
-                    //IsLoadingwird im View auf False zurückgesetzt
+                //IsLoadingwird im View auf False zurückgesetzt
                 else
+                {
+                    bg0MP4 = BattlegroundObjects.Where(t => t is ImageObject && (t as ImageObject).IsBackgroundPicture).FirstOrDefault();
+                    if (bg0MP4 != null)
+                        SetBackgroundClick(bg0MP4);
+                }
+
                     IsLoading = false;
             }
         }
@@ -3099,7 +3106,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             }
             else
             {
-                BackgroundImage = (obj as MP4Object).VideoUrl;
+                if (obj is MP4Object)
+                    BackgroundImage = (obj as MP4Object).VideoUrl;
             }
 
             BackgroundMP4LoadedBehavior = MediaState.Play;
