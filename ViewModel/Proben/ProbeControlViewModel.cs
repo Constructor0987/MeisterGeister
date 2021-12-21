@@ -672,9 +672,16 @@ namespace MeisterGeister.ViewModel.Proben
             set { _held = value; OnChanged("Held"); OnChanged("StartWert"); OnChanged("ModList"); OnChanged("Readonly"); } 
         }
 
+        private Model.Gegner _gegner = null;
+        public Model.Gegner Gegner
+        { 
+            get { return _gegner; }
+            set { _gegner = value; OnChanged("Gegner"); OnChanged("StartWert"); OnChanged("ModList"); OnChanged("Readonly"); } 
+        }
+
         public bool Readonly
         {
-            get { return _held != null; }
+            get { return _held != null || _gegner != null; }
         }
 
         public int StartWert
@@ -683,7 +690,7 @@ namespace MeisterGeister.ViewModel.Proben
             {
                 if (Held == null)
                     return Wert;
-                return Held.EigenschaftWert(Name, true);
+                return Held != null? Held.EigenschaftWert(Name, true) : Gegner.EigenschaftWert(Name, true);
             }
         }
 
@@ -694,7 +701,7 @@ namespace MeisterGeister.ViewModel.Proben
                 Type modType = Eigenschaft.GetModType(Name);
                 if (Held == null || modType == null)
                     return new List<dynamic>();
-                return Held.ModifikatorenListe(modType, StartWert);
+                return Held != null? Held.ModifikatorenListe(modType, StartWert): Gegner.ModifikatorenListe(modType, StartWert);
             }
         }
 

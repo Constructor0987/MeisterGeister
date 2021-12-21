@@ -242,7 +242,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
 
             return mod;
         }
-        
+
         //TODO:  AKTUALISIERUNG in der Combobox NICHT OKAY
         //private Position _getKämpferPosition = Position.Stehend;
         //public Position GetKämpferPosition
@@ -260,7 +260,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //    }
         //}
 
-        
+
 
         //private Base.CommandBase _onBtnPositionSelbstRefresh;
         //public Base.CommandBase OnBtnPositionSelbstRefresh
@@ -280,7 +280,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
         //    ((NahkampfModifikator<Position>)Mods["PositionSelbst"]).Value = Ausführender.Kämpfer.Position;
 
         //}
-            
+
 
         #endregion
 
@@ -292,6 +292,37 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             if (waffe != null)
                 //TODO: Sinnvolles Standardziel auswählen
                 WaffeZiel[waffe] = null;
+            //else
+            //    if (Ausführender.Kämpfer is Gegner)
+            //{
+            //    Gegner_Angriff gangriff = (Ausführender.Kämpfer as Gegner).Angriffe.FirstOrDefault();
+            //    if (gangriff != null)
+            //    {
+            //        Waffe w = new Waffe();
+            //        w.DK = gangriff.DK;
+            //        w.AusdauerSchaden = false;
+            //        w.Name = gangriff.Name;
+            //        w.TPKKSchwelle = null;
+            //        w.TPKKSchritt = gangriff.Reichweite;
+            //        w.TPWürfelAnzahl = 1;
+            //        w.TPWürfel = 6;
+            //        w.WMAT = 0;
+            //        w.WMPA = 0;
+            //        w.INI = 0;
+
+            //        if (gangriff.IsNahkampf)
+            //        {
+            //INahkampfwaffe iwaffe = new INahkampfwaffe();
+            //            waffe.AT = gangriff.AT;
+            //            waffe.PA = gangriff.PA;
+
+            //        }
+            //    }
+                //waffe = new INahkampfwaffe();
+                //waffe.PA = gangriff.PA;
+                //waffe.AT = gangriff.AT;
+                //WaffeZiel[gangriff] = null;           
+            
         }
 
         protected override void Patzer(Probe p, KämpferInfo ziel, INahkampfwaffe waffe, ManöverEventArgs e_init)
