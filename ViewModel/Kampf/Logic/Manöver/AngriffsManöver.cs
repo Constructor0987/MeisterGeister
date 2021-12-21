@@ -185,13 +185,38 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
                 p.Modifikator = Mods.Values.Sum(mod => mod.Result);
                 p.KritischVerhaltenGlücklich = ProbeKritischVerhalten.BESTÄTIGUNG;
                 p.KritischVerhaltenPatzer = ProbeKritischVerhalten.BESTÄTIGUNG;
-                ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
-
+                if (Ausführender.Kämpfer is Held)
+                    ViewHelper.ShowProbeDialog(p, Ausführender.Kämpfer as Held);
+                
                 //Prüfen ob das Ziel pariert o.Ä.
                 bool cancel = OnAusgeführt(p);
                 if (!cancel)
                 {
                     ProbeAuswerten(p, wz.Value, wz.Key, null);
+                }
+            }
+            if (WaffeZiel.Count == 0 && Ausführender.Kämpfer is Gegner)
+            {
+                Gegner_Angriff gAngriff = (Ausführender.Kämpfer as Gegner).Angriffe.FirstOrDefault();
+                if (gAngriff != null)
+                {
+                    Probe p = new Probe();
+                    p.Probenname = gAngriff.Name;
+                    p.Werte = new int[] { gAngriff.AT };
+                    p.WerteNamen = "AT";
+                    p.Modifikator = Mods.Values.Sum(mod => mod.Result);
+                    p.KritischVerhaltenGlücklich = ProbeKritischVerhalten.BESTÄTIGUNG;
+                    p.KritischVerhaltenPatzer = ProbeKritischVerhalten.BESTÄTIGUNG;
+                    if (Ausführender.Kämpfer is Gegner)
+                        ViewHelper.ShowProbeDialog(p, null);
+
+                    //Prüfen ob das Ziel pariert o.Ä.
+                    bool cancel = OnAusgeführt(p);
+                    if (!cancel)
+                    {
+                        //TODO: Standard Waffe müsste erstellt werden
+                        //    ProbeAuswerten(p, (Ausführender.Kämpfer as Gegner).ki, gAngriff.Base_Angriff null, null);
+                    }
                 }
             }
         }
