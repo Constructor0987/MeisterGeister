@@ -19,7 +19,790 @@ namespace MeisterGeister.ViewModel.Foundry
         //TODO:  Helden: Bars -Always visible, Lep, AsP
         //TODO:  Foundry Pfad vom User definierbar, read Options, set Web-Connection (lokal oder Inet auswählbar)
         //TODO:  SpielerScreen: Zeige WebBrowser
+        #region //---- Constante ----
 
+        private static string ErsetzeUmlaute(string s)
+        {
+            s = s.Replace("ä", "ae");
+            s = s.Replace("ü", "ue");
+            s = s.Replace("ö", "oe");
+            s = s.Replace("ß", "ss");
+            return s;
+        }
+        public static string GetTalent_sid(string talent)
+        {
+            switch (talent)
+            {
+                case "Zweihandschwerter":
+                    return "talent-zweihandschwerter__saebel";
+                case "Zweihandsäbel":
+                    return "talent-zweihandschwerter__saebel";
+                case "Wurfbeile":
+                    return "talent-wurfbeile";
+                case "Peitsche":
+                    return "talent-peitsche";
+                case "Infanteriewaffen":
+                    return "talent-infanteriewaffen";
+                case "Wurfspeere":
+                    return "talent-wurfspeere";
+                case "Blasrohr":
+                    return "talent-blasrohr";
+                case "Ringen":
+                    return "talent-ringen";
+                case "Schleuder":
+                    return "talent-schleuder";
+                case "Diskus":
+                    return "talent-diskus";
+                case "Zweihandhiebwaffen":
+                    return "talent-zweihand_hiebwaffen";
+                case "Belagerungswaffen":
+                    return "talent-belagerungswaffen";
+                case "Raufen":
+                    return "talent-raufen";
+                case "Stäbe":
+                    return "talent-staebe";
+                case "Kettenstäbe":
+                    return "talent-kettenstaebe";
+                case "Lanzenreiten":
+                    return "talent-lanzenreiten";
+                case "Bogen":
+                    return "talent-bogen";
+                case "Kettenwaffen":
+                    return "talent-kettenwaffen";
+                case "Säbel":
+                    return "talent-saebel";
+                case "Hiebwaffen":
+                    return "talent-hiebwaffen";
+                case "Anderthalbhaender":
+                    return "talent-anderthalbhaender";
+                case "Fechtwaffen":
+                    return "talent-fechtwaffen";
+                case "Speere":
+                    return "talent-speere";
+                case "Dolche":
+                    return "talent-dolche";
+                case "Wurfmesser":
+                    return "talent-wurfmesser";
+                case "Zweihandflegel":
+                    return "talent-zweihandflegel";
+                case "Schwerter":
+                    return "talent-schwerter";
+                case "Armbrust":
+                    return "talent-armbrust";
+                default:
+                    return "talent-" + ErsetzeUmlaute(talent.ToLower());
+            }
+        }
+        public static string GetCategory(string cat)
+        {
+            switch (cat)
+            {
+                case "Kampf":
+                    return "combat";
+                case "Körper":
+                    return "physical";
+                case "Handwerk":
+                    return "crafting";
+                case "Natur":
+                    return "nature";
+                case "Gabe":
+                    return "gift";
+                case "Wissen":
+                    return "knowledge";
+                case "Gesellschaft":
+                    return "social";
+                case "Liturgiekenntnis":
+                    return "ability-liturgiekenntnis";     //????
+                case "Ritualkenntnis":
+                    return "ability-ritualkenntnis";     //????
+                case "Meta":
+                    return "meta";       //????
+                case "Sprachen/Schriften":
+                    return "language";     //????
+                default:
+                    return cat.ToLower();
+            }
+        }
+        public static string GetAttribute(string cat)
+        {
+            switch (cat)
+            {
+                case "MU":
+                    return "courage";
+                case "KL":
+                    return "cleverness";
+                case "IN":
+                    return "intuition";
+                case "CH":
+                    return "charisma";
+                case "FF":
+                    return "agility";
+                case "GE":
+                    return "dexterity";
+                case "KO":
+                    return "constitution";
+                case "KK":
+                    return "strength";
+                default:
+                    return "";
+            }
+        }
+        public static string GetSF_sid(string sf)
+        {
+            if (sf == "Traumgänger I")
+                sf = "Traumgänger";
+            if (sf.StartsWith("Geländekunde") || sf.StartsWith("Kulturkunde") || sf.StartsWith("Schnellladen") || sf.StartsWith("Schnellziehen") || sf.StartsWith("Scharfschütze") ||
+                sf.StartsWith("Repräsentation")|| sf.StartsWith("Waffenloses Manöver")|| sf.StartsWith("Merkmalskenntnis")|| sf.StartsWith("Ritualkenntnis"))
+                sf = sf.Substring(0, sf.IndexOf(" ("));
+            if (sf.StartsWith("Elfenlied:")|| sf.StartsWith("Hexenfluch:"))
+                sf = sf.Substring(0, sf.IndexOf(":"));
+            switch (sf)
+            {
+                case "Ritualkenntnis":
+                    return "ability-ritualkenntnis";
+                case "Schildkampf II":
+                    return "ability-schildkampf-ii";
+                case "Ausweichen III":
+                    return "ability-ausweichen-iii";
+                case "Turnierreiterei":
+                    return "ability-turnierreiterei";
+                case "Ausfall":
+                    return "ability-ausfall";
+                case "Fälscher":
+                    return "ability-faelscher";
+                case "Hammerschlag":
+                    return "ability-hammerschlag";
+                case "Meisterliche Zauberkontrolle II":
+                    return "ability-meisterliche-zauberkontrolle-ii";
+                case "Standfest":
+                    return "ability-standfest";
+                case "Golembauer":
+                    return "ability-golembauer";
+                case "Matrixverständnis":
+                    return "ability-matrixverstaendnis";
+                case "Tierischer Begleiter":
+                    return "ability-tierischer-begleiter-";
+                case "Astrale Meditation":
+                    return "ability-astrale-meditation";
+                case "Regeneration II":
+                    return "ability-regeneration-ii";
+                case "Verbotene Pforten":
+                    return "ability-verbotene-pforten";
+                case "Defensiver Kampfstil":
+                    return "ability-defensiver-kampfstil";
+                case "Druidenrache":
+                    return "ability-druidenrache";
+                case "Berittener Schütze":
+                    return "ability-berittener-schuetze";
+                case "Exorzist":
+                    return "ability-exorzist";
+                case "Klingentänzer":
+                    return "ability-klingentaenzer";
+                case "Schnellziehen":
+                    return "ability-schnellziehen";
+                case "Elementarharmonisierte Aura":
+                    return "ability-elementarharmonisierte-aura";
+                case "Eiserner Wille II":
+                    return "ability-eiserner-wille-ii";
+                case "Stapeleffekt":
+                    return "ability-stapeleffekt";
+                case "Karmalqueste":
+                    return "ability-karmalqueste";
+                case "Waffenlose Kampftechnik (Bornländisch/Gossenstil)":
+                    return "ability-waffenlose-kampftechnik-bornlaendisch";
+                case "Salasandra":
+                    return "ability-salasandra";
+                case "Schamanistische":
+                    return "ability-schamanistische";
+                case "Elfenlied":
+                    return "ability-elfenlieder";
+                case "Schildkampf I":
+                    return "ability-schildkampf-i";
+                case "Semipermanenz I":
+                    return "ability-semipermanenz-i";
+                case "Matrixkontrolle":
+                    return "ability-matrixkontrolle";
+                case "Parierwaffen II":
+                    return "ability-parierwaffen-ii";
+                case "Parierwaffen I":
+                    return "ability-parierwaffen-i";
+                case "Invocatio Integra":
+                    return "ability-invocatio-integra";
+                case "Gedankenschutz":
+                    return "ability-gedankenschutz";
+                case "Spätweihe":
+                    return "ability-spaetweihe";
+                case "Rüstungsgewöhnung III":
+                    return "ability-ruestungsgewoehnung-iii";
+                case "Eiserner Wille I":
+                    return "ability-eiserner-wille-i";
+                case "Vertrautenbindung":
+                    return "ability-vertrautenbindung";
+                case "Ottagaldr, Nichtzauberer":
+                    return "ability-ottagaldr-nichtzauberer";
+                case "Schnellladen":
+                    return "ability-schnellladen";
+                case "Runenkunde":
+                    return "ability-runenkunde";
+                case "Kampf im Wasser":
+                    return "ability-kampf-im-wasser";
+                case "Beidhändiger Kampf II":
+                    return "ability-beidhaendiger-kampf-ii";
+                case "Betäubungsschlag":
+                    return "ability-betaeubungsschlag";
+                case "Hexenfluch":
+                    return "ability-hexenflueche-";
+                case "Zauberspezialisierung":
+                    return "ability-zauberspezialisierung";
+                case "Nandusgefälliges Wissen":
+                    return "ability-nandusgefaelliges-wissen";
+                case "Zauberkontrolle":
+                    return "ability-zauberkontrolle";
+                case "Waffenmeister":
+                    return "ability-waffenmeister";
+                case "Spießgespann":
+                    return "ability-spieszgespann";
+                case "Aufmerksamkeit":
+                    return "ability-aufmerksamkeit";
+                case "Druidische Herrschaftsrituale":
+                    return "ability-druidische-herrschaftsrituale";
+                case "Formation":
+                    return "ability-formation";
+                case "Wuchtschlag":
+                    return "ability-wuchtschlag";
+                case "Kristallomantische Rituale":
+                    return "ability-kristallomantische-rituale";
+                case "Linkhand":
+                    return "ability-linkhand";
+                case "Akklimatisierung Hitze":
+                    return "ability-akklimatisierung-hitze";
+                case "Befreiungsschlag":
+                    return "ability-befreiungsschlag";
+                case "Regeneration I":
+                    return "ability-regeneration-i";
+                case "Meisterliche Regeneration":
+                    return "ability-meisterliche-regeneration";
+                case "Kriegsreiterei":
+                    return "ability-kriegsreiterei";
+                case "Traumgänger":
+                    return "ability-traumgaenger";
+                case "Kugelzauber":
+                    return "ability-kugelzauber";
+                case "Waffenlose Kampftechnik (Hammerfaust)":
+                    return "ability-waffenlose-kampftechnik-hammerfaust";
+                case "Finte":
+                    return "ability-finte";
+                case "Nekromant":
+                    return "ability-nekromant";
+                case "Geschützmeister":
+                    return "ability-geschuetzmeister";
+                case "Waffenlose Kampftechnik (Unauer Schule)":
+                    return "ability-waffenlose-kampftechnik-unauer-schule";
+                case "Aura der Heiligkeit":
+                    return "ability-aura-der-heiligkeit";
+                case "Gegenhalten":
+                    return "ability-gegenhalten";
+                case "Ottagaldr, Zauberer":
+                    return "ability-ottagaldr-zauberer";
+                case "Blutmagie":
+                    return "ability-blutmagie";
+                case "Schuppenbeutel":
+                    return "ability-schuppenbeutel";
+                case "Binden":
+                    return "ability-binden";
+                case "Meisterliche Zauberkontrolle I":
+                    return "ability-meisterliche-zauberkontrolle-i";
+                case "Festnageln":
+                    return "ability-festnageln";
+                case "Kraftspeicher":
+                    return "ability-kraftspeicher";
+                case "Signaturkenntnis":
+                    return "ability-signaturkenntnis";
+                case "Vielfache Ladungen":
+                    return "ability-vielfache-ladungen";
+                case "Kontakt zum Großen Geist":
+                    return "ability-kontakt-zum-groszen-geist";
+                case "Odûns Gaben":
+                    return "ability-odns-gaben";
+                case "Lockeres Zaubern":
+                    return "ability-lockeres-zaubern";
+                case "Tanz der Mada":
+                    return "ability-tanz-der-mada";
+                case "Zauberzeichen":
+                    return "ability-zauberzeichen";
+                case "Zaubertänzer":
+                    return "ability-zaubertaenze";
+                case "Meister der Improvisation":
+                    return "ability-meister-der-improvisation";
+                case "Todesstoß":
+                    return "ability-todesstosz";
+                case "Repräsentation":
+                    return "ability-repraesentation";
+                case "Waffenlose Kampftechnik (Gladiatorenstil)":
+                    return "ability-waffenlose-kampftechnik-gladiatorenstil";
+                case "Trommelzauber":
+                    return "ability-trommelzauber-";
+                case "Matrixregeneration I":
+                    return "ability-matrixregeneration-i";
+                case "Höhere Dämonenbindung":
+                    return "ability-hoehere-daemonenbindung";
+                case "Ausweichen II":
+                    return "ability-ausweichen-ii";
+                case "Liturgiekenntnis":
+                    return "ability-liturgiekenntnis";
+                case "Schlangenring-Zauber":
+                    return "ability-schlangenringzauber";
+                case "Improvisierte Waffen":
+                    return "ability-improvisierte-waffen";
+                case "Meisterschütze":
+                    return "ability-meisterschuetze";
+                case "Geodenrituale":
+                    return "ability-geodenrituale-";
+                case "Beidhändiger Kampf I":
+                    return "ability-beidhaendiger-kampf-i";
+                case "Klingensturm":
+                    return "ability-klingensturm";
+                case "Dämonenbindung I":
+                    return "ability-daemonenbindung-i";
+                case "Simultanzaubern":
+                    return "ability-simultanzaubern";
+                case "Keulenrituale":
+                    return "ability-keulenrituale-";
+                case "Waffenloses Manöver":
+                    return "ability-waffenloses-manoever";
+                case "Zauber vereinigen":
+                    return "ability-zauber-vereinigen";
+                case "Unterwasserkampf":
+                    return "ability-unterwasserkampf";
+                case "Rüstungsgewöhnung I":
+                    return "ability-ruestungsgewoehnung-i";
+                case "Ortskenntnis":
+                    return "ability-ortskenntnis";
+                case "Waffenlose Kampftechnik (Mercenario)":
+                    return "ability-waffenlose-kampftechnik-mercenario";
+                case "Geber der Gestalt":
+                    return "ability-geber-der-gestalt";
+                case "Merkmalskenntnis":
+                    return "ability-merkmalskenntnis";
+                case "Zauberroutine":
+                    return "ability-zauberroutine";
+                case "Sturmangriff":
+                    return "ability-sturmangriff";
+                case "Zibilja-Rituale":
+                    return "ability-zibiljarituale";
+                case "Aura verhüllen":
+                    return "ability-aura-verhuellen";
+                case "Halbschwert":
+                    return "ability-halbschwert";
+                case "Akklimatisierung Kälte":
+                    return "ability-akklimatisierung-kaelte";
+                case "Chimärenmeister":
+                    return "ability-chimaerenmeister";
+                case "Geländekunde":
+                    return "ability-gelaendekunde";
+                case "Zauber bereithalten":
+                    return "ability-zauber-bereithalten";
+                case "Hypervehemenz":
+                    return "ability-hypervehemenz";
+                case "Waffenspezialisierung":
+                    return "ability-waffenspezialisierung";
+                case "Umreißen":
+                    return "ability-umreiszen";
+                case "Scharfschütze":
+                    return "ability-scharfschuetze";
+                case "Matrixregeneration II":
+                    return "ability-matrixregeneration-ii";
+                case "Berufsgeheimnis":
+                    return "ability-berufsgeheimnis";
+                case "Stabzauber":
+                    return "ability-stabzauber";
+                case "Waffe zerbrechen":
+                    return "ability-waffe-zerbrechen";
+                case "Zauber unterbrechen":
+                    return "ability-zauber-unterbrechen";
+                case "Gezielter Stich":
+                    return "ability-gezielter-stich";
+                case "Entwaffnen":
+                    return "ability-entwaffnen";
+                case "Kraftlinienmagie II":
+                    return "ability-kraftlinienmagie-ii";
+                case "Konzentrationsstärke":
+                    return "ability-konzentrationsstaerke";
+                case "Akoluth":
+                    return "ability-akoluth";
+                case "Eisenhagel":
+                    return "ability-eisenhagel";
+                case "Fernzauberei":
+                    return "ability-fernzauberei";
+                case "Gefäß der Sterne":
+                    return "ability-gefaesz-der-sterne";
+                case "Apport":
+                    return "ability-apport";
+                case "Meisterparade":
+                    return "ability-meisterparade";
+                case "Klingenwand":
+                    return "ability-klingenwand";
+                case "Liturgien":
+                    return "ability-liturgien";
+                case "Tod von links":
+                    return "ability-tod-von-links";
+                case "Kraftkontrolle":
+                    return "ability-kraftkontrolle";
+                case "Kampfreflexe":
+                    return "ability-kampfreflexe";
+                case "Schalenzauber":
+                    return "ability-schalenzauber";
+                case "Waffenlose Kampftechnik (Hruruzat)":
+                    return "ability-waffenlose-kampftechnik-hruruzat";
+                case "Bannschwert":
+                    return "ability-bannschwert";
+                case "Große Meditation":
+                    return "ability-grosze-meditation";
+                case "Blindkampf":
+                    return "ability-blindkampf";
+                case "Reiterkampf":
+                    return "ability-reiterkampf";
+                case "Talentspezialisierung":
+                    return "ability-talentspezialisierung";
+                case "Kulturkunde":
+                    return "ability-kulturkunde";
+                case "Kampfgespür":
+                    return "ability-kampfgespuer";
+                case "Doppelangriff":
+                    return "ability-doppelangriff";
+                case "Ausweichen I":
+                    return "ability-ausweichen-i";
+                case "Meisterliches Entwaffnen":
+                    return "ability-meisterliches-entwaffnen";
+                case "Aurapanzer":
+                    return "ability-aurapanzer";
+                case "Niederwerfen":
+                    return "ability-niederwerfen";
+                case "Semipermanenz II":
+                    return "ability-semipermanenz-ii";
+                case "Rosstäuscher":
+                    return "ability-rosstaeuscher";
+                case "Rüstungsgewöhnung II":
+                    return "ability-ruestungsgewoehnung-ii";
+                case "Druidische Dolchrituale":
+                    return "ability-druidische-dolchrituale";
+                case "Matrixgeber":
+                    return "ability-matrixgeber";
+                case "Schildspalter":
+                    return "ability-schildspalter";
+                case "Windmühle":
+                    return "ability-windmuehle";
+                case "Kraftlinienmagie I":
+                    return "ability-kraftlinienmagie-i";
+                case "Dämonenbindung II":
+                    return "ability-daemonenbindung-ii";
+                case "Form der Formlosigkeit":
+                    return "ability-form-der-formlosigkeit";
+                default:
+                    return "ability-" + ErsetzeUmlaute(sf.ToLower());
+            }
+        }
+
+        public static string GetZauber_sid(string z)
+        {
+            switch (z)
+            {
+                case "Applicatus Zauberspeicher": return "spell-applicatus";
+                case "Murks und Patz": return "spell-murks-und-patz";
+                case "Aquasphaero": return "spell-aquasphaero";
+                case "Falkenauge Meisterschuss": return "spell-falkenauge";
+                case "Humofaxius Humusstrahl": return "spell-humofaxius";
+                case "Levthans Feuer": return "spell-levthans-feuer";
+                case "Heilkraft bannen": return "spell-heilkraft-bannen";
+                case "Manifesto Element": return "spell-manifesto";
+                case "Gedankenbilder Elfenruf": return "spell-gedankenbilder";
+                case "Skelettarius": return "spell-skelettarius";
+                case "Visibili Vanitar": return "spell-visibili";
+                case "Meister der Elemente": return "spell-meister-der-elemente";
+                case "Aquafaxius": return "spell-aquafaxius";
+                case "Verständigung stören": return "spell-verstaendigung-stoeren";
+                case "Beherrschung brechen": return "spell-beherrschung-brechen";
+                case "Lach dich gesund": return "spell-lach-dich-gesund";
+                case "Elementarbann": return "spell-elementarbann";
+                case "Ignifaxius Flammenstrahl": return "spell-ignifaxius";
+          //      case "Wand aus Erz": return "spell-wand-aus-gletscher";
+                case "Nebelwand und Morgendunst": return "spell-nebelwand";
+                case "Pestilenz erspüren": return "spell-pestilenz-erspueren";
+                case "Ignisphaero Feuerball": return "spell-ignisphaero";
+                case "Leib des Feuers": return "spell-leib-des-feuers";
+                case "Motoricus": return "spell-motoricus";
+                case "Transformatio Formgestalt": return "spell-transformatio";
+                case "Zorn der Elemente": return "spell-zorn-der-elemente";
+                case "Vogelzwitschern Glockenspiel": return "spell-vogelzwitschern";
+                case "Große Verwirrung": return "spell-grosze-verwirrung";
+                case "Staub wandle!": return "spell-staub-wandle";
+                case "Traumgestalt": return "spell-traumgestalt";
+                case "Adlerauge Luchsenohr": return "spell-adlerauge";
+                case "Band und Fessel": return "spell-band-und-fessel";
+                case "Tempus Stasis": return "spell-tempus-stasis";
+                case "Fulminictus Donnerkeil": return "spell-fulminictus";
+                case "Ängste lindern": return "spell-aengste-lindern";
+                case "Custodosigil Diebesbann": return "spell-custodosigil";
+                case "Zunge lähmen": return "spell-zunge-laehmen";
+                case "Tlalucs Odem Pestgestank": return "spell-tlalucs-odem";
+                case "Spurlos Trittlos": return "spell-spurlos";
+                case "Arcanovi Artefakt": return "spell-arcanovi-aufladbar";
+                case "Memorans Gedächtniskraft": return "spell-memorans";
+                case "Corpofrigo Kälteschock": return "spell-corpofrigo";
+                case "Böser Blick": return "spell-boeser-blick";
+                case "Foramen Foraminor": return "spell-foramen";
+        //        case "Destructibo Arcanitas": return "spell-aurarcania-deleatur";
+                case "Zagibu Ubigaz": return "spell-zagibu";
+                case "Wand aus Wogen": return "spell-wand-aus-wogen";
+                case "Tiere besprechen": return "spell-tiere-besprechen";
+                case "Pfeil der Luft": return "spell-pfeil-der-luft";
+                case "Invocatio maior": return "spell-invocatio-maior";
+                case "Archosphaero Erzball": return "spell-archophaero";
+                case "Caldofrigo heiß und kalt": return "spell-caldofrigo";
+                case "Blick in die Gedanken": return "spell-blick-in-die-gedanken";
+                case "Leib des Windes": return "spell-leib-des-windes";
+                case "Langer Lulatsch": return "spell-langer-lulatsch";
+                case "Aerogelo Atemqual": return "spell-aerogelo";
+                case "Krötensprung": return "spell-kroetensprung";
+                case "Serpentialis Schlangenleib": return "spell-serpentialis";
+                case "Mahlstrom": return "spell-mahlstrom";
+                case "Blick durch fremde Augen": return "spell-blick-durch-fremde-augen";
+                case "Sanftmut": return "spell-sanftmut";
+                case "Wipfellauf": return "spell-wipfellauf";
+                case "Eigne Ängste quälen dich!": return "spell-eigne-aengste";
+                case "Herr über das Tierreich": return "spell-herr-ueber-das-tierreich";
+                case "Totes handle!": return "spell-totes-handle";
+                case "Reversalis Revidum": return "spell-reversalis";
+                case "Transversalis Teleport": return "spell-transversalis";
+                case "Psychostabilis": return "spell-psychostabilis";
+                case "Metamagie neutralisieren": return "spell-metamagie-neutral";
+                case "Humosphaero Humusball": return "spell-humophaero";
+                case "Elfenstimme Flötenton": return "spell-elfenstimme";
+                case "Orcanofaxius Luftstrahl": return "spell-orcanofaxius";
+                case "Lunge des Leviatan": return "spell-lunge-des-leviatan";
+                case "Wellenlauf": return "spell-wellenlauf";
+                case "Objekt entzaubern": return "spell-objekt-entzaubern";
+                case "Tiergedanken": return "spell-tiergedanken";
+                case "Zaubernahrung Hungerbann": return "spell-zaubernahrung";
+                case "Dichter und Denker": return "spell-dichter-und-denker";
+                case "Delicioso Gaumenschmaus": return "spell-delicioso";
+                case "Unitatio Geistesbund": return "spell-unitatio";
+                case "Gardianum Zauberschild": return "spell-gardianum";
+                case "Sumus Elixiere": return "spell-sumus-elixiere";
+                case "Zauberzwang": return "spell-zauberzwang";
+                case "Große Gier": return "spell-grosze-gier";
+              //  case "Fortifex arkane Wand": return "spell-wand-aus-wind";
+                case "Pectetondo Zauberhaar": return "spell-pectetondo";
+                case "Weiße Mähn' und gold'ner Huf": return "spell-weisze-maehn";
+                case "Zwingtanz": return "spell-zwingtanz";
+                case "Klickeradomms": return "spell-klickeradomms";
+                case "Chamaelioni Mimikry": return "spell-chamaelioni";
+                case "Fortifex arkane Wand": return "spell-fortifex";
+                case "Magischer Raub": return "spell-magischer-raub";
+                case "Pfeil des Erzes": return "spell-pfeil-des-erzes";
+                case "Archofaxius Erzstrahl": return "spell-archofaxius";
+                case "Respondami": return "spell-respondami";
+                case "Invocatio minor": return "spell-invocatio-minor";
+                case "Memorabia Falsifir": return "spell-memorabia";
+                case "Schwarzer Schrecken": return "spell-schwarzer-schrecken";
+                case "Projektimago Ebenbild": return "spell-projektimago";
+                case "Herzschlag ruhe!": return "spell-herzschlag";
+                case "Aureolus Güldenglanz": return "spell-aureolus";
+                case "Blick aufs Wesen": return "spell-blick-aufs-wesen";
+                case "Bärenruhe Winterschlaf": return "spell-baerenruhe";
+                case "Ecliptifactus Schattenkraft": return "spell-ecliptifactus";
+                case "Flim Flam Funkel": return "spell-flim-flam";
+                case "Metamorpho Gletscherform": return "spell-metamorpho-gletscherform";
+                case "Herbeirufung vereiteln": return "spell-herbeirufung-vereiteln";
+                case "Harmlose Gestalt": return "spell-harmlose-gestalt";
+                case "Eisenrost und Patina": return "spell-eisenrost";
+                case "Hexengalle": return "spell-hexengalle";
+                case "Verwandlung beenden": return "spell-verwandlung-beenden";
+                case "Unberührt von Satinav": return "spell-unberuehrt-von-satinav";
+                case "Meister minderer Geister": return "spell-meister-mind-geister";
+                case "Lachkrampf": return "spell-lachkrampf";
+                case "Klarum Purum": return "spell-klarum-purum";
+                case "Hexenkrallen": return "spell-hexenkrallen";
+                case "Objectofixo": return "spell-objectofixo";
+                case "Axxeleratus Blitzgeschwind": return "spell-axxeleratus";
+                case "Windstille": return "spell-windstille";
+                case "Armatrutz": return "spell-armatrutz";
+                case "Metamorpho Felsenform": return "spell-metamorpho-felsenform";
+                case "Invercano Spiegeltrick": return "spell-invercano";
+                case "Unsichtbarer Jäger": return "spell-unsichtbarer-jaeger";
+                case "Dschinnenruf": return "spell-dschinnenruf";
+                case "Arachnea Krabbeltier": return "spell-arachnea";
+                case "Geisterbann": return "spell-geisterbann";
+                case "Analys Arkanstruktur": return "spell-analys";
+                case "Schelmenmaske": return "spell-schelmenmaske";
+                case "Objectovoco": return "spell-objectovoco";
+                case "Stein wandle!": return "spell-stein-wandle";
+                case "Bewegung stören": return "spell-bewegung-stoeren";
+                case "Illusion auflösen": return "spell-illusion-aufloesen";
+                case "Pentagramma Sphärenbann": return "spell-pentagramma";
+                case "Karnifilio Raserei": return "spell-karnifilo";
+                case "Krabbelnder Schrecken": return "spell-krabbelnder-schrecken";
+                case "Aerofugo Vakuum": return "spell-aerofugo";
+                case "Weihrauchwolke Wohlgeruch": return "spell-weihrauchwolke";
+                case "Hellsicht trüben": return "spell-hellsicht-trueben";
+                case "Solidirid Weg aus Licht": return "spell-solidirid";
+                case "Xenographus Schriftenkunde": return "spell-xenographus";
+                case "Seidenzunge Elfenwort": return "spell-seidenzunge";
+                case "Schelmenkleister": return "spell-schelmenkleister";
+                case "Pfeil des Feuers": return "spell-pfeil-des-feuers";
+                case "Reptilea Natternest": return "spell-reptilea";
+            //    case "Auris Nasus Oculus": return "spell-oculus";
+                case "Zauberklinge Geisterspeer": return "spell-zauberklinge";
+                case "Koboldgeschenk": return "spell-koboldgeschenk";
+                case "Firnlauf": return "spell-firnlauf";
+                case "Windhose": return "spell-windhose";
+                case "Kusch!": return "spell-kusch";
+                case "Holterdipolter": return "spell-holterdipolter";
+                case "Corpofesso Gliederschmerz": return "spell-corpofesso";
+                case "Eiseskälte Kämpferherz": return "spell-eiseskaelte";
+                case "Imperavi Handlungszwang": return "spell-imperavi";
+                case "Beschwörung vereiteln": return "spell-beschwoerung-vereiteln";
+                case "Exposami Lebenskraft": return "spell-exposami";
+                case "Horriphobus Schreckgestalt": return "spell-horriphobus";
+                case "Wand aus Erz": return "spell-wand-aus-erz";
+                case "Vipernblick": return "spell-vipernblick";
+                case "Schadenszauber bannen": return "spell-schadenszauber-bannen";
+                case "Menetekel Flammenschrift": return "spell-menetekel";
+                case "Aufgeblasen Abgehoben": return "spell-aufgeblasen";
+                case "Vocolimbo hohler Klang": return "spell-vocolimbo";
+                case "Radau": return "spell-radau";
+                case "Hilfreiche Tatze, rettende Schwinge": return "spell-hilfreiche-tatze";
+                case "Bannbaladin": return "spell-bannbaladin";
+                case "Orcanosphaero Orkanball": return "spell-orcanosphaero";
+                case "Iribaars Hand": return "spell-iribaars-hand";
+                case "Madas Spiegel": return "spell-madas-spiegel";
+                case "Pfeil des Humus": return "spell-pfeil-des-humus";
+                case "Eins mit der Natur": return "spell-eins-mit-der-natur";
+                case "Leib der Erde": return "spell-leib-der-erde";
+                case "Favilludo Funkentanz": return "spell-favilludo";
+                case "Stillstand": return "spell-stillstand";
+                case "Penetrizzel Tiefenblick": return "spell-penetrizzel";
+                case "Objecto Obscuro": return "spell-objecto-obscuro";
+                case "Immortalis Lebenszeit": return "spell-immortalis";
+                case "Juckreiz": return "spell-juckreiz-daemlicher";
+                case "Verschwindibus": return "spell-verschwindibus";
+                case "Seelentier erkennen": return "spell-seelentier-erkennen";
+                case "Panik überkomme euch!": return "spell-panik";
+                case "Auris Nasus Oculus": return "spell-auris-nasus";
+                case "Hexenholz": return "spell-hexenholz";
+                case "Körperlose Reise": return "spell-koerperlose-reise";
+                case "Pfeil des Eises": return "spell-pfeil-des-eises";
+                case "Nebelleib": return "spell-nebelleib";
+                case "Ruhe Körper, ruhe Geist": return "spell-ruhe-koerper";
+                case "Leidensbund": return "spell-leidensbund";
+                case "Sapefacta Zauberschwamm": return "spell-sapefacta";
+                case "Accuratum Zaubernadel": return "spell-accuratum";
+                case "Widerwille Ungemach": return "spell-widerwille";
+                case "Gefunden!": return "spell-gefunden";
+                case "Alpgestalt": return "spell-alpgestalt";
+                case "Claudibus Clavistibor": return "spell-claudibus";
+                case "Kulminatio Kugelblitz": return "spell-kulminatio";
+                case "Pandaemonium": return "spell-pandaemonium";
+                case "Schleier der Unwissenheit": return "spell-schleier-der-unwissenheit";
+                case "Hexenknoten": return "spell-hexenknoten";
+                case "Halluzination": return "spell-halluzination";
+                case "Chrononautos Zeitenfahrt": return "spell-chrononautos";
+                case "Dunkelheit": return "spell-dunkelheit";
+                case "Nuntiovolo Botenvogel": return "spell-nuntiovolo";
+                case "Tauschrausch": return "spell-tauschrausch";
+                case "Duplicatus Doppelbild": return "spell-duplicatus";
+                case "Seidenweich Schuppengleich": return "spell-seidenweich";
+                case "Plumbumbarum schwerer Arm": return "spell-plumbumbarum";
+                case "Blitz dich find": return "spell-blitz-dich-find";
+                case "Höllenpein zerreiße dich!": return "spell-hoellenpein";
+                case "Spinnenlauf": return "spell-spinnenlauf";
+                case "Leib des Eises": return "spell-leib-des-eises";
+                case "Aeolitus Windgebraus": return "spell-aeolitus";
+                case "Erinnerung verlasse dich!": return "spell-erinnerung-verlasse-dich";
+                case "Blendwerk": return "spell-blendwerk";
+                case "Salander Mutander": return "spell-salander";
+                case "Kraft des Erzes": return "spell-kraft-des-erzes";
+                case "Weisheit der Bäume": return "spell-weisheit";
+                case "Transmutare Körperform": return "spell-transmutare";
+                case "Chimaeroform Hybridgestalt": return "spell-chimaeroform";
+                case "Zauberwesen der Natur": return "spell-zauberwesen";
+                case "Protectionis Kontrabann": return "spell-protectionis";
+                case "Sensibar Empathicus": return "spell-sensibar";
+                case "Balsam Salabunde": return "spell-balsam";
+                case "Wasseratem": return "spell-wasseratem";
+                case "Impersona Maskenbild": return "spell-impersona";
+                case "Granit und Marmor": return "spell-granit";
+                case "Seelenwanderung": return "spell-seelenwanderung";
+                case "Movimento Dauerlauf": return "spell-movimento";
+                case "Eigenschaft wiederherstellen": return "spell-eigenschaften-wiederherstellen";
+                case "Paralysis starr wie Stein": return "spell-paralysis";
+                case "Lockruf und Feenfüße": return "spell-lockruf";
+                case "Attributo": return "spell-attributo";
+                case "Einfluss bannen": return "spell-einfluss-bannen";
+                case "Last des Alters": return "spell-last-des-alters";
+                case "Warmes Blut": return "spell-warmes-blut";
+                case "Katzenaugen": return "spell-katzenaugen";
+                case "Nihilogravo Schwerelos": return "spell-nihilogravo";
+                case "Gefäß der Jahre": return "spell-gefaesz-der-jahre";
+                case "Ignorantia Ungesehn": return "spell-ignorantia";
+                case "Schelmenlaune": return "spell-schelmenlaune";
+                case "Odem Arcanum": return "spell-odem";
+                case "Auge des Limbus": return "spell-auge-des-limbus";
+                case "Weiches erstarre!": return "spell-weiches-erstarre";
+                case "Hartes schmelze!": return "spell-hartes-schmelze";
+                case "Schwarz und Rot": return "spell-schwarz-und-rot";
+                case "Krähenruf": return "spell-kraehenruf";
+                case "Somnigravis tiefer Schlaf": return "spell-somnigravis";
+                case "Dämonenbann": return "spell-daemonenbann";
+                case "Haselbusch und Ginsterkraut": return "spell-haselbusch";
+                case "Adlerschwinge Wolfsgestalt": return "spell-adlerschwinge";
+                case "Hexenspeichel": return "spell-hexenspeichel";
+                case "Sensattacco Meisterstreich": return "spell-sensattacco";
+                case "Cryptographo Zauberschrift": return "spell-cryptographo";
+                case "Leib des Erzes": return "spell-leib-des-erzes";
+                case "Pfeil des Wassers": return "spell-pfeil-des-wassers";
+                case "Schabernack": return "spell-schabernack";
+                case "Papperlapapp": return "spell-papperlapapp";
+                case "Destructibo Arcanitas": return "spell-destructibo";
+                case "Hexenblick": return "spell-hexenblick";
+                case "Atemnot": return "spell-atemnot";
+                case "Elementarer Diener": return "spell-elementarer-diener";
+                case "Geisterruf": return "spell-geisterruf";
+                case "Nekropathia Seelenreise": return "spell-nekropathia";
+                case "Reflectimago Spiegelschein": return "spell-reflectimago";
+                case "Schelmenrausch": return "spell-schelmenrausch";
+                case "Blick in die Vergangenheit": return "spell-blick-in-die-vergangenheit";
+                case "Silentium": return "spell-silentium";
+                case "Frigifaxius Eisstrahl": return "spell-frigifaxius";
+                case "Limbus versiegeln": return "spell-limbus-versiegeln";
+                case "Standfest Katzengleich": return "spell-standfest";
+                case "Animatio stummer Diener": return "spell-animatio";
+                case "Wand aus Flammen": return "spell-wand-aus-flammen";
+                case "Infinitum Immerdar": return "spell-infinitum";
+                case "Desintegratus Pulverstaub": return "spell-desintegratus";
+                case "Abvenenum reine Speise": return "spell-abvenenum";
+                case "Nackedei": return "spell-nackedei";
+                case "Wand aus Dornen": return "spell-wand-aus-dornen";
+                case "Zappenduster": return "spell-zappenduster";
+                case "Veränderung aufheben": return "spell-veraenderung-aufheben";
+                case "Komm Kobold Komm": return "spell-komm-kobold-komm";
+                case "Fluch der Pestilenz": return "spell-fluch-der-pestilenz";
+                case "Planastrale Anderswelt": return "spell-planastrale";
+                case "Wettermeisterschaft": return "spell-wettermeisterschaft";
+                case "Leib der Wogen": return "spell-leib-der-wogen";
+                case "Koboldovision": return "spell-koboldovision";
+                case "Chronoklassis Urfossil": return "spell-chronoklassis";
+                case "Sinesigil unerkannt": return "spell-sinesigil";
+                case "Satuarias Herrlichkeit": return "spell-satuarias-herrlichkeit";
+                case "Adamantium Erzstruktur": return "spell-adamantium";
+                case "Frigisphaero Eisball": return "spell-frigosphaero";
+                case "Brenne toter Stoff!": return "spell-brenne-toter-stoff";
+
+                default:
+                    return "spell-" + ErsetzeUmlaute(z.ToLower());
+            }
+        }
+        #endregion
         #region //---- Classes ----
         public class MyTimer
         {
@@ -46,14 +829,6 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        private static string ErsetzeUmlaute(string s)
-        {
-            s = s.Replace("ä", "ae");
-            s = s.Replace("ü", "ue");
-            s = s.Replace("ö", "oe");
-            s = s.Replace("ß", "ss");
-            return s;
-        }
 
         public class folder
         {
@@ -81,8 +856,11 @@ namespace MeisterGeister.ViewModel.Foundry
             public string name { get; set; }
             public string type { get; set; }
             public string img { get; set; }
+            public bool isKampfTalent { get; set; }
             public dat Data { get; set; }
             public Held_Talent ht { get; set; }
+            public Held_Sonderfertigkeit hsf { get; set; }
+            public Held_Zauber hz { get; set; }
 
             public string shortInfo { get; set; }
             public DSA41_HeldTalent()
@@ -92,12 +870,8 @@ namespace MeisterGeister.ViewModel.Foundry
 
             public string GetShortInfo()
             {
+                isKampfTalent = true;
                 char A = (char)34;
-                /*
-                 
-"MrUDmjbWc93ezvq6":{"data":{"combat":{"attack":-1,"parry":-1},"value":null}},
-"X2rlEdeyECvqcUvP":{"data":{"combat":{"rangedAttack":-1},"value":null}},
-                 */
                 string back = A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ":{";
                 back += A + "data" + A + ":{" + A + "combat" + A + ":{";
                 if (ht.HatAttacke)
@@ -110,8 +884,143 @@ namespace MeisterGeister.ViewModel.Foundry
                 back += "},";
                 back += A + "value" + A + ":" + (ht.TaW != null? ht.TaW.Value.ToString():"null") + "}},";
 
+                return back;            
+            }
+
+            public string GetLongInfoSF()
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + hsf.Sonderfertigkeit.Name + A + ",";
+                back += A + "type" + A + ":" + A + "specialAbility" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                string beschreibung = 
+                    (hsf.Sonderfertigkeit.Name.StartsWith("Geländekunde") || 
+                     hsf.Sonderfertigkeit.Name.StartsWith("Kulturkunde") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Schnellladen") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Schnellziehen")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Scharfschütze") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Repräsentation")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Waffenloses Manöver")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Merkmalskenntnis")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Ritualkenntnis")) ?
+                     hsf.Sonderfertigkeit.Name.Substring(hsf.Sonderfertigkeit.Name.IndexOf(" (")+1) :
+                    (hsf.Sonderfertigkeit.Name.StartsWith("Elfenlied:")|| hsf.Sonderfertigkeit.Name.StartsWith("Hexenfluch:")) ?
+                     hsf.Sonderfertigkeit.Name.Substring(hsf.Sonderfertigkeit.Name.IndexOf(":")+2) :
+                    hsf.Sonderfertigkeit.Voraussetzungen;
+
+                back += A + "description" + A + ":" + A + beschreibung + A + ",";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetSF_sid(hsf.Sonderfertigkeit.Name) + A + ",";
+                back += A + "type" + A + ":" + (hsf.Sonderfertigkeit.HatWert.HasValue && hsf.Sonderfertigkeit.HatWert.Value ? A + hsf.Wert + A : "null") + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
                 return back;
             }
+
+            /*#
+             
+             ZAUBER
+            {"_id":"FNbBBTxHHplsAlYl","name":"Adlerauge Luchsenohr","type":"spell","img":"icons/svg/item-bag.svg","data":{"description":"",
+            "test":{"firstAttribute":"cleverness","secondAttribute":"intuition","thirdAttribute":"dexterity"},
+            "castTime":{"duration":0,"unit":null,"info":""},"effectTime":{"duration":0,"unit":null,"info":""},
+            "targetClasses":[],"range":"","technique":"","effect":"","variants":[],"isUniquelyOwnable":true,"sid":"spell-adlerauge","value":8,"testMod":null,"astralCost":"",
+            "modifications":[],"lcdPage":"15","reversalis":"","antimagic":"","properties":[],"complexity":"","representation":"","spread":null},
+            "effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.spell.5XPRS9ElwdjM7pug"}}}
+             
+             */
+            public string GetLongInfoZauber()
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + hz.Zauber.Name + A + ",";
+                back += A + "type" + A + ":" + A + "spell" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + hz.Bemerkung + A + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" + (hz.Zauber.Eigenschaft1 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft1) + A) : "null") + ",";
+                back += A + "secondAttribute" + A + ":" + (hz.Zauber.Eigenschaft2 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (hz.Zauber.Eigenschaft3 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft3) + A) : "null") + "},";
+                back += A + "castTime" + A + ":{";
+                back += A + "duration" + A + ":" + (hz.Zauber.Zauberdauer??0) + ",";
+                back += A + "unit" + A + ":" + A+"Aktionen"+A + ",";
+                back += A + "info" + A + ":" + A+A + "},";
+                back += A + "effectTime" + A + ":{";
+                back += A + "duration" + A + ":" + (hz.Zauber.Wirkungsdauer??"0") + ",";
+                back += A + "unit" + A + ":" + A + "Aktionen" + A + ",";
+                back += A + "info" + A + ":" + A + (hz.Zauber.Wirkungsradius??"0")+ A + "},";
+                back += A + "targetClasses" + A + ":[],";
+                back += A + "range" + A + ":" + A + (hz.Zauber.Reichweite??"0") + A + ",";
+                back += A + "technique" + A + ":" + A + A + ",";
+                back += A + "effect" + A + ":" + A + A + ",";
+                back += A + "variants" + A + ":[],";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetZauber_sid(hz.Zauber.Name) + A + ",";
+                back += A + "value" + A + ":" +hz.ZfW+ ",";
+                back += A + "testMod" + A + ":null" + ",";
+                back += A + "astralCost" + A + ":" +A+(hz.Zauber.Kosten??"0")+A +",";
+                back += A + "modifications" + A + ":[],";
+                back += A + "lcdPage" + A + ":" + A+hz.Zauber.Literatur +A+ ",";
+                back += A + "reversalis" + A + ":" + A + A + ",";
+                back += A + "antimagic" + A + ":" + A + A + ",";
+                back += A + "properties" + A + ":[],";
+                back += A + "complexity" + A + ":" + A+hz.Zauber.Komplex + A + ",";
+                back += A + "representation" + A + ":" + A+hz.Zauber.Repräsentationen + A + ",";
+                back += A + "spread" + A + ":null" + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+            public string GetLongInfoTalent()
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + ht.Talent.Name + A + ",";
+                back += A + "type" + A + ":" + A + "talent" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/mystery-man.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + (string.IsNullOrEmpty(ht.Bemerkung) ? ("" + A + A) : ht.Bemerkung) + ",";
+                string typ = ht.Talent.Talenttyp == "Basis" ? "basic" : "special";
+                back += A + "type" + A + ":" + A + typ + A + ",";
+                back += A + "category" + A + ":" + A + GetCategory(ht.Talent.Talentgruppe.Kurzname) + A + ",";
+                back += A + "effectiveEncumbarance" + A + ":{";
+                back += A + "type" + A + ":" + A + "formula" + A + ",";
+                back += A + "formula" + A + ":" + A + (ht.Talent.IsBehinderung ? ht.Talent.eBE : "null") + A + "},";
+                back += A + "value" + A + ":" + ht.TaW + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" +(ht.Talent.Eigenschaft1!= null?(A + GetAttribute(ht.Talent.Eigenschaft1) + A):"null") + ",";
+                back += A + "secondAttribute" + A + ":" + (ht.Talent.Eigenschaft2 != null ? (A + GetAttribute(ht.Talent.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (ht.Talent.Eigenschaft3 != null ? (A + GetAttribute(ht.Talent.Eigenschaft3) + A) : "null") + "},";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetTalent_sid(ht.Talent.Name) + A + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
             public string GetLongInfo()
             {
                 char A = (char)34;
@@ -132,37 +1041,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 back += A + "formula" + A + ":" + A + (ht.Talent.IsBehinderung? ht.Talent.eBE: "null") + A + "},";
                 back += A + "value" + A + ":" + ht.TaW + ",";
                 back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
-                /*sid  =  talent-  &
-                  
-                zweihandschwerter__saebel
-                wurfbeile
-                peitsche
-                infanteriewaffen
-                wurfspeere
-                blasrohr
-                ringen
-                schleuder
-                diskus
-                zweihand_hiebwaffen
-                belagerungswaffen
-                raufen
-                staebe
-                kettenstaebe
-                lanzenreiten
-                bogen
-                kettenwaffen
-                saebel
-                hiebwaffen
-                anderthalbhaender
-                fechtwaffen
-                speere
-                dolche
-                wurfmesser
-                zweihandflegel
-                schwerter
-                armbrust
-                */
-                back += A + "sid" + A + ":" + A + "talent-"+ ErsetzeUmlaute(ht.Talent.Name.ToLower()) + A + ",";
+                back += A + "sid" + A + ":" + A + GetTalent_sid(ht.Talent.Name) + A + ",";
                 back += A + "combat" + A + ":{";
                 string cat = ht.Talent.Untergruppe == "Fernkampf" ? "ranged" :
                     ht.Talent.Untergruppe == "Bewaffneter Nahkampf" ? "melee":
@@ -1469,17 +2348,24 @@ namespace MeisterGeister.ViewModel.Foundry
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
                 lstHeldT.Add(heldT);
-
                 lstArg.Add(new dbArgument { Prefix = heldT.GetShortInfo() });
             }
-            lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
-            /*
-             
-"MrUDmjbWc93ezvq6":{"data":{"combat":{"attack":-1,"parry":-1},"value":null}},
-"X2rlEdeyECvqcUvP":{"data":{"combat":{"rangedAttack":-1},"value":null}},
-             */
 
+            foreach (Held_Talent ht in h.Held_Talent.Where(t => t.Talent.Talentgruppe.Kurzname != "Kampf"))
+            {
+                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                heldT.ht = ht;
+                heldT.GMid = GMid;
+                heldT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstHeldT.Add(heldT);
 
+                lstArg.Add(new dbArgument { 
+                    Prefix = A + heldT._id.ToString().Substring(19, 17).Replace("-", "") + A + ":{", 
+                    ArgString= A + "data" + A + ":{" + A + "value" + A + ":"+ht.TaW, 
+                    Suffix="}},"
+                });
+            }
+            lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
             lstArg.Add(new dbArgument { Prefix = "",Suffix="}}," });
             //ENDE Talent-werte
 
@@ -1540,31 +2426,45 @@ namespace MeisterGeister.ViewModel.Foundry
 
             foreach (DSA41_HeldTalent heldT in lstHeldT)
             {
-                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfo() }); 
+                if (heldT.isKampfTalent)
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfo() }); 
+                else
+                {
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoTalent() });
+                }
             }
+            foreach (Held_Sonderfertigkeit heldSF in h.Held_Sonderfertigkeit)
+            {
+                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                heldT.hsf = heldSF;
+                heldT.GMid = GMid;
+                heldT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoSF() });
+            }
+
+            /*#
+             * SF
+             {"_id":"zUdKy7pxyKioLcJv","name":"Kampfreflexe","type":"specialAbility","img":"icons/svg/item-bag.svg","data":{"description":"beschreibung","isUniquelyOwnable":true,"sid":"ability-kampfreflexe","type":"2" },"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.specialability.pdlHhGm7qO0gvDOn"}}}
+             {"_id":"zUdKy7pxyKioLcJv","name":"Kampfreflexe","type":"specialAbility","img":"icons/svg/item-bag.svg","data":{"description":""            ,"isUniquelyOwnable":true,"sid":"ability-kampfreflexe","type":null},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.specialability.pdlHhGm7qO0gvDOn"}}}
+             
+             ZAUBER
+            {"_id":"FNbBBTxHHplsAlYl","name":"Adlerauge Luchsenohr","type":"spell","img":"icons/svg/item-bag.svg","data":{"description":"","test":{"firstAttribute":"cleverness","secondAttribute":"intuition","thirdAttribute":"dexterity"},"castTime":{"duration":0,"unit":null,"info":""},"effectTime":{"duration":0,"unit":null,"info":""},"targetClasses":[],"range":"","technique":"","effect":"","variants":[],"isUniquelyOwnable":true,"sid":"spell-adlerauge","value":8,"testMod":null,"astralCost":"","modifications":[],"lcdPage":"15","reversalis":"","antimagic":"","properties":[],"complexity":"","representation":"","spread":null},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.spell.5XPRS9ElwdjM7pug"}}}
+             
+             */
+
+            foreach (Held_Zauber heldZ in h.Held_Zauber)
+            {
+                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                heldT.hz = heldZ;
+                heldT.GMid = GMid;
+                heldT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoZauber() });
+            }
+
             lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
-
             //ENDE Talente
-
-            //lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[]", Suffix="," });
-            //lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{", ArgString = A + "default" + A + ":0," + A + "wEwtIaGkqxrjiQ8r" + A + ":3,"+A+ "tMZ8KdJLc8F1Y9wM" + A + ":3", Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}}" }); // das , weglassen beim letzten Argument
-
             lstArg.Add(new dbArgument { Prefix ="",Suffix="]," });
-
-            //lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "_id" + A + ":" + A + "vjvjVMo2PSRaBi1G" + A, Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "changes" + A + ":[]",Suffix=","});
-            //lstArg.Add(new dbArgument { Prefix = A + "disabled" + A + ":", ArgString = "false", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "duration" + A + ":{", ArgString = A + "startTime" + A + ":0", Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "icon" + A + ":", ArgString = A + "icons/svg/blood.svg" + A, Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "label" + A + ":", ArgString = A + "New Effect" + A, Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "transfer" + A + ":", ArgString = "false", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}}]," });
-
             lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString =A+ SelectedHeldenFolder._id+A, Suffix = "," });   //welches Verzeichnis 
             lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
 
