@@ -926,17 +926,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 return back;
             }
 
-            /*#
-             
-             ZAUBER
-            {"_id":"FNbBBTxHHplsAlYl","name":"Adlerauge Luchsenohr","type":"spell","img":"icons/svg/item-bag.svg","data":{"description":"",
-            "test":{"firstAttribute":"cleverness","secondAttribute":"intuition","thirdAttribute":"dexterity"},
-            "castTime":{"duration":0,"unit":null,"info":""},"effectTime":{"duration":0,"unit":null,"info":""},
-            "targetClasses":[],"range":"","technique":"","effect":"","variants":[],"isUniquelyOwnable":true,"sid":"spell-adlerauge","value":8,"testMod":null,"astralCost":"",
-            "modifications":[],"lcdPage":"15","reversalis":"","antimagic":"","properties":[],"complexity":"","representation":"","spread":null},
-            "effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.spell.5XPRS9ElwdjM7pug"}}}
-             
-             */
             public string GetLongInfoZauber()
             {
                 char A = (char)34;
@@ -1065,32 +1054,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 return back;
             }
 
-            /*
-                 * 
-    {"_id":"JhKSlQv5b9ZpHxGZ",
-    "name":"Ringen",
-    "type":"combatTalent",
-    "img":"icons/svg/mystery-man.svg",
-    "data":{"description":"",
-    "type":"basic",
-    "category":"combat",
-    "effectiveEncumbarance":{"type":"formula",
-    "formula":"BE"},
-    "value":null,
-    "isUniquelyOwnable":true,
-    "sid":"talent-ringen",
-    "combat":{"category":"unarmed",
-    "attack":-1,
-    "parry":-1,
-    "rangedAttack":-1}},
-    "effects":[],
-    "folder":null,
-    "sort":0,
-    "permission":{"default":0,
-    "wEwtIaGkqxrjiQ8r":3,
-    "9LyLVaSrAgiTV9hV":3},
-    "flags":{}}, 
-                 */
             public class dat
             {
                 public string description { get; set; }
