@@ -859,8 +859,10 @@ namespace MeisterGeister.ViewModel.Foundry
             public bool isKampfTalent { get; set; }
             public dat Data { get; set; }
             public Held_Talent ht { get; set; }
+            public Held_Ausrüstung ha { get; set; }
             public Held_Sonderfertigkeit hsf { get; set; }
             public Held_Zauber hz { get; set; }
+            public Held_VorNachteil hvn { get; set; }
 
             public string shortInfo { get; set; }
             public DSA41_HeldTalent()
@@ -875,9 +877,9 @@ namespace MeisterGeister.ViewModel.Foundry
                 string back = A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ":{";
                 back += A + "data" + A + ":{" + A + "combat" + A + ":{";
                 if (ht.HatAttacke)
-                    back += A + "attack" + A + ":" + Convert.ToString(ht.Attacke) + ",";
+                    back += A + "attack" + A + ":" + Convert.ToString(ht.ZuteilungAT) + ",";
                 if (ht.HatParade)
-                    back += A + "parry" + A + ":" + Convert.ToString(ht.Parade) + ",";
+                    back += A + "parry" + A + ":" + Convert.ToString(ht.ZuteilungPA) + ",";
                 if (ht.HatFernkampf)
                     back += A + "rangedAttack" + A + ":" + Convert.ToString(ht.Fernkampfwert) + ",";
                 back = back.TrimEnd(new Char[] { ',' });
@@ -915,6 +917,50 @@ namespace MeisterGeister.ViewModel.Foundry
                 back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
                 back += A + "sid" + A + ":" + A + GetSF_sid(hsf.Sonderfertigkeit.Name) + A + ",";
                 back += A + "type" + A + ":" + (hsf.Sonderfertigkeit.HatWert.HasValue && hsf.Sonderfertigkeit.HatWert.Value ? A + hsf.Wert + A : "null") + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoVN()
+            {
+                string VNname = hvn.VorNachteil.Name;
+                char A = (char)34;
+                if (hvn.Wert != null && hvn.Wert.Contains("("))
+                    VNname += " " + hvn.Wert.Substring(0, hvn.Wert.LastIndexOf("(") - 1);
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + VNname + A + ",";
+                back += A + "type" + A + ":" + A + (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value?"dis":"")+ "advantage" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                
+                back += A + "description" + A + ":" + A +  A + ",";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+
+                string b = (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value ? "dis" : "") +
+                    "advantage-" + ErsetzeUmlaute(VNname.Replace(" ", ""));
+                if (b.Contains("("))
+                {
+                    b = b.Substring(0, b.IndexOf("("));
+                    back += A + "value" + A + ":" + A + hvn.Wert + A + ",";
+                }
+                back += A + "sid" + A + ":" + A + b + A + ",";
+                back += A + "negativeAttribute" + A + ":" + (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value ? "true" : "false") + ",";
+                if (hvn.Wert != null && hvn.Wert.Contains("("))
+                    back += A + "value" + A + ":" + hvn.Wert.Substring(hvn.Wert.LastIndexOf("(") + 1, hvn.Wert.IndexOf(")") - hvn.Wert.LastIndexOf("(") - 1) + ",";
+                else
+                if (hvn.VorNachteil.WertTyp != null && hvn.VorNachteil.WertTyp.ToLowerInvariant() == "int")
+                back += A + "value" + A + ":" + hvn.Wert + ","; 
+                
+
+                back += A + "type" + A + ":" +  "null" + "},";
                 back += A + "effects" + A + ":[],";
                 back += A + "folder" + A + ":null,";
                 back += A + "sort" + A + ":0,";
@@ -1038,9 +1084,183 @@ namespace MeisterGeister.ViewModel.Foundry
                     "special";
                 // unarmed armed ranged melee special
                 back += A + "category" + A + ":" + A + cat + A + ",";
-                back += A + "attack" + A + ":" +  Convert.ToString(ht.Attacke) + ","; //ht.Talent.ModifikatorenListeAT ???
-                back += A + "parry" + A + ":" + Convert.ToString(ht.HatFernkampf ? ht.Fernkampfwert : ht.Parade) + ",";
-                back += A + "rangedAttack" + A + ":" + Convert.ToString(ht.Fernkampfwert) + "}},";
+                back += A + "attack" + A + ":" +  Convert.ToString(ht.ZuteilungAT) + ","; //ht.Talent.ModifikatorenListeAT ???
+                back += A + "parry" + A + ":" + Convert.ToString(ht.HatFernkampf ? ht.Fertigkeitswert : ht.ZuteilungPA) + ",";
+                back += A + "rangedAttack" + A + ":" + Convert.ToString(ht.Fertigkeitswert) + "}},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+
+                return back;
+            }
+
+
+            //Waffen und Rüstungen
+
+            /*
+             
+            {"_id":"qdHQPxisXFMFwKbw","name":"Normaler Gegenstand","type":"genericItem", "img":"icons/svg/item-bag.svg","data":{"description":"beschreibung","isConsumable":true,"quantity":14},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
+            {"_id":"DwS5a3HPPCNwuP2B","name":"Nahkampfwaffe"      ,"type":"meleeWeapon", "img":"icons/svg/item-bag.svg","data":{"description":"Beschreinug","talent":"talent-staebe","damage":"1d6+4","price":70,"weight":80,"length":90,"strengthMod":{"threshold":12,"hitPointStep":4},"breakingFactor":5,"initiativeMod":1,"weaponMod":{"attack":1,"parry":0},"distanceClass":"HN","twoHanded":false,"improvised":false,"priviledged":false},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
+            {"_id":"4rvmAMurNCBqwXzv","name":"Fernkampf"          ,"type":"rangedWeapon","img":"icons/svg/item-bag.svg","data":{"description":"Bogen","talent":"talent-bogen","damage":"1d6+4","price":900,"weight":50,"ranges":{"veryClose":2,"close":1,"medium":1,"far":0,"veryFar":0},"bonusDamages":{"veryClose":-1,"close":-1,"medium":-1,"far":0,"veryFar":0},"loadtime":20,"projectilePrice":6,"loweredWoundThreshold":true,"improvised":false,"entangles":false},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
+            {"_id":"nnT6N3oQlM7rRxWa","name":"Helm","type":"armor",                      "img":"icons/svg/item-bag.svg","data":{"description":"Toller Helm","price":30,"weight":25,"equipped":false,"armorClass":1,"encumbarance":0,"equiped":true},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
+            {"_id":"TIj0lVzQtkFW2JvO","name":"Torwalerschild","type":"shield"           ,"img":"icons/svg/item-bag.svg","data":{"description":"toll oder?","price":70,"weight":40,"type":"block","sizeClass":"groß","weaponMod":{"attack":-2,"parry":4},"initiativeMod":-2,"breakingFactor":4},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}}],"effects":[],"folder":"kMZZ09EatG4A4dR5","sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}}
+             
+             */
+
+            //
+            public string GetLongInfoAusrüstung()
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A +ha.Name.Replace(A.ToString(),"'") + A + ",";
+
+                string typ =
+                    ha.Waffe != null ? "meleeWeapon" :
+                    ha.Held_Fernkampfwaffe != null ? "rangedWeapon" :
+                    ha.Held_Rüstung != null ? "armor" :
+                    ha.Schild != null ? "shield" :
+                    "genericItem";
+
+                back += A + "type" + A + ":" + A + typ + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+
+                switch (typ)
+                {
+                    case "genericItem":
+                        back += A + "description" + A + ":" + A+ha.Ausrüstung.Bemerkung +A+ ",";
+                        back += A + "isConsumable" + A + ":" + "false" + ",";
+                        back += A + "quantity" + A + ":" + "0" + "},";
+                    break;
+                    case "meleeWeapon":
+                        back += A + "description" + A + ":" + A + ha.Waffe.Bemerkung + A + ",";
+                        switch (ha.Waffe.Talent.FirstOrDefault().Name)
+                        {
+                            case "Zweihandschwerter/-säbel": back += A + "talent" + A + ":" + A + "talent-zweihandschwerter__saebel" + A + ",";
+                                break;
+                            case "Infanteriewaffen": back += A + "talent" + A + ":" + A + "talent-infanteriewaffen" + A + ",";
+                                break;
+                            case "Zweihand-Hiebwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-zweihand-Hiebwaffen" + A + ",";
+                                break;
+                            case "Stäbe":
+                                back += A + "talent" + A + ":" + A + "talent-staebe" + A + ",";
+                                break;
+                            case "Kettenstäbe":
+                                back += A + "talent" + A + ":" + A + "talent-kettenstaebe" + A + ",";
+                                break;
+                            case "Kettenwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-kettenwaffen" + A + ",";
+                                break;
+                            case "Säbel":
+                                back += A + "talent" + A + ":" + A + "talent-saebel" + A + ",";
+                                break;
+                            case "Hiebwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-hiebwaffen" + A + ",";
+                                break;
+                            case "Anderthalbhänder":
+                                back += A + "talent" + A + ":" + A + "talent-anderthalbhaender" + A + ",";
+                                break;
+                            case "Fechtwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-fechtwaffen" + A + ",";
+                                break;
+                            case "Speere":
+                                back += A + "talent" + A + ":" + A + "talent-speere" + A + ",";
+                                break;
+                            case "Dolche":
+                                back += A + "talent" + A + ":" + A + "talent-dolche" + A + ",";
+                                break;
+                            case "Zweihandflegel":
+                                back += A + "talent" + A + ":" + A + "talent-zweihandflegel" + A + ",";
+                                break;
+                            case "Schwerter":
+                                back += A + "talent" + A + ":" + A + "talent-schwerter" + A + ",";
+                                break;
+                        }
+                        back += A + "damage" + A + ":" + A + ha.Waffe.TPString.Replace("W", "d") + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Waffe.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Waffe.Gewicht + ",";
+                        back += A + "length" + A + ":"  + (ha.Waffe.Länge??0) + ",";
+                        back += A + "strengthMod" + A + ":{";
+                        back += A + "threshold" + A + ":" + (ha.Waffe.TPKKSchwelle??0) + ",";
+                        back += A + "hitPointStep" + A + ":" + (ha.Waffe.TPKKSchritt??0) + "},";
+                        back += A + "breakingFactor" + A + ":" + (ha.Waffe.BF??0) + ",";
+                        back += A + "initiativeMod" + A + ":" + (ha.Waffe.INI??0) + ",";
+                        back += A + "weaponMod" + A + ":{";
+                        back += A + "attack" + A + ":" + (ha.Waffe.WMAT ?? 0) + ",";
+                        back += A + "parry" + A + ":" + (ha.Waffe.WMPA ?? 0) + "},";
+                        back += A + "distanceClass" + A + ":" + A + ha.Waffe.DK + A + ",";
+                        back += A + "twoHanded" + A + ":" + "false" + ",";
+                        back += A + "improvised" + A + ":" +  ha.Waffe.Improvisiert.ToString().ToLower() + ",";
+                        back += A + "priviledged" + A + ":" + "false" + "},";
+                    break;
+                    case "rangedWeapon":
+                        back += A + "description" + A + ":" + A + ha.Fernkampfwaffe.Bemerkung + A + ",";
+                        switch (ha.Fernkampfwaffe.Talent.FirstOrDefault().Name)
+                        {
+                            case "Wurfbeile": back += A + "talent" + A + ":" + A + "talent-wurfbeile" + A + ",";
+                            break;
+                            case "Wurfspeere": back += A + "talent" + A + ":" + A + "talent-wurfspeere" + A + ",";
+                                break;
+                            case "Blasrohr": back += A + "talent" + A + ":" + A + "talent-blasrohr" + A + ",";
+                                break;
+                            case "Schleuder": back += A + "talent" + A + ":" + A + "talent-schleuder" + A + ",";
+                                break;
+                            case "Diskus": back += A + "talent" + A + ":" + A + "talent-diskus" + A + ",";
+                                break;
+                            case "Belagerungswaffen": back += A + "talent" + A + ":" + A + "talent-belagerungswaffen" + A + ",";
+                                break;
+                            case "Bogen": back += A + "talent" + A + ":" + A + "talent-bogen" + A + ",";
+                                break;
+                            case "Wurfmesser": back += A + "talent" + A + ":" + A + "talent-wurfmesser" + A + ",";
+                                break;
+                            case "Armbrust": back += A + "talent" + A + ":" + A + "talent-armbrust" + A + ",";
+                                break;
+                        }
+                        back += A + "damage" + A + ":" + A + ha.Fernkampfwaffe.TPString.Replace("W","d") + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Fernkampfwaffe.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Fernkampfwaffe.Gewicht + ",";
+                        back += A + "ranges" + A + ":{";
+                        back += A + "veryClose" + A + ":" + (ha.Fernkampfwaffe.TPSehrNah??0) + ",";
+                        back += A + "close" + A + ":" + (ha.Fernkampfwaffe.TPNah ?? 0) + ",";
+                        back += A + "medium" + A + ":" + (ha.Fernkampfwaffe.TPMittel ?? 0) + ",";
+                        back += A + "far" + A + ":" + (ha.Fernkampfwaffe.TPWeit ?? 0) + ",";
+                        back += A + "veryFar" + A + ":" + (ha.Fernkampfwaffe.TPSehrWeit ?? 0) + "},";
+                        back += A + "loadtime" + A + ":" + ha.Fernkampfwaffe.LadeZeit + ",";
+                        back += A + "projectilePrice" + A + ":" + (ha.Fernkampfwaffe.Munitionspreis??0).ToString().Replace(",",".") + ",";
+                        back += A + "loweredWoundThreshold" + A + ":" + ha.Fernkampfwaffe.Verwundend.ToString().ToLower() + ",";
+                        back += A + "improvised" + A + ":" + ha.Fernkampfwaffe.Improvisiert.ToString().ToLower() + ",";
+                        back += A + "entangles" + A + ":" + "false" + "},";
+                    break;
+
+                    case "armor":
+                        back += A + "description" + A + ":" + A + ha.Rüstung.Bemerkung + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Rüstung.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Rüstung.Gewicht + ",";
+                        back += A + "equipped" + A + ":" + ha.Angelegt.ToString().ToLower() + ",";
+                        back += A + "armorClass" + A + ":" + (ha.Rüstung.RS?? 0) + ",";
+                        back += A + "encumbarance" + A + ":" + "0" + "},";
+                    break;
+                    case "shield":
+                        back += A + "description" + A + ":" + A + ha.Schild.Bemerkung + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Schild.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Schild.Gewicht + ",";
+                        back += A + "type" + A + ":" + A + "???" + A + ",";
+                        back += A + "sizeClass" + A + ":" + A + ha.Schild.Größe + A + ",";
+                        back += A + "weaponMod" + A + ":{";
+                        back += A + "attack" + A + ":" + ha.Schild.WMAT  + ",";
+                        back += A + "parry" + A + ":" + ha.Schild.WMPA  + "},";
+                        back += A + "initiativeMod" + A + ":" + ha.Schild.INI + ",";
+                        back += A + "breakingFactor" + A + ":" + ha.Schild.BF + "},";
+                        break;
+                };
                 back += A + "effects" + A + ":[],";
                 back += A + "folder" + A + ":null,";
                 back += A + "sort" + A + ":0,";
@@ -2404,16 +2624,14 @@ namespace MeisterGeister.ViewModel.Foundry
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
                 lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoSF() });
             }
-
-            /*#
-             * SF
-             {"_id":"zUdKy7pxyKioLcJv","name":"Kampfreflexe","type":"specialAbility","img":"icons/svg/item-bag.svg","data":{"description":"beschreibung","isUniquelyOwnable":true,"sid":"ability-kampfreflexe","type":"2" },"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.specialability.pdlHhGm7qO0gvDOn"}}}
-             {"_id":"zUdKy7pxyKioLcJv","name":"Kampfreflexe","type":"specialAbility","img":"icons/svg/item-bag.svg","data":{"description":""            ,"isUniquelyOwnable":true,"sid":"ability-kampfreflexe","type":null},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.specialability.pdlHhGm7qO0gvDOn"}}}
-             
-             ZAUBER
-            {"_id":"FNbBBTxHHplsAlYl","name":"Adlerauge Luchsenohr","type":"spell","img":"icons/svg/item-bag.svg","data":{"description":"","test":{"firstAttribute":"cleverness","secondAttribute":"intuition","thirdAttribute":"dexterity"},"castTime":{"duration":0,"unit":null,"info":""},"effectTime":{"duration":0,"unit":null,"info":""},"targetClasses":[],"range":"","technique":"","effect":"","variants":[],"isUniquelyOwnable":true,"sid":"spell-adlerauge","value":8,"testMod":null,"astralCost":"","modifications":[],"lcdPage":"15","reversalis":"","antimagic":"","properties":[],"complexity":"","representation":"","spread":null},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"EdH5LUNHx6gIYjnJ":3,"9LyLVaSrAgiTV9hV":3},"flags":{"core":{"sourceId":"Compendium.dsa-4.1.spell.5XPRS9ElwdjM7pug"}}}
-             
-             */
+            foreach (Held_VorNachteil heldVN in h.Held_VorNachteil)
+            {
+                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                heldT.hvn = heldVN;
+                heldT.GMid = GMid;
+                heldT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoVN() });
+            }
 
             foreach (Held_Zauber heldZ in h.Held_Zauber)
             {
@@ -2422,6 +2640,15 @@ namespace MeisterGeister.ViewModel.Foundry
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
                 lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoZauber() });
+            }
+
+            foreach (Held_Ausrüstung heldA in h.Held_Ausrüstung)
+            {
+                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                heldT.ha = heldA;
+                heldT.GMid = GMid;
+                heldT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung() });
             }
 
             lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
@@ -2433,6 +2660,8 @@ namespace MeisterGeister.ViewModel.Foundry
 
             lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{", ArgString = A+ "default"+A+":0,"+A+ GMid + A+":3", Suffix = "}," });  //wer darf editieren
             lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}}" });
+
+
 
             return lstArg;
         }
