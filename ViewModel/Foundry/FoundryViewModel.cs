@@ -2439,33 +2439,6 @@ namespace MeisterGeister.ViewModel.Foundry
             System.Windows.Documents.TextRange tr = new System.Windows.Documents.TextRange(fd.ContentStart, fd.ContentEnd);
             return tr.Text;
         }
-        public static string GetText(System.Windows.Controls.RichTextBox rich)
-        {
-            var block = rich.Document.Blocks.FirstBlock;
-            if (block == null)
-            {
-                return string.Empty;
-            }
-            StringBuilder text = new StringBuilder();
-            do
-            {
-                Paragraph paragraph = block as Paragraph;
-                if (paragraph != null)
-                {
-                    var inline = paragraph.Inlines.FirstInline;
-                    do
-                    {
-                        if (0 < text.Length)
-                        {
-                            text.Append(Environment.NewLine);
-                        }
-                        TextRange range = new TextRange(inline.ContentStart, inline.ContentEnd);
-                        text.Append(range.Text);
-                    } while ((inline = inline.NextInline) != null);
-                }
-            } while ((block = block.NextBlock) != null);
-            return text.ToString();
-        }
 
         private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id)
         {
