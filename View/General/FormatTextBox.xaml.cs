@@ -117,6 +117,7 @@ namespace MeisterGeister.View.General
                         format = DataFormats.Rtf;
                         break;
                 }
+
                 FlowDocument document = RTBNotiz.Document;
                 TextRange range = new TextRange(document.ContentStart, document.ContentEnd);
                 FileStream stream = new FileStream(dialog.FileName, FileMode.Create, FileAccess.ReadWrite);
