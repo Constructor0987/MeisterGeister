@@ -23,7 +23,7 @@
                 <StackPanel VerticalAlignment="Center" Width="200">
                     <RadioButton IsChecked="{Binding IsLocalInstalliert, UpdateSourceTrigger=PropertyChanged}" Content="Lokale Installation" Margin="40,0,0,4" GroupName="foundryInst" />
                     <RadioButton IsChecked="{Binding IsLocalInstalliert, Converter={StaticResource InverseBooleanConverter1}, UpdateSourceTrigger=PropertyChanged}"
-                                             Content="Server stallation" GroupName="foundryInst" Margin="40,0,0,0" />
+                                             Content="Server Installation" GroupName="foundryInst" Margin="40,0,0,0" />
                 </StackPanel>
 
                 <GroupBox Header="FoundryVTT - Pfad" Margin="2,0,0,0">

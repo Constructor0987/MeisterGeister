@@ -48,7 +48,7 @@ namespace MeisterGeister
                 ViewType = typeof(View.Kampf.KampfView),
                 ViewModelType = typeof(ViewModel.Kampf.KampfViewModel)
             });
-#if (DEBUG)
+//#if (DEBUG)
             ToolListe.Add("Foundry", new Tool()
             {
                 Name = "FoundryVTT",
@@ -57,7 +57,7 @@ namespace MeisterGeister
                 ViewType = typeof(View.Foundry.FoundryView),
                 ViewModelType = typeof(ViewModel.Foundry.FoundryViewModel)
             });
-#endif
+//#endif
             ToolListe.Add("Gegner", new Tool()
             {
                 Name = "Gegner",
