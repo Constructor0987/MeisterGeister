@@ -64,8 +64,8 @@ Die Datei 'ImpromptuInterface.dll' unterliegt der Apache License (siehe 'License
 Voraussetzungen
 ******************************************
 
-Microsoft .NET Framework 4.5.2
-https://www.microsoft.com/de-DE/download/details.aspx?id=42642
+Microsoft .NET Framework 4.8
+https://dotnet.microsoft.com/en-us/download/dotnet-framework/thank-you/net48-web-installer
 
 Microsoft SQL Server Compact 4.0 SP1
 http://www.microsoft.com/de-de/download/details.aspx?id=30709

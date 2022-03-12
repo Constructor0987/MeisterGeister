@@ -499,11 +499,11 @@ namespace MeisterGeister {
                 }
             }
 
-            // Versionen 4.5 und höher
+            // Versionen 4.8 und höher
             using (RegistryKey ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\"))
             {
-                version += Environment.NewLine + "  v4.5";
+                version += Environment.NewLine + "  v4.8";
                 string versionKey = ndpKey.GetValue("Version").ToString();
                 version += Environment.NewLine + "    Full " + versionKey;
             }
