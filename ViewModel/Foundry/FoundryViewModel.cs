@@ -850,7 +850,7 @@ namespace MeisterGeister.ViewModel.Foundry
             public string img { get; set; }
         }
 
-        public class DSA41_HeldTalent
+        public class DSA41_KämpferTalent
         {
             public Guid _id { get; set; }
             public string GMid { get; set; }
@@ -864,10 +864,11 @@ namespace MeisterGeister.ViewModel.Foundry
             public Held_Ausrüstung ha { get; set; }
             public Held_Sonderfertigkeit hsf { get; set; }
             public Held_Zauber hz { get; set; }
+            public GegnerBase_Zauber gbz { get; set; }
             public Held_VorNachteil hvn { get; set; }
 
             public string shortInfo { get; set; }
-            public DSA41_HeldTalent()
+            public DSA41_KämpferTalent()
             {
                 _id = Guid.NewGuid();
             }
@@ -977,43 +978,46 @@ namespace MeisterGeister.ViewModel.Foundry
 
             public string GetLongInfoZauber(int nummer)
             {
+                Model.Zauber z = hz != null ? hz.Zauber : gbz != null ? gbz.Zauber : null;
+                if (z == null)
+                    return null;
                 char A = (char)34;
 
                 string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
-                back += A + "name" + A + ":" + A + hz.Zauber.Name + A + ",";
+                back += A + "name" + A + ":" + A + z.Name + A + ",";
                 back += A + "type" + A + ":" + A + "spell" + A + ",";
                 back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
                 back += A + "data" + A + ":{";
-                back += A + "description" + A + ":" + A + hz.Bemerkung + A + ",";
+                back += A + "description" + A + ":" + A + (hz!= null? hz.Bemerkung: gbz.Bemerkung) + A + ",";
                 back += A + "test" + A + ":{";
-                back += A + "firstAttribute" + A + ":" + (hz.Zauber.Eigenschaft1 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft1) + A) : "null") + ",";
-                back += A + "secondAttribute" + A + ":" + (hz.Zauber.Eigenschaft2 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft2) + A) : "null") + ",";
-                back += A + "thirdAttribute" + A + ":" + (hz.Zauber.Eigenschaft3 != null ? (A + GetAttribute(hz.Zauber.Eigenschaft3) + A) : "null") + "},";
+                back += A + "firstAttribute" + A + ":" + (z.Eigenschaft1 != null ? (A + GetAttribute(z.Eigenschaft1) + A) : "null") + ",";
+                back += A + "secondAttribute" + A + ":" + (z.Eigenschaft2 != null ? (A + GetAttribute(z.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (z.Eigenschaft3 != null ? (A + GetAttribute(z.Eigenschaft3) + A) : "null") + "},";
                 back += A + "castTime" + A + ":{";
-                back += A + "duration" + A + ":" + (hz.Zauber.Zauberdauer??0) + ",";
+                back += A + "duration" + A + ":" + (z.Zauberdauer??0) + ",";
                 back += A + "unit" + A + ":" + A+"Aktionen"+A + ",";
                 back += A + "info" + A + ":" + A+A + "},";
                 back += A + "effectTime" + A + ":{";
-                back += A + "duration" + A + ":" + (hz.Zauber.Wirkungsdauer??"0") + ",";
+                back += A + "duration" + A + ":" + (z.Wirkungsdauer??"0") + ",";
                 back += A + "unit" + A + ":" + A + "Aktionen" + A + ",";
-                back += A + "info" + A + ":" + A + (hz.Zauber.Wirkungsradius??"0")+ A + "},";
+                back += A + "info" + A + ":" + A + (z.Wirkungsradius??"0")+ A + "},";
                 back += A + "targetClasses" + A + ":[],";
-                back += A + "range" + A + ":" + A + (hz.Zauber.Reichweite??"0") + A + ",";
+                back += A + "range" + A + ":" + A + (z.Reichweite??"0") + A + ",";
                 back += A + "technique" + A + ":" + A + A + ",";
                 back += A + "effect" + A + ":" + A + A + ",";
                 back += A + "variants" + A + ":[],";
                 back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
-                back += A + "sid" + A + ":" + A + GetZauber_sid(hz.Zauber.Name) + A + ",";
-                back += A + "value" + A + ":" +hz.ZfW+ ",";
+                back += A + "sid" + A + ":" + A + GetZauber_sid(z.Name) + A + ",";
+                back += A + "value" + A + ":" + (hz != null ? hz.ZfW: gbz.ZfW)+ ",";
                 back += A + "testMod" + A + ":null" + ",";
-                back += A + "astralCost" + A + ":" +A+(hz.Zauber.Kosten??"0")+A +",";
+                back += A + "astralCost" + A + ":" +A+(z.Kosten??"0")+A +",";
                 back += A + "modifications" + A + ":[],";
-                back += A + "lcdPage" + A + ":" + A+hz.Zauber.Literatur +A+ ",";
+                back += A + "lcdPage" + A + ":" + A+z.Literatur +A+ ",";
                 back += A + "reversalis" + A + ":" + A + A + ",";
                 back += A + "antimagic" + A + ":" + A + A + ",";
                 back += A + "properties" + A + ":[],";
-                back += A + "complexity" + A + ":" + A+hz.Zauber.Komplex + A + ",";
-                back += A + "representation" + A + ":" + A+hz.Zauber.Repräsentationen + A + ",";
+                back += A + "complexity" + A + ":" + A+z.Komplex + A + ",";
+                back += A + "representation" + A + ":" + A+z.Repräsentationen + A + ",";
                 back += A + "spread" + A + ":null" + "},";
                 back += A + "effects" + A + ":[],";
                 back += A + "folder" + A + ":null,";
@@ -1025,6 +1029,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 back += A + "flags" + A + ":{}},";
                 return back;
             }
+
             public string GetLongInfoTalent(int nummer)
             {
                 char A = (char)34;
@@ -1102,20 +1107,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 return back;
             }
 
-
-            //Waffen und Rüstungen
-
-            /*
-             
-            {"_id":"qdHQPxisXFMFwKbw","name":"Normaler Gegenstand","type":"genericItem", "img":"icons/svg/item-bag.svg","data":{"description":"beschreibung","isConsumable":true,"quantity":14},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
-            {"_id":"DwS5a3HPPCNwuP2B","name":"Nahkampfwaffe"      ,"type":"meleeWeapon", "img":"icons/svg/item-bag.svg","data":{"description":"Beschreinug","talent":"talent-staebe","damage":"1d6+4","price":70,"weight":80,"length":90,"strengthMod":{"threshold":12,"hitPointStep":4},"breakingFactor":5,"initiativeMod":1,"weaponMod":{"attack":1,"parry":0},"distanceClass":"HN","twoHanded":false,"improvised":false,"priviledged":false},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
-            {"_id":"4rvmAMurNCBqwXzv","name":"Fernkampf"          ,"type":"rangedWeapon","img":"icons/svg/item-bag.svg","data":{"description":"Bogen","talent":"talent-bogen","damage":"1d6+4","price":900,"weight":50,"ranges":{"veryClose":2,"close":1,"medium":1,"far":0,"veryFar":0},"bonusDamages":{"veryClose":-1,"close":-1,"medium":-1,"far":0,"veryFar":0},"loadtime":20,"projectilePrice":6,"loweredWoundThreshold":true,"improvised":false,"entangles":false},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
-            {"_id":"nnT6N3oQlM7rRxWa","name":"Helm","type":"armor",                      "img":"icons/svg/item-bag.svg","data":{"description":"Toller Helm","price":30,"weight":25,"equipped":false,"armorClass":1,"encumbarance":0,"equiped":true},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}},
-            {"_id":"TIj0lVzQtkFW2JvO","name":"Torwalerschild","type":"shield"           ,"img":"icons/svg/item-bag.svg","data":{"description":"toll oder?","price":70,"weight":40,"type":"block","sizeClass":"groß","weaponMod":{"attack":-2,"parry":4},"initiativeMod":-2,"breakingFactor":4},"effects":[],"folder":null,"sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}}],"effects":[],"folder":"kMZZ09EatG4A4dR5","sort":0,"permission":{"default":0,"9LyLVaSrAgiTV9hV":3},"flags":{}}
-             
-             */
-
-            //
             public string GetLongInfoAusrüstung()
             {
                 char A = (char)34;
@@ -1314,6 +1305,8 @@ namespace MeisterGeister.ViewModel.Foundry
                     public string flags { get; set; }
                 }
             }
+
+
         }
 
         #endregion
@@ -2309,163 +2302,163 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
-        {
-            List<dbArgument> lstArg = new List<dbArgument>();
-            char A = (char)34;
+        //private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
+        //{
+        //    List<dbArgument> lstArg = new List<dbArgument>();
+        //    char A = (char)34;
 
-            //gArg.lstArguments = new List<dbArgument>();
-            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
-            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
+        //    //gArg.lstArguments = new List<dbArgument>();
+        //    lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}}}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
+        //    lstArg.Add(new dbArgument { Prefix = "}}}," });
 
-            //Folder
-            if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
-            {
-                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
-            }
+        //    //Folder
+        //    if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
+        //    {
+        //        lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
+        //    }
 
-            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
 
-            //Portrait Image
-            lstArg.Add(new dbArgument
-            {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-                 GetFilenamePortrait),
-                Suffix = A + ","
-            });
+        //    //Portrait Image
+        //    lstArg.Add(new dbArgument
+        //    {
+        //        Prefix = A + "img" + A + ":\"",
+        //        ArgString =
+        //        (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
+        //         GetFilenamePortrait),
+        //        Suffix = A + ","
+        //    });
 
-            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
 
-            //Token Image
-            lstArg.Add(new dbArgument
-            {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-                GetFilenameToken),
-                Suffix = A + ","
-            });
+        //    //Token Image
+        //    lstArg.Add(new dbArgument
+        //    {
+        //        Prefix = A + "img" + A + ":\"",
+        //        ArgString =
+        //        (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
+        //        GetFilenameToken),
+        //        Suffix = A + ","
+        //    });
 
-            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-            lstArg.Add(new dbArgument { Prefix = "}" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+        //    lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
+        //    lstArg.Add(new dbArgument { Prefix = "}," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
+        //    lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
+        //    lstArg.Add(new dbArgument { Prefix = "}" });
 
-            return lstArg;
+        //    return lstArg;
 
-        }
+        //}
 
         public static string FlowDocument_GetText(System.Windows.Documents.FlowDocument fd)
         {
@@ -2473,6 +2466,254 @@ namespace MeisterGeister.ViewModel.Foundry
             return tr.Text;
         }
 
+        private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
+        {
+            char A = (char)34;
+            string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
+
+            List<dbArgument> lstArg = new List<dbArgument>();
+
+            lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" : GetFilenamePortrait), Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "base" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "basicAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "courage" + A + ":{" + A + "value" + A + ":", ArgString = (g.MU ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "cleverness" + A + ":{" + A + "value" + A + ":", ArgString = (g.KL ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "intuition" + A + ":{" + A + "value" + A + ":", ArgString = (g.IN ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "charisma" + A + ":{" + A + "value" + A + ":", ArgString = (g.CH ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dexterity" + A + ":{" + A + "value" + A + ":", ArgString = (g.FF ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "agility" + A + ":{" + A + "value" + A + ":", ArgString = (g.GE ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "constitution" + A + ":{" + A + "value" + A + ":", ArgString = (g.KO).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "strength" + A + ":{" + A + "value" + A + ":", ArgString = (g.KK ?? 0).ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "resources" + A + ":{" });
+
+            lstArg.Add(new dbArgument { Prefix = A + "vitality" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "karmicEnergy" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "astralEnergy" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "combatAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "active" + A + ":{" + A + "baseInitiative" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "baseAttack" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseParry" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseRangedAttack" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dodge" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "passive" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "magicResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.MRGeist.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "physicalResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (g.RS[Kampf.Logic.Trefferzone.Gesamt]).ToString(), Suffix = "}}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "movement" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.GS.ToString(), Suffix = "," + A + "unit" + A + ":" + A + "Schritt(" +(g.GS2??0)+"/"+(g.GS3??0)+")"+ A + "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "combatState" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "isArmed" + A + ":true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "unarmedTalent" + A + ":" + "null", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "race" + A + ":" + "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":" + "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "profession" + A + ":" + "null", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "social" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "social_status" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (g.SO ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "titles" + A + ":[]," });
+            lstArg.Add(new dbArgument { Prefix = A + "nobility" + A + ":" + "null", Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "appearance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "birthday" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "eye_colour" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "hair_colour" + A + ":" + A + A, Suffix = "," });
+
+            string outcome = g.Bemerkung??"";
+            outcome = outcome.Replace(A.ToString(), ((char)92).ToString() + ((char)34).ToString())
+                    .Replace(((char)9).ToString(), "  ")
+                    .Replace("\r\n", ((char)92).ToString() + ((char)110).ToString())
+                    .Replace(((char)13).ToString() , ((char)92).ToString() + ((char)110).ToString())
+                    .Replace(((char)10).ToString(), ((char)92).ToString() + ((char)110).ToString());
+            
+            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":" + A + (outcome) + A, Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "equiped" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" + A + "null" + A, Suffix = "}}," });
+
+            //Talent-Werte
+            lstArg.Add(new dbArgument { Prefix = A + "owned" + A + ":{" });
+            //List<DSA41_HeldTalent> lstHeldT = new List<DSA41_HeldTalent>();
+            //foreach (Held_Talent ht in h.Kampftalente)
+            //{
+            //    DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+            //    heldT.ht = ht;
+            //    heldT.GMid = GMid;
+            //    heldT.USERid = "wEwtIaGkqxrjiQ8r";
+            //    lstHeldT.Add(heldT);
+            //    lstArg.Add(new dbArgument { Prefix = heldT.GetShortInfo() });
+            //}
+
+            //foreach (Held_Talent ht in h.Held_Talent.Where(t => t.Talent.Talentgruppe.Kurzname != "Kampf"))
+            //{
+            //    DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+            //    heldT.ht = ht;
+            //    heldT.GMid = GMid;
+            //    heldT.USERid = "wEwtIaGkqxrjiQ8r";
+            //    lstHeldT.Add(heldT);
+
+            //    lstArg.Add(new dbArgument
+            //    {
+            //        Prefix = A + heldT._id.ToString().Substring(19, 17).Replace("-", "") + A + ":{",
+            //        ArgString = A + "data" + A + ":{" + A + "value" + A + ":" + ht.TaW,
+            //        Suffix = "}},"
+            //    });
+            //}
+            //lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
+            lstArg.Add(new dbArgument { Prefix = "", Suffix = "}}," });
+            //ENDE Talent-werte
+
+            lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" : GetFilenameToken), Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "rotation" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "7", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "180", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":", ArgString = A + id + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.vitality" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.astralEnergy" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorX" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorY" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "light" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "angle" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bright" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "coloration" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dim" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "gradual" + A + ":", ArgString = "true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "luminosity" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "saturation" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "contrast" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "shadows" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "animation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "reverse" + A + ":", ArgString = "false", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "darkness" + A + ":{", ArgString = A + "min" + A + ":0," + A + "max" + A + ":1", Suffix = "}}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[" });
+            //Talente
+            int no = 1;
+
+            //foreach (DSA41_HeldTalent heldT in lstHeldT)
+            //{
+            //    if (heldT.isKampfTalent)
+            //        lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfo(no) });
+            //    else
+            //    {
+            //        lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoTalent(no) });
+            //    }
+            //    no++;
+            //}
+            //foreach (Held_Sonderfertigkeit heldSF in h.Held_Sonderfertigkeit)
+            //{
+            //    DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+            //    heldT.hsf = heldSF;
+            //    heldT.GMid = GMid;
+            //    heldT.USERid = "wEwtIaGkqxrjiQ8r";
+            //    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoSF() });
+            //}
+            //foreach (Held_VorNachteil heldVN in h.Held_VorNachteil)
+            //{
+            //    DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+            //    heldT.hvn = heldVN;
+            //    heldT.GMid = GMid;
+            //    heldT.USERid = "wEwtIaGkqxrjiQ8r";
+            //    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoVN() });
+            //}
+            foreach (GegnerBase_Zauber gbZ in g.GegnerBase_Zauber)
+            {
+                GegnerBase_Zauber gbZauber = new GegnerBase_Zauber();
+                DSA41_KämpferTalent KämpferT = new DSA41_KämpferTalent();
+                KämpferT.gbz = gbZ;
+                KämpferT.GMid = GMid;
+                KämpferT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = KämpferT.GetLongInfoZauber(no) });
+                no++;
+            }
+            
+            //foreach (Held_Ausrüstung heldA in h.Held_Ausrüstung)
+            //{
+            //    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+            //    heldT.ha = heldA;
+            //    heldT.GMid = GMid;
+            //    heldT.USERid = "wEwtIaGkqxrjiQ8r";
+            //    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung() });
+            //}
+
+            lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+            //ENDE Talente
+            lstArg.Add(new dbArgument { Prefix = "", Suffix = "]," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+            if (SelectedGegnerFolder== null)
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+            else
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = A + SelectedGegnerFolder._id + A, Suffix = "," });   //welches Verzeichnis 
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (100000 + AnzChr).ToString(), Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{", ArgString = A + "default" + A + ":0," + A + GMid + A + ":3", Suffix = "}," });  //wer darf editieren
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", ArgString = A + "core" + A + ":{" + A + "sheetClass" + A + ":" + A + "dsa-4.1.DsaFourOneActorSheet" + A + "}", Suffix = "}}" });
+
+
+            return lstArg;
+        }
         private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
         {
             char A = (char)34;
@@ -2562,14 +2803,14 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "hair_colour" + A + ":" + A + A, Suffix = "," });
 
             string outcome = null;
-            //if (h.Notizen != null)
-            //{
-            //    FlowDocument Document = System.Windows.Markup.XamlReader.Parse(h.Notizen) as FlowDocument;
-            //    outcome = FlowDocument_GetText(Document)
-            //        .Replace(A.ToString(), ((char)92).ToString() + ((char)34).ToString())
-            //        .Replace(((char)9).ToString(), "  ")
-            //        .Replace("\r\n", ((char)92).ToString()+((char)110).ToString());
-            //}
+            if (h.Notizen != null)
+            {
+                FlowDocument Document = System.Windows.Markup.XamlReader.Parse(h.Notizen) as FlowDocument;
+                outcome = FlowDocument_GetText(Document)
+                    .Replace(A.ToString(), ((char)92).ToString() + ((char)34).ToString())
+                    .Replace(((char)9).ToString(), "  ")
+                    .Replace("\r\n", ((char)92).ToString() + ((char)110).ToString());
+            }
             lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":" + A + outcome + A, Suffix = "}," });
 
             lstArg.Add(new dbArgument { Prefix = A + "equiped" + A + ":{" });
@@ -2578,10 +2819,10 @@ namespace MeisterGeister.ViewModel.Foundry
 
             //Talent-Werte
             lstArg.Add(new dbArgument { Prefix = A + "owned" + A + ":{" });
-            List<DSA41_HeldTalent> lstHeldT = new List<DSA41_HeldTalent>();
+            List<DSA41_KämpferTalent> lstHeldT = new List<DSA41_KämpferTalent>();
             foreach (Held_Talent ht in h.Kampftalente)
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.ht = ht;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -2591,7 +2832,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
             foreach (Held_Talent ht in h.Held_Talent.Where(t => t.Talent.Talentgruppe.Kurzname != "Kampf"))
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.ht = ht;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -2660,7 +2901,7 @@ namespace MeisterGeister.ViewModel.Foundry
             //Talente
             int no = 1;
 
-            foreach (DSA41_HeldTalent heldT in lstHeldT)
+            foreach (DSA41_KämpferTalent heldT in lstHeldT)
             {
                 if (heldT.isKampfTalent)
                     lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfo(no) }); 
@@ -2672,7 +2913,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             foreach (Held_Sonderfertigkeit heldSF in h.Held_Sonderfertigkeit)
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.hsf = heldSF;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -2680,7 +2921,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             foreach (Held_VorNachteil heldVN in h.Held_VorNachteil)
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.hvn = heldVN;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -2688,7 +2929,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             foreach (Held_Zauber heldZ in h.Held_Zauber)
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.hz = heldZ;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -2698,7 +2939,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
             foreach (Held_Ausrüstung heldA in h.Held_Ausrüstung)
             {
-                DSA41_HeldTalent heldT = new DSA41_HeldTalent();
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
                 heldT.ha = heldA;
                 heldT.GMid = GMid;
                 heldT.USERid = "wEwtIaGkqxrjiQ8r";
@@ -3654,49 +3895,60 @@ namespace MeisterGeister.ViewModel.Foundry
 
         public void GetGegnerData()
         {
-            lstGegnerArgument.Clear();
-            MyTimer.start_timer();
-            List<string> lstPicKopiert = new List<string>();
-            List<string> lstTokenKopiert = new List<string>();
-            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
-
-            List<string> lstFTPGegnerPics = new List<string>();
-            if (!IsLocalInstalliert)
+            Global.SetIsBusy(true, "Gegner werden exportiert");
+            try
             {
-                List<string> list = new List<string>();
-                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
-                ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
-                lstFTPGegnerPics = list;
+                lstGegnerArgument.Clear();
+                MyTimer.start_timer();
+                List<string> lstPicKopiert = new List<string>();
+                List<string> lstTokenKopiert = new List<string>();
+                string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+                List<string> lstFTPGegnerPics = new List<string>();
+                if (!IsLocalInstalliert)
+                {
+                    List<string> list = new List<string>();
+                    NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                    ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
+                    lstFTPGegnerPics = list;
+                }
+                int AnzChr = 1001;
+                foreach (GegnerBase g in lstGegnerBase)
+                {
+                    Global.SetIsBusy(true, "Exportiere: " + g.Name);
+                    BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
+                    BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
+
+                    string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
+                    //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
+                    string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
+
+                    //char A = (char)34; // (new Char[] { '"' });
+                    //                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                    string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
+
+                    GegnerArgument gArg = new GegnerArgument();
+                    gArg.g = g;
+                    gArg.lstArguments = new List<dbArgument>();
+                    if (DSA41Version)
+                        gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    else
+                        gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    AnzChr++;
+                    gArg.outcome = "";
+                    foreach (dbArgument arg in gArg.lstArguments)
+                    { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
+
+                    lstGegnerArgument.Add(gArg);
+                }
+                MyTimer.stop_timer("Gegner-DB-Argument");
+                Global.SetIsBusy(false);
             }
-            int AnzChr = 1001;
-            foreach (GegnerBase g in lstGegnerBase)
+            catch (Exception ex)
             {
-                BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
-                BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
-                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
-
-                //char A = (char)34; // (new Char[] { '"' });
-                //                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
-
-                GegnerArgument gArg = new GegnerArgument();
-                gArg.g = g;
-                gArg.lstArguments = new List<dbArgument>();
-                if (DSA41Version)
-                    gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
-                else
-                    gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
-                AnzChr++;
-                gArg.outcome = "";
-                foreach (dbArgument arg in gArg.lstArguments)
-                { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-                lstGegnerArgument.Add(gArg);
+                Global.SetIsBusy(false);
             }
-            MyTimer.stop_timer("Gegner-DB-Argument");
         }
 
 
@@ -3769,50 +4021,60 @@ namespace MeisterGeister.ViewModel.Foundry
 
         public void GetHeldenData()
         {
-            lstHeldArgument.Clear();
-            MyTimer.start_timer();
-
-            List<string> lstPicKopiert = new List<string>();
-            List<string> lstTokenKopiert = new List<string>();
-            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
-
-            List<string> lstFTPHeldenPics = new List<string>();
-            if (!IsLocalInstalliert)
+            Global.SetIsBusy(true, "Exportiere Helden");
+            try
             {
-                List<string> list = new List<string>();
-                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
-                ListFtpDirectory(FoundryPfad + HeldPortraitPfad, "", false, credentials, list);
-                lstFTPHeldenPics = list;
+                lstHeldArgument.Clear();
+                MyTimer.start_timer();
+
+                List<string> lstPicKopiert = new List<string>();
+                List<string> lstTokenKopiert = new List<string>();
+                string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+                List<string> lstFTPHeldenPics = new List<string>();
+                if (!IsLocalInstalliert)
+                {
+                    List<string> list = new List<string>();
+                    NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                    ListFtpDirectory(FoundryPfad + HeldPortraitPfad, "", false, credentials, list);
+                    lstFTPHeldenPics = list;
+                }
+                int AnzChr = 1;
+                foreach (Held h in Global.ContextHeld.HeldenGruppeListe.Where(t => t.AktiveHeldengruppe.Value))
+                {
+                    Global.SetIsBusy(true, "Exportiere: " + h.Name);
+                    BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
+                    BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
+
+                    string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
+                    //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
+                    string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
+
+                    char A = (char)34; // (new Char[] { '"' });
+                                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                    string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
+
+                    HeldenArgument hArg = new HeldenArgument();
+                    hArg.h = h;
+                    hArg.lstArguments = new List<dbArgument>();
+                    if (DSA41Version)
+                        hArg.lstArguments.AddRange(SetDSA41Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    else
+                        hArg.lstArguments.AddRange(SetDSA5Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    AnzChr++;
+                    hArg.outcome = "";
+                    foreach (dbArgument arg in hArg.lstArguments)
+                    { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
+
+                    lstHeldArgument.Add(hArg);
+                }
+                MyTimer.stop_timer("Helden-DB-Argument");
+                Global.SetIsBusy(false);
             }
-            int AnzChr = 1;
-            foreach (Held h in Global.ContextHeld.HeldenGruppeListe.Where(t => t.AktiveHeldengruppe.Value))
+            catch (Exception ex)
             {
-                BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
-                BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
-
-                string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
-                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
-
-                char A = (char)34; // (new Char[] { '"' });
-                //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
-
-                HeldenArgument hArg = new HeldenArgument();
-                hArg.h = h;
-                hArg.lstArguments = new List<dbArgument>();
-                if (DSA41Version)
-                    hArg.lstArguments.AddRange(SetDSA41Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
-                else
-                    hArg.lstArguments.AddRange(SetDSA5Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
-                AnzChr++;
-                hArg.outcome = "";
-                foreach (dbArgument arg in hArg.lstArguments)
-                { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-                lstHeldArgument.Add(hArg);
+                Global.SetIsBusy(false);
             }
-            MyTimer.stop_timer("Helden-DB-Argument");
         }
 
         public void InitWaffen()
