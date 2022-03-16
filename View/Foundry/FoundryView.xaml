@@ -19,6 +19,14 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
+
+            <GroupBox Header="Foundry DSA Version" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"  Margin="20,2">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
+                    <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                </StackPanel>
+            </GroupBox>
+
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" >
                 <StackPanel VerticalAlignment="Center" Width="200">
                     <RadioButton IsChecked="{Binding IsLocalInstalliert, UpdateSourceTrigger=PropertyChanged}" Content="Lokale Installation" Margin="40,0,0,4" GroupName="foundryInst" />
@@ -73,18 +81,11 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
-                                        <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
-                                    </StackPanel>
-                                </GroupBox>
-
                                 <Label Content="Verzeichnis" Grid.Row="1" />
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0" >
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedGegnerFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                                Command="{Binding OnBtnCreateFolder}" >
+                                                Command="{Binding OnBtnCreateFolder}" CommandParameter="Actor">
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
@@ -135,18 +136,11 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
-                                        <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
-                                    </StackPanel>
-                                </GroupBox>
-
                                 <Label Content="Verzeichnis" Grid.Row="1" />
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedHeldenFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
+                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="Actor">
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
@@ -220,7 +214,7 @@
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedWaffenFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
+                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="JournalEntry" >
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
