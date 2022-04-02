@@ -1395,6 +1395,13 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _startup; }
             set { Set(ref _startup, value); }
         }
+        private bool _isPlaylistsInKompendium = true;
+        public bool IsPlaylistsInKompendium
+        {
+            get { return _isPlaylistsInKompendium; }
+            set { Set(ref _isPlaylistsInKompendium, value); }
+        }
+
         private bool _isGegnerInKompendium = true;
         public bool IsGegnerInKompendium
         {
@@ -1916,6 +1923,12 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _heldenKompendium; }
             set { Set(ref _heldenKompendium, value); }
         }
+        private string _playlistsKompendium = null;
+        public string PlaylistsKompendium
+        {
+            get { return _playlistsKompendium; }
+            set { Set(ref _playlistsKompendium, value); }
+        }
 
         private string _selectedWorld = null;
         public string SelectedWorld
@@ -1933,6 +1946,7 @@ namespace MeisterGeister.ViewModel.Foundry
                         GetActorFolders(string.Format("{0}worlds/{1}/data/folders.db", FoundryPfad, value));
                     HeldenKompendium = null;
                     GegnerKompendium = null;
+                    PlaylistsKompendium = null;
                 }
             }
         }
@@ -4233,7 +4247,7 @@ namespace MeisterGeister.ViewModel.Foundry
             public bool privat;
         }
 
-        private void AddActorKompendium(string filename, string Kompendium)
+        private void AddKompendium(string filename, string Kompendium, string Kompendiumtype)
         {
             string json;
             char A = (char)34;
@@ -4249,12 +4263,12 @@ namespace MeisterGeister.ViewModel.Foundry
             Pack kampferPack = new Pack()                
             {
                 label = Kompendium,
-                type = "Actor",
+                type = Kompendiumtype,
                 name = ErsetzeUmlaute(Kompendium),
                 path = "packs/"+ ErsetzeUmlaute(Kompendium) + ".db",
                 system = DSA41Version?"dsa-4.1": "dsa5",
                 package = "world",
-                entity = "Actor",
+                entity = Kompendiumtype,
                 privat = false
             };
             world.packs.Add(kampferPack);
@@ -4314,7 +4328,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     string worldsFile = IsLocalInstalliert ?
                         FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
                         FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
-                    AddActorKompendium(worldsFile, GegnerKompendium);
+                    AddKompendium(worldsFile, GegnerKompendium, "Actor");
 
                     actorsPath = IsLocalInstalliert ?
                         FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(GegnerKompendium) + ".db" :
@@ -4519,7 +4533,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     string worldsFile = IsLocalInstalliert ?
                         FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
                         FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
-                    AddActorKompendium(worldsFile, HeldenKompendium);
+                    AddKompendium(worldsFile, HeldenKompendium, "Actor");
 
                     actorsPath = IsLocalInstalliert ?
                         FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(HeldenKompendium) + ".db" :
@@ -4675,8 +4689,9 @@ namespace MeisterGeister.ViewModel.Foundry
             else
             {
                 MakeFTPDir(FoundryPfad, MusikPfad, FTPUser, FTPPasswort, null, null);
-            }
+            } 
 
+            //Daten zusammenstellen
             List<PlaylistArgument> lstPArg = new List<PlaylistArgument>();
             string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
 
@@ -4744,14 +4759,40 @@ namespace MeisterGeister.ViewModel.Foundry
                     anzTotalTitel++;
                 }
                 lstPArg.Add(pArg);
+            }
+            //Daten zusammenstellen ENDE
 
-                if (anzTotalTitel >= 100)
-                { }
+
+            string playlistsFile = null;
+            if (IsPlaylistsInKompendium)
+            {
+                if (string.IsNullOrEmpty(PlaylistsKompendium))
+                    PlaylistsKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", PlaylistsKompendium);
+
+                if (string.IsNullOrEmpty(PlaylistsKompendium))
+                    return;
+                string worldsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                AddKompendium(worldsFile, PlaylistsKompendium, "Playlist");
+
+                playlistsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(PlaylistsKompendium) + ".db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(PlaylistsKompendium) + ".db";
+            }
+            else
+            {
+                playlistsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\playlists.db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/playlists.db";
             }
 
-            //Open playlists.db
-            string worldPath = FoundryPfad + @"worlds\" + SelectedWorld + @"\data\";
-            string playlistsFile = worldPath + "playlists.db";
+            ////Open playlists.db
+            //string worldPath = (!IsPlaylistsInKompendium) ?
+            //        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\":
+            //        FoundryPfad + @"worlds\" + SelectedWorld + @"\";
+            //string playlistsFile = worldPath +  (!IsPlaylistsInKompendium ?
+            //        "playlists.db": PlaylistsKompendium + ".db");
 
             if (!IsLocalInstalliert)
                 playlistsFile = playlistsFile.Replace(@"\", "/");
@@ -4769,6 +4810,16 @@ namespace MeisterGeister.ViewModel.Foundry
             Global.SetIsBusy(true, "Daten werden zusammengestellt");
             List<string> lstErsetzt = new List<string>();
             string FileData = GetFileData(playlistsFile);
+
+            if (IsPlaylistsInKompendium && FileData == null)
+            {
+                if (IsLocalInstalliert)
+                    using (StreamWriter sw = File.CreateText(playlistsFile))
+                    { }
+                else
+                { }
+                FileData = "";
+            }
             if (FileData != null)
             {
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
@@ -4804,6 +4855,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 Global.SetIsBusy(false);
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                 ViewHelper.Popup("Die Foundry Datenbank 'playlists.db' konnte nicht gefunden werden.\n\n ");
+                PlaylistStatus = null;
+                return;
             }
             Global.SetIsBusy(false);
 

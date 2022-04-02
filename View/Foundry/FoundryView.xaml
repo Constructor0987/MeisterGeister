@@ -194,7 +194,18 @@
                                     <Label Content="{Binding FoundryPfad}" Padding="0,0,5,0" VerticalAlignment="Center" />
                                     <TextBox Text="{Binding MusikPfad}" Width="405" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
+
+                                <StackPanel Orientation="Horizontal" Margin="100,5,0,5" >
+                                    <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
+
+                                    <CheckBox x:Name="chkbxIsPlaylistsInKompendium" IsChecked="{Binding IsPlaylistsInKompendium}" VerticalAlignment="Center" Margin="50,0"
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+                                    <TextBox Text="{Binding PlaylistsKompendium}" Height="24"  Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsPlaylistsInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+
+                                </StackPanel>
+
+
                                 <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
                                 <CheckBox IsChecked="{Binding CopyTitelFile}" Content="Kopiere alle Musik-Dateien nach Foundry" />
                                 <Label Content="{Binding PlaylistStatus, UpdateSourceTrigger=PropertyChanged}" Height="30" />
