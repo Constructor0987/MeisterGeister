@@ -12,6 +12,7 @@ using MeisterGeister.View.General;
 using MeisterGeister.Logic.Einstellung;
 using System.Windows.Forms;
 using System.Windows.Documents;
+using Newtonsoft.Json;
 
 namespace MeisterGeister.ViewModel.Foundry
 {
@@ -25,6 +26,8 @@ namespace MeisterGeister.ViewModel.Foundry
 
         private static string ErsetzeUmlaute(string s)
         {
+            if (s == null)
+                return "";
             s = s.Replace("ä", "ae");
             s = s.Replace("ü", "ue");
             s = s.Replace("ö", "oe");
@@ -1392,6 +1395,20 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _startup; }
             set { Set(ref _startup, value); }
         }
+        private bool _isGegnerInKompendium = true;
+        public bool IsGegnerInKompendium
+        {
+            get { return _isGegnerInKompendium; }
+            set { Set(ref _isGegnerInKompendium, value); }
+        }
+
+        private bool _isHeldenInKompendium = true;
+        public bool IsHeldenInKompendium
+        {
+            get { return _isHeldenInKompendium; }
+            set { Set(ref _isHeldenInKompendium, value); }
+        }
+
         private bool _doLoad = false;
         public bool doLoad
         {
@@ -1789,7 +1806,7 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _representedName, value); }
         }
 
-        private bool _dsa41Version = false;
+        private bool _dsa41Version = true;
         public bool DSA41Version
         {
             get { return _dsa41Version; }
@@ -1870,13 +1887,34 @@ namespace MeisterGeister.ViewModel.Foundry
         public folder SelectedHeldenFolder
         {
             get { return _selectedHeldenFolder; }
-            set { Set(ref _selectedHeldenFolder, value); }
+            set
+            {
+                Set(ref _selectedHeldenFolder, value);
+                if (value != null && string.IsNullOrEmpty(HeldenKompendium))
+                    HeldenKompendium = value.name;
+            }
         }
         private folder _selectedGegnerFolder = null;
         public folder SelectedGegnerFolder
         {
             get { return _selectedGegnerFolder; }
-            set { Set(ref _selectedGegnerFolder, value); }
+            set { Set(ref _selectedGegnerFolder, value);
+                if (value != null && string.IsNullOrEmpty(GegnerKompendium))
+                    GegnerKompendium = value.name;
+            }
+        }
+
+        private string _gegnerKompendium = null;
+        public string GegnerKompendium
+        {
+            get { return _gegnerKompendium; }
+            set { Set(ref _gegnerKompendium, value); }
+        }
+        private string _heldenKompendium = null;
+        public string HeldenKompendium
+        {
+            get { return _heldenKompendium; }
+            set { Set(ref _heldenKompendium, value); }
         }
 
         private string _selectedWorld = null;
@@ -1893,6 +1931,8 @@ namespace MeisterGeister.ViewModel.Foundry
                         GetActorFolders(string.Format(@"{0}worlds\{1}\data\folders.db", FoundryPfad, value));
                     else
                         GetActorFolders(string.Format("{0}worlds/{1}/data/folders.db", FoundryPfad, value));
+                    HeldenKompendium = null;
+                    GegnerKompendium = null;
                 }
             }
         }
@@ -2285,7 +2325,11 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
             }
             else
+            {
                 FoundryPfad = null;
+                if (startup)
+                    IsLocalInstalliert = true;
+            }
         }
         private void BildSpeichern(string bildDateiname, string WesenPfad, string MGPfad, List<string> lstFTPGegnerPics, List<string> lstDateienKopiert)
         {
@@ -2331,9 +2375,14 @@ namespace MeisterGeister.ViewModel.Foundry
                 {
                     if (IsLocalInstalliert)
                     {
-                        if (!File.Exists(FoundryPfad + srcCharFilename) || OverwritePictureFile)
+                        if (!File.Exists(FoundryPfad + WesenPfad.Replace("/", @"\") + srcCharFilename) || OverwritePictureFile)
                         {
-                            File.Copy(charBild, FoundryPfad + srcCharFilename, OverwritePictureFile);
+                            try
+                            {
+                                File.Copy(charBild, FoundryPfad + WesenPfad.Replace("/", @"\") + srcCharFilename, OverwritePictureFile);
+                            }
+                            catch (Exception)
+                            { }
                         }
                     }
                     else
@@ -2468,7 +2517,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = g.TokenOversize == null ? "1" : Math.Round(g.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "rotation" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
@@ -2681,7 +2730,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = h.TokenOversize == null?"1":Math.Round(h.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "rotation" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
@@ -2989,10 +3038,8 @@ namespace MeisterGeister.ViewModel.Foundry
         }
         private List<dbArgument> AddAngriffeArgument(GegnerBase g)
         {
-
             List<dbArgument> addArg = new List<dbArgument>();
             char A = (char)34;
-
             if (g.GegnerBase_Angriff.Count > 0)
             {
                 g.GegnerBase_Angriff.ToList().ForEach(delegate (GegnerBase_Angriff ga)
@@ -3391,7 +3438,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = g.TokenOversize == null ? "1" : Math.Round(g.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
@@ -3601,7 +3648,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = A + "" + A, Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = h.TokenOversize == null ? "1" : Math.Round(h.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
@@ -3981,14 +4028,12 @@ namespace MeisterGeister.ViewModel.Foundry
                 {
                     Global.SetIsBusy(true, "Exportiere: " + h.Name);
                     BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
-                    BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
+                    BildSpeichern(h.Token, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
 
                     string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
-                    //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                    string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
+                    string GetFilenameToken = string.IsNullOrEmpty(h.Token) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Token));
 
-                    char A = (char)34; // (new Char[] { '"' });
-                                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                    char A = (char)34;
                     string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
 
                     HeldenArgument hArg = new HeldenArgument();
@@ -4077,6 +4122,7 @@ namespace MeisterGeister.ViewModel.Foundry
             string typ = sender as string;
 
             DoCreateFolder(newFolder, null, typ);
+
             ViewHelper.Popup("Verzeichnis erstellt");
         }
 
@@ -4085,9 +4131,9 @@ namespace MeisterGeister.ViewModel.Foundry
             char A = (char)34; 
             string _id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
 
-            string outdata = "{" + A + "name:" + A + newFolder + A + "," + A + "type" + A + ":" + A + typ + A + "," + A + "sort" + A +
-                ":0," + A + "flags" + A + ":{}," + A + "parent" + A + ":"+ partentID + "," + A + "sorting" + A + ":" + A + "a" + A +
-                "," + A + "color" + A + ":" + A + color + A + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
+            string outdata = "{" + A + "name" + A + ":" + A + newFolder + A + "," + A + "type" + A + ":" + A + typ + A + "," + A + "sort" + A +
+                ":0," + A + "flags" + A + ":{}," + A + "parent" + A + ":"+ (partentID??"null") + "," + A + "sorting" + A + ":" + A + "a" + A +
+                "," + A + "color" + A + ":" + (string.IsNullOrEmpty( color)?"null": A +color+ A ) + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
 
             if (IsLocalInstalliert)
             {
@@ -4171,6 +4217,57 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        public class worldJSON
+        {
+            public List<Pack> packs;
+        }
+        public class Pack
+        {
+            public string label;
+            public string type;
+            public string name;
+            public string path;
+            public string system;
+            public string package;
+            public string entity;
+            public bool privat;
+        }
+
+        private void AddActorKompendium(string filename, string Kompendium)
+        {
+            string json;
+            char A = (char)34;
+            List<Pack> PackItems = new List<Pack>();
+            worldJSON world = new worldJSON();
+            using (StreamReader r = new StreamReader(filename))
+            {
+                json = r.ReadToEnd();
+                json = json.Replace(A + "private" + A, A + "privat" + A);
+                world = JsonConvert.DeserializeObject<worldJSON>(json);
+            }
+            world.packs.Remove( world.packs.Where(t => t.label == Kompendium).FirstOrDefault());
+            Pack kampferPack = new Pack()                
+            {
+                label = Kompendium,
+                type = "Actor",
+                name = ErsetzeUmlaute(Kompendium),
+                path = "packs/"+ ErsetzeUmlaute(Kompendium) + ".db",
+                system = DSA41Version?"dsa-4.1": "dsa5",
+                package = "world",
+                entity = "Actor",
+                privat = false
+            };
+            world.packs.Add(kampferPack);
+
+            int start = json.IndexOf(A+"packs"+A);
+            int end = json.IndexOf("]",start+6);
+            string newJSON = json.Substring(0, start) + json.Substring(end+1);
+            string jsonNewPacks = JsonConvert.SerializeObject(world).TrimStart((char)123).TrimEnd((char)125).Replace("privat","private");
+
+            json = newJSON.Substring(0,start) + jsonNewPacks + newJSON.Substring(start);
+            File.WriteAllText(filename, json);
+        }
+
         private Base.CommandBase _onBtnExportGegner = null;
         public Base.CommandBase OnBtnExportGegner
         {
@@ -4196,6 +4293,9 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n"+
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?")) return;
+
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
                 MyTimer.start_timer();
                 GetGegnerData();
@@ -4203,11 +4303,38 @@ namespace MeisterGeister.ViewModel.Foundry
                 List<string> lstErsetzt = new List<string>();
                 string A = (new Char[] { '"' }).ToString();
 
-                //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
-                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
-                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string actorsPath = null;
+                if (IsGegnerInKompendium)
+                {
+                    if (string.IsNullOrEmpty(GegnerKompendium))
+                        GegnerKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", GegnerKompendium);
+
+                    if (string.IsNullOrEmpty(GegnerKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddActorKompendium(worldsFile, GegnerKompendium);
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(GegnerKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(GegnerKompendium) + ".db";
+                }
+                else
+                {
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsGegnerInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath)) { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
@@ -4230,7 +4357,8 @@ namespace MeisterGeister.ViewModel.Foundry
                     SetFileData(actorsPath, newFile);
                     MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert\n\nWenn Foundry bereits läuft muss die Welt evtl 1x "+
+                        "angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden.",
                         lstGegnerArgument.Count, lstErsetzt.Count));
                 }
                 else
@@ -4281,6 +4409,11 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um alle Gegenstände zu separieren\n\nSollen die Waffen trotzdem in das" +
                     "Hauptverzeichnis exportiert werden?"))
                     return;
+
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                    return;
+
 
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
 
@@ -4361,12 +4494,10 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
-                //if (!PathExists(FoundryPfad + HeldPortraitPfad) || !PathExists(FoundryPfad + HeldTokenPfad))
-                //{ 
-                //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
-                //        FoundryPfad + HeldPortraitPfad, FoundryPfad + HeldTokenPfad));
-                //    return;
-                //}
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                    return;
+
 
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
                 MyTimer.start_timer();
@@ -4377,10 +4508,39 @@ namespace MeisterGeister.ViewModel.Foundry
                 string A = (new Char[] { '"' }).ToString();
 
                 //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
-                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
-                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string actorsPath = null;
+                if (IsHeldenInKompendium)
+                {
+                    if (string.IsNullOrEmpty(HeldenKompendium))
+                        HeldenKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", HeldenKompendium);
+
+                    if (string.IsNullOrEmpty(HeldenKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddActorKompendium(worldsFile, HeldenKompendium);
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(HeldenKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(HeldenKompendium) + ".db";
+                }
+                else
+                {
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsHeldenInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath))
+                        { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
@@ -4401,9 +4561,12 @@ namespace MeisterGeister.ViewModel.Foundry
                     newFile = newFile.TrimEnd(new Char[] { ',' });
                     //Held einfügen
                     SetFileData(actorsPath, newFile);
+                    MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                     ViewHelper.Popup(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") + "\n\nAlle Helden wurden eingefügt.\n" +
-                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : ""));
+                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : "")+
+                        "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x " +
+                        "angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden.");
                 }
                 else
                 {
@@ -4494,6 +4657,10 @@ namespace MeisterGeister.ViewModel.Foundry
                 ViewHelper.Popup("Wähle zuerst eine Welt");
                 return;
             }
+            if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                return;
+
             Global.SetIsBusy(true, string.Format("Export der Playlisten..."));
             System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.AppStarting);
             MyTimer.start_timer();
