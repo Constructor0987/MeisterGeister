@@ -1964,6 +1964,8 @@ namespace MeisterGeister.ViewModel.Foundry
                     HeldenKompendium = null;
                     GegnerKompendium = null;
                     PlaylistsKompendium = null;
+                    WaffenKompendium = null;
+                    SelectedWaffenFolder = null;
                 }
             }
         }
