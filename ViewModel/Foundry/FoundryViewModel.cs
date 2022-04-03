@@ -1395,6 +1395,13 @@ namespace MeisterGeister.ViewModel.Foundry
             get { return _startup; }
             set { Set(ref _startup, value); }
         }
+        private bool _isWaffenInKompendium = true;
+        public bool IsWaffenInKompendium
+        {
+            get { return _isWaffenInKompendium; }
+            set { Set(ref _isWaffenInKompendium, value); }
+        }
+
         private bool _isPlaylistsInKompendium = true;
         public bool IsPlaylistsInKompendium
         {
@@ -1887,7 +1894,10 @@ namespace MeisterGeister.ViewModel.Foundry
         public folder SelectedWaffenFolder
         {
             get { return _selectedWaffenFolder; }
-            set { Set(ref _selectedWaffenFolder, value); }
+            set { Set(ref _selectedWaffenFolder, value);
+                if (value != null && string.IsNullOrEmpty(WaffenKompendium))
+                    WaffenKompendium = value.name;
+            }
         }
 
         private folder _selectedHeldenFolder = null;
@@ -1928,6 +1938,13 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             get { return _playlistsKompendium; }
             set { Set(ref _playlistsKompendium, value); }
+        }
+
+        private string _waffenKompendium = null;
+        public string WaffenKompendium
+        {
+            get { return _waffenKompendium; }
+            set { Set(ref _waffenKompendium, value); }
         }
 
         private string _selectedWorld = null;
@@ -3954,7 +3971,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
                 string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
+                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
             }
 
             foreach (Fernkampfwaffe fern in Global.ContextInventar.FernkampfwaffeListe)
@@ -3973,7 +3990,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
                 string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
+                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
             }
 
             foreach (Schild s in Global.ContextInventar.SchildListe)
@@ -3992,7 +4009,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
                 string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
+                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
             }
 
             foreach (Rüstung r in Global.ContextInventar.RuestungListe)
@@ -4012,7 +4029,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
                 string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = wname, lstArguments = lstArg, outcome = outc });
+                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
             }
         }
 
@@ -4371,15 +4388,15 @@ namespace MeisterGeister.ViewModel.Foundry
                     SetFileData(actorsPath, newFile);
                     MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert\n\nWenn Foundry bereits läuft muss die Welt evtl 1x "+
-                        "angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden.",
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert"+
+                        (!IsGegnerInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
                         lstGegnerArgument.Count, lstErsetzt.Count));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                        "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsGegnerInKompendium ? GegnerKompendium : "actors.db", actorsPath));
                 }
             }
             finally
@@ -4439,11 +4456,39 @@ namespace MeisterGeister.ViewModel.Foundry
                 List<string> lstErsetzt = new List<string>();
                 string A = (new Char[] { '"' }).ToString();
 
-                //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
+                string actorsPath = null;
+                if (IsWaffenInKompendium)
+                {
+                    if (string.IsNullOrEmpty(WaffenKompendium))
+                        WaffenKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", WaffenKompendium);
+
+                    if (string.IsNullOrEmpty(WaffenKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddKompendium(worldsFile, WaffenKompendium, "Item");
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(WaffenKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(WaffenKompendium) + ".db";
+                }
+                else
+                {
+                    //Open actors.db
+                    actorsPath = IsLocalInstalliert ?
                     FoundryPfad + @"worlds\" + SelectedWorld + @"\data\items.db" :
                     FoundryPfad + @"worlds/" + SelectedWorld + @"/data/items.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsWaffenInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath)) { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
@@ -4465,21 +4510,21 @@ namespace MeisterGeister.ViewModel.Foundry
                     //Waffen einfügen
                     SetFileData(actorsPath, newFile);
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Waffen-Daten aktualisiert in") + "\n\nAlle Waffen wurden eingefügt.\n");
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert" +
+                        (!IsWaffenInKompendium?"":"\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
+                        lstWaffenArgument.Count, lstErsetzt.Count));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                    "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsWaffenInKompendium ? WaffenKompendium : "items.db", actorsPath));
                 }
             }
             finally
             {
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
             }
-
-
         }
 
         private Base.CommandBase _onBtnExportHelden = null;
@@ -4578,15 +4623,14 @@ namespace MeisterGeister.ViewModel.Foundry
                     MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                     ViewHelper.Popup(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") + "\n\nAlle Helden wurden eingefügt.\n" +
-                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : "")+
-                        "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x " +
-                        "angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden.");
+                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : "") +
+                    (!IsHeldenInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                    "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsHeldenInKompendium ? HeldenKompendium : "actors.db", actorsPath));
                 }
             }
             finally
@@ -4787,13 +4831,6 @@ namespace MeisterGeister.ViewModel.Foundry
                     FoundryPfad + @"worlds/" + SelectedWorld + @"/data/playlists.db";
             }
 
-            ////Open playlists.db
-            //string worldPath = (!IsPlaylistsInKompendium) ?
-            //        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\":
-            //        FoundryPfad + @"worlds\" + SelectedWorld + @"\";
-            //string playlistsFile = worldPath +  (!IsPlaylistsInKompendium ?
-            //        "playlists.db": PlaylistsKompendium + ".db");
-
             if (!IsLocalInstalliert)
                 playlistsFile = playlistsFile.Replace(@"\", "/");
             if (OverwritePlaylistFile)
@@ -4803,9 +4840,6 @@ namespace MeisterGeister.ViewModel.Foundry
                 else
                     DeleteFileOnFtpServer(new Uri(playlistsFile.Replace(@"\", "/")), FTPUser, FTPPasswort);
             }
-
-
-            //*********************************
 
             Global.SetIsBusy(true, "Daten werden zusammengestellt");
             List<string> lstErsetzt = new List<string>();
@@ -4847,14 +4881,16 @@ namespace MeisterGeister.ViewModel.Foundry
                 MyTimer.stop_timer("");
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                 Global.SetIsBusy(false);
-                ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert" +
+                    (!IsPlaylistsInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
                     lstPArg.Count, lstErsetzt.Count));
             }
             else
             {
                 Global.SetIsBusy(false);
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                ViewHelper.Popup("Die Foundry Datenbank 'playlists.db' konnte nicht gefunden werden.\n\n ");
+                ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                    IsPlaylistsInKompendium ? PlaylistsKompendium : "playlists.db", playlistsFile));
                 PlaylistStatus = null;
                 return;
             }

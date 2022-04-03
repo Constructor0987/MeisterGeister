@@ -249,11 +249,19 @@
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedWaffenFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="JournalEntry" >
+                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="Item" >
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
-                                <Button Content="Export Waffen" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportWaffen}" />
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="3" Margin="100,5,0,5" >
+                                    <Button Content="Export Waffen" Width="100" Command="{Binding OnBtnExportWaffen}" />
+
+                                    <CheckBox x:Name="chkbxIsWaffenInKompendium" IsChecked="{Binding IsWaffenInKompendium}" VerticalAlignment="Center" Margin="50,0"
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+                                    <TextBox Text="{Binding WaffenKompendium}" Height="24"  Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsWaffenInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                </StackPanel>
 
                                 <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
