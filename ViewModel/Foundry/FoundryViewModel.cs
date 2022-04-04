@@ -1136,7 +1136,7 @@ namespace MeisterGeister.ViewModel.Foundry
                 return back;
             }
 
-            public string GetLongInfoAusrüstung(int nummer, string folder)
+            public string GetLongInfoAusrüstung(int nummer, string folder, string InventarBemerkung = null)
             {
                 char A = (char)34;
 
@@ -1155,9 +1155,9 @@ namespace MeisterGeister.ViewModel.Foundry
                 switch (typ)
                 {
                     case "genericItem":
-                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
-                back += A + "data" + A + ":{";
-                        back += A + "description" + A + ":" + A+ha.Ausrüstung.Bemerkung +A+ ",";
+                        back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A+ InventarBemerkung + A + ",";
                         back += A + "isConsumable" + A + ":" + "false" + ",";
                         back += A + "quantity" + A + ":" + "0" + "},";
                     break;
@@ -1394,6 +1394,36 @@ namespace MeisterGeister.ViewModel.Foundry
         {
             get { return _startup; }
             set { Set(ref _startup, value); }
+        }
+        private bool _includeHandelsgut = true;
+        public bool IncludeHandelsgut
+        {
+            get { return _includeHandelsgut; }
+            set { Set(ref _includeHandelsgut, value); }
+        }
+        private bool _includeWaffe = true;
+        public bool IncludeWaffe
+        {
+            get { return _includeWaffe; }
+            set { Set(ref _includeWaffe, value); }
+        }
+        private bool _includeFernkampfwaffe = true;
+        public bool IncludeFernkampfwaffe
+        {
+            get { return _includeFernkampfwaffe; }
+            set { Set(ref _includeFernkampfwaffe, value); }
+        }
+        private bool _includeSchild = true;
+        public bool IncludeSchild
+        {
+            get { return _includeSchild; }
+            set { Set(ref _includeSchild, value); }
+        }
+        private bool _includeRüstung = true;
+        public bool IncludeRüstung
+        {
+            get { return _includeRüstung; }
+            set { Set(ref _includeRüstung, value); }
         }
         private bool _isWaffenInKompendium = true;
         public bool IsWaffenInKompendium
@@ -3957,82 +3987,110 @@ namespace MeisterGeister.ViewModel.Foundry
             //    folderID = DoCreateFolder("Fernkampfwaffen", folderID, "JournalEntry", "#816a6a");
             //lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = folderID, Suffix = "," });
 
-            foreach (Waffe w in Global.ContextInventar.WaffeListe)
-            {
-                GegenstandArgument newGeg = new GegenstandArgument();
-                newGeg.name = w.Name;
-                Held_Ausrüstung newHA = new Held_Ausrüstung();
-                newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
-                newHA.Held_BFAusrüstung.Held_Waffe = new Held_Waffe() { Waffe = w };
+            if (IncludeHandelsgut)
+                foreach (Handelsgut hg in Global.ContextHandelsgut.HandelsgüterListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = hg.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    //newHA.Held_BFAusrüstung.Held_Ausrüstung = new Held_Ausrüstung() { new Ausrüstung(){
+                    //    Bemerkung = hg.Bemerkung + @"\n" + (hg.Gewicht != null ? hg.Gewicht.Value + " Uz" : ""),
+                    //    Gewicht = Convert.ToInt32(hg.Gewicht != null ? hg.Gewicht.Value : 1) }};
 
-                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
-                heldT.ha = newHA;
-                heldT.GMid = GMid;
-                heldT.USERid = null;
-                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
-                lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
-                string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
-            }
 
-            foreach (Fernkampfwaffe fern in Global.ContextInventar.FernkampfwaffeListe)
-            {
-                GegenstandArgument newGeg = new GegenstandArgument();
-                newGeg.name = fern.Name;
-                Held_Ausrüstung newHA = new Held_Ausrüstung();
-                newHA.Held_Fernkampfwaffe = new Held_Fernkampfwaffe();
-                newHA.Held_Fernkampfwaffe.Fernkampfwaffe = fern;
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                   
+                    heldT.ha.Name = hg.Name;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID, hg.Bemerkung + @"\n" + (hg.Gewicht != null ? hg.Gewicht.Value + " Uz" : "")) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
-                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
-                heldT.ha = newHA;
-                heldT.GMid = GMid;
-                heldT.USERid = null;
-                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
-                lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
 
-                string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
-            }
+            if (IncludeWaffe)
+                foreach (Waffe w in Global.ContextInventar.WaffeListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = w.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    newHA.Held_BFAusrüstung.Held_Waffe = new Held_Waffe() { Waffe = w };
 
-            foreach (Schild s in Global.ContextInventar.SchildListe)
-            {
-                GegenstandArgument newGeg = new GegenstandArgument();
-                newGeg.name = s.Name;
-                Held_Ausrüstung newHA = new Held_Ausrüstung();
-                newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
-                newHA.Held_BFAusrüstung.Schild = s;
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
-                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
-                heldT.ha = newHA;
-                heldT.GMid = GMid;
-                heldT.USERid = null;
-                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
-                lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
 
-                string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
-            }
+            if (IncludeFernkampfwaffe)
+                foreach (Fernkampfwaffe fern in Global.ContextInventar.FernkampfwaffeListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = fern.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_Fernkampfwaffe = new Held_Fernkampfwaffe();
+                    newHA.Held_Fernkampfwaffe.Fernkampfwaffe = fern;
 
-            foreach (Rüstung r in Global.ContextInventar.RuestungListe)
-            {
-                GegenstandArgument newGeg = new GegenstandArgument();
-                newGeg.name = r.Name;
-                Held_Ausrüstung newHA = new Held_Ausrüstung();
-         //       newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
-         //       newHA.Held_BFAusrüstung.Held_Ausrüstung = new Held_Ausrüstung() { Held_Rüstung = new Held_Rüstung() { Rüstung = r } };
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
 
-                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
-                newHA.Held_Rüstung = new Held_Rüstung() { Rüstung = r } ;
-                heldT.ha = newHA;
-                heldT.GMid = GMid;
-                heldT.USERid = null;
-                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
-                lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
 
-                string outc = lstArg.Last().Prefix;
-                lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
-            }
+            if (IncludeSchild)
+                foreach (Schild s in Global.ContextInventar.SchildListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = s.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    newHA.Held_BFAusrüstung.Schild = s;
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+
+            if (IncludeRüstung)
+                foreach (Rüstung r in Global.ContextInventar.RuestungListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = r.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    newHA.Held_Rüstung = new Held_Rüstung() { Rüstung = r } ;
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
         }
 
 

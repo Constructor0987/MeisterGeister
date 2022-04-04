@@ -213,7 +213,7 @@
                         </GroupBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Waffen" GotFocus="TabItem_GotFocus" >
+                <TabItem Header="Gegenstände" GotFocus="TabItem_GotFocus" >
                     <Grid Background="{StaticResource BackgroundMenu}">
 
                         <Grid.ColumnDefinitions>
@@ -228,7 +228,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <GroupBox Header="Waffen-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
+                        <GroupBox Header="Gegenstände-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
@@ -255,7 +255,7 @@
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="3" Margin="100,5,0,5" >
-                                    <Button Content="Export Waffen" Width="100" Command="{Binding OnBtnExportWaffen}" />
+                                    <Button Content="Export Gegenstände" Width="120" Command="{Binding OnBtnExportWaffen}" />
 
                                     <CheckBox x:Name="chkbxIsWaffenInKompendium" IsChecked="{Binding IsWaffenInKompendium}" VerticalAlignment="Center" Margin="50,0"
                                               Content="In Kompendium speichern" HorizontalAlignment="Left" />
@@ -263,8 +263,21 @@
                                          Visibility="{Binding ElementName=chkbxIsWaffenInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}" />
                                 </StackPanel>
 
-                                <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
+                                <StackPanel  Grid.Row="5" Grid.ColumnSpan="4" >
+                                <CheckBox IsChecked="{Binding IncludeHandelsgut}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Handelsgüter" />
+                                    <CheckBox IsChecked="{Binding IncludeWaffe}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Nahkampfwaffen" />
+                                    <CheckBox IsChecked="{Binding IncludeFernkampfwaffe}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Fernkampfwaffen" />
+                                    <CheckBox IsChecked="{Binding IncludeSchild}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Schilde" />
+                                    <CheckBox IsChecked="{Binding IncludeRüstung}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Rüstungen" />
+
+                                    <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
+                                </StackPanel>
                             </Grid>
                         </GroupBox>
                     </Grid>
