@@ -981,6 +981,60 @@ namespace MeisterGeister.ViewModel.Foundry
                 return back;
             }
 
+            public string GetLongInfoAngriff41(int nummer)
+            {
+                Model.Zauber z = hz != null ? hz.Zauber : gbz != null ? gbz.Zauber : null;
+                if (z == null)
+                    return null;
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + z.Name + A + ",";
+                back += A + "type" + A + ":" + A + "spell" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + (hz!= null? hz.Bemerkung: gbz.Bemerkung) + A + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" + (z.Eigenschaft1 != null ? (A + GetAttribute(z.Eigenschaft1) + A) : "null") + ",";
+                back += A + "secondAttribute" + A + ":" + (z.Eigenschaft2 != null ? (A + GetAttribute(z.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (z.Eigenschaft3 != null ? (A + GetAttribute(z.Eigenschaft3) + A) : "null") + "},";
+                back += A + "castTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Zauberdauer??0) + ",";
+                back += A + "unit" + A + ":" + A+"Aktionen"+A + ",";
+                back += A + "info" + A + ":" + A+A + "},";
+                back += A + "effectTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Wirkungsdauer??"0") + ",";
+                back += A + "unit" + A + ":" + A + "Aktionen" + A + ",";
+                back += A + "info" + A + ":" + A + (z.Wirkungsradius??"0")+ A + "},";
+                back += A + "targetClasses" + A + ":[],";
+                back += A + "range" + A + ":" + A + (z.Reichweite??"0") + A + ",";
+                back += A + "technique" + A + ":" + A + A + ",";
+                back += A + "effect" + A + ":" + A + A + ",";
+                back += A + "variants" + A + ":[],";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetZauber_sid(z.Name) + A + ",";
+                back += A + "value" + A + ":" + (hz != null ? hz.ZfW: gbz.ZfW)+ ",";
+                back += A + "testMod" + A + ":null" + ",";
+                back += A + "astralCost" + A + ":" +A+(z.Kosten??"0")+A +",";
+                back += A + "modifications" + A + ":[],";
+                back += A + "lcdPage" + A + ":" + A+z.Literatur +A+ ",";
+                back += A + "reversalis" + A + ":" + A + A + ",";
+                back += A + "antimagic" + A + ":" + A + A + ",";
+                back += A + "properties" + A + ":[],";
+                back += A + "complexity" + A + ":" + A+z.Komplex + A + ",";
+                back += A + "representation" + A + ":" + A+z.Repräsentationen + A + ",";
+                back += A + "spread" + A + ":null" + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
             public string GetLongInfoZauber(int nummer)
             {
                 Model.Zauber z = hz != null ? hz.Zauber : gbz != null ? gbz.Zauber : null;
@@ -2533,10 +2587,10 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.GS.ToString(), Suffix = "," + A + "unit" + A + ":" + A + "Schritt(" +(g.GS2??0)+"/"+(g.GS3??0)+")"+ A + "}}," });
 
             lstArg.Add(new dbArgument { Prefix = A + "combatState" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "isArmed" + A + ":true", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" + A + "null" + A, Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" + A + "null" + A, Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "unarmedTalent" + A + ":" + "null", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "isArmed" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":", ArgString = A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":", ArgString = A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "unarmedTalent" + A + ":" + A + "null" + A, Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "race" + A + ":" + "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":" + "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "profession" + A + ":" + "null", Suffix = "," });
@@ -2569,6 +2623,24 @@ namespace MeisterGeister.ViewModel.Foundry
 
             //Talent-Werte
             lstArg.Add(new dbArgument { Prefix = A + "owned" + A + ":{" });
+
+            List<string> ZBAattackIDs = new List<string>();
+
+            //Spezielle Angriffe
+            if (g.GegnerBase_Angriff.Count > 0)
+            {
+                string atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+                ZBAattackIDs.Add(atGuid);
+                lstArg.Add(new dbArgument { Prefix = A + atGuid + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "combat" + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = "0", Suffix = "," });                    
+                lstArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = "0", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = "0", Suffix = "}}," });
+
+                lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
+            }
+
             lstArg.Add(new dbArgument { Prefix = "", Suffix = "}}," });
             //ENDE Talent-werte
 
@@ -2588,7 +2660,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "0", Suffix = "," }); //360
             lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
@@ -2634,7 +2706,22 @@ namespace MeisterGeister.ViewModel.Foundry
                 lstArg.Add(new dbArgument { Prefix = KämpferT.GetLongInfoZauber(no) });
                 no++;
             }
-            lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+            string primHand = null;
+            string secHand = null;
+            lstArg.AddRange(AddAngriffeArgument41(g, ZBAattackIDs, GMid, out primHand, out secHand));
+            if (g.GegnerBase_Angriff.Count > 0)
+            {
+                lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
+
+                try
+                {
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "isArmed" + A + ":").ArgString = "true";
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "primaryHand" + A + ":").ArgString = A + primHand + A;
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "secondaryHand" + A + ":").ArgString = A + secHand + A;
+                }
+                catch { }
+            }
 
             lstArg.Add(new dbArgument { Prefix = "", Suffix = "]," });
             lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
@@ -2650,6 +2737,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
             return lstArg;
         }
+
         private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
         {
             char A = (char)34;
@@ -2914,7 +3002,6 @@ namespace MeisterGeister.ViewModel.Foundry
             return lstArg;
         }
 
-
         private List<dbArgument> AddGegnerArgument(string eigenschaft, string color, int? wert, string lastEigenschaft = ",")
         {
             List<dbArgument> addArg = new List<dbArgument>();
@@ -3099,7 +3186,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
             return addArg;
         }
-        private List<dbArgument> AddAngriffeArgument(GegnerBase g)
+        private List<dbArgument> AddAngriffeArgument50(GegnerBase g)
         {
             List<dbArgument> addArg = new List<dbArgument>();
             char A = (char)34;
@@ -3188,7 +3275,88 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             return addArg;
         }
-        private List<dbArgument> AddAngriffeArgument(Held h)
+
+
+        private List<dbArgument> AddAngriffeArgument41(GegnerBase g, List<string> ZBAattackIDs, string GMid, out string primHand, out string secHand)
+        {
+            string tmp_primHand = null;
+            string tmp_secHand = null;
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+            string atGuid = null;
+            if (g.GegnerBase_Angriff.Count > 0)
+            {
+                atGuid = ZBAattackIDs.First();
+                addArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = atGuid, Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = "ZBA Attacke", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "combatTalent", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "icons/svg/mystery-man.svg", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "description" + A + ":\"", ArgString = "MG Attack_Export", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "basic", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "category" + A + ":\"", ArgString = "combat", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "effectiveEncumbarance" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "formula", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "formula" + A + ":\"", ArgString = "BE-4", Suffix = A + "}," });
+                addArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "isUniquelyOwnable" + A + ":", ArgString = "true", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "sid" + A + ":\"", ArgString = "talent-hiebwaffen", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "combat" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "category" + A + ":\"", ArgString = "melee", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "rangedAttack" + A + ":", ArgString = "-1", Suffix = "}}," });
+                addArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "default" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + GMid + A + ":", ArgString = "3", Suffix = "}," });
+                addArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", ArgString = A+ "core"+A+":{"+A+"sourceId"+A+":"+A+"Compendium.dsa-4.1.combattalent.h2FZZhU6fCgwI31Q"+A, Suffix = "}}}," });
+                
+                g.GegnerBase_Angriff.ToList().ForEach(delegate (GegnerBase_Angriff ga)
+                {
+                    atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+                    if (tmp_primHand == null) tmp_primHand = atGuid; else tmp_secHand = atGuid;
+                    addArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = atGuid, Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = ga.Name.Trim(), Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "meleeWeapon", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "icons/svg/item-bag.svg", Suffix = A + "," });//systems/dsa5/icons/categories/ability_combat.webp
+                    addArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "description" + A + ":\"", ArgString = "MG Attack_Export", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "talent" + A + ":\"", ArgString = "talent-hiebwaffen", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "damage" + A + ":\"", ArgString =(ga.TPWürfelAnzahl+"d"+ ga.TPWürfel + (ga.TPBonus>=0?"+":"-")+ ga.TPBonus), Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "price" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "weight" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "length" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "strengthMod" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "threshold" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "hitPointStep" + A + ":", ArgString = "999", Suffix =  "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "breakingFactor" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "initiativeMod" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "weaponMod" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = (ga.AT - g.AT).ToString(), Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = (ga.PA - g.PA).ToString(), Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "distanceClass" + A + ":\"", ArgString = ga.DK, Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "twoHanded" + A + ":", ArgString = "false", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "improvised" + A + ":", ArgString = "false", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "priviledged" + A + ":", ArgString = "false", Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "default" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + GMid + A + ":", ArgString = "3", Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}}," });
+                });
+            }
+            primHand = tmp_primHand;
+            secHand = tmp_secHand;
+            return addArg;
+        }
+
+
+        private List<dbArgument> AddAngriffeArgument50(Held h)
         {
 
             List<dbArgument> addArg = new List<dbArgument>();
@@ -3542,7 +3710,7 @@ namespace MeisterGeister.ViewModel.Foundry
               Waffe:
              {"_id":"6BVLO6Q8311fc2OJ","name":"Heshthot-Peitsche*","type":"meleeweapon","data":{"price":{"value":0},"quantity":{"value":1},"weight":{"value":1},"effect":{"value":"1 Stufe Schmerz"},"description":{"value":"Erzielt der Heshthot mit der Peitsche SP, erhält sein Opfer pro Treffer eine Stufe Schmerz bis zum nächsten Sonnenaufgang."},"gmdescription":{"value":""},"damage":{"value":"1d6+1"},"atmod":{"value":0,"offhandMod":0},"pamod":{"value":0,"offhandMod":0},"reach":{"value":"long"},"damageThreshold":{"value":16},"guidevalue":{"value":"ff"},"combatskill":{"value":"Peitschen"},"worn":{"value":true,"offhand":false,"offHand":false},"structure":{"max":0,"value":0}},"sort":100000,"flags":{},"img":"icons/weapons/swords/greatsword-blue.webp","effects":[]}
               */
-            lstArg.AddRange(AddAngriffeArgument(g));
+            lstArg.AddRange(AddAngriffeArgument50(g));
             lstArg.AddRange(AddZauberArgument(g));
 
             string atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
@@ -3749,7 +3917,7 @@ namespace MeisterGeister.ViewModel.Foundry
               Waffe:
              {"_id":"6BVLO6Q8311fc2OJ","name":"Heshthot-Peitsche*","type":"meleeweapon","data":{"price":{"value":0},"quantity":{"value":1},"weight":{"value":1},"effect":{"value":"1 Stufe Schmerz"},"description":{"value":"Erzielt der Heshthot mit der Peitsche SP, erhält sein Opfer pro Treffer eine Stufe Schmerz bis zum nächsten Sonnenaufgang."},"gmdescription":{"value":""},"damage":{"value":"1d6+1"},"atmod":{"value":0,"offhandMod":0},"pamod":{"value":0,"offhandMod":0},"reach":{"value":"long"},"damageThreshold":{"value":16},"guidevalue":{"value":"ff"},"combatskill":{"value":"Peitschen"},"worn":{"value":true,"offhand":false,"offHand":false},"structure":{"max":0,"value":0}},"sort":100000,"flags":{},"img":"icons/weapons/swords/greatsword-blue.webp","effects":[]}
               */
-            lstArg.AddRange(AddAngriffeArgument(h));
+            lstArg.AddRange(AddAngriffeArgument50(h));
             lstArg.AddRange(AddZauberArgument(h));
 
             //Add all Talente
@@ -4378,7 +4546,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     ViewHelper.Popup("Wähle zuerst eine Welt");
                     return;
                 }
-                if ((SelectedGegnerFolder == null || SelectedGegnerFolder.name == "") &&
+                if ((SelectedGegnerFolder == null || SelectedGegnerFolder.name == "") && !IsGegnerInKompendium &&
                     !ViewHelper.Confirm("Export der Gegner", "Die Gegner-Datenbank wird ins das Hauptverzeichnis exportiert\n" +
                     "Wir empfehlen hier dringend zuvor ein Verzeichnis zu erstellen, um Gegner, NSC und Helden zu separieren\n\nSollen die Gegner in das " +
                     "Hauptverzeichnis exportiert werden?"))
@@ -4607,7 +4775,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     ViewHelper.Popup("Wähle zuerst eine Welt");
                     return;
                 }
-                if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") &&
+                if (SelectedHeldenFolder == null || SelectedHeldenFolder.name == "" && !IsHeldenInKompendium &&
                     !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
                     "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
                     "Hauptverzeichnis exportiert werden?"))
