@@ -3976,7 +3976,7 @@ namespace MeisterGeister.Model
         /// <summary>
         /// Berechnet die Rüstungswerte (Held.RS) des Helden anhand der angelegten Ausrüstung neu.
         /// </summary>
-        public void BerechneRüstungswerte()
+        public int BerechneRüstungswerte()
         {
             var zonenRüstung = E.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.AutomatischZonen
                                 || E.RSBerechnung == (int)ViewModel.Settings.ermittleRuestung.Zonen;
@@ -4005,6 +4005,7 @@ namespace MeisterGeister.Model
             {
                 RS[Trefferzone.Gesamt] = einfacherRs;
             }
+            return RS[Trefferzone.Gesamt];
         }
 
         public Held_Ausrüstung AddAusrüstung(Ausrüstung a, bool detached = false)

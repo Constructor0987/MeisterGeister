@@ -19,11 +19,19 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
+
+            <GroupBox Header="Foundry DSA Version" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150"  Margin="20,2">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
+                    <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
+                </StackPanel>
+            </GroupBox>
+
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" >
                 <StackPanel VerticalAlignment="Center" Width="200">
                     <RadioButton IsChecked="{Binding IsLocalInstalliert, UpdateSourceTrigger=PropertyChanged}" Content="Lokale Installation" Margin="40,0,0,4" GroupName="foundryInst" />
                     <RadioButton IsChecked="{Binding IsLocalInstalliert, Converter={StaticResource InverseBooleanConverter1}, UpdateSourceTrigger=PropertyChanged}"
-                                             Content="Server stallation" GroupName="foundryInst" Margin="40,0,0,0" />
+                                             Content="Server Installation" GroupName="foundryInst" Margin="40,0,0,0" />
                 </StackPanel>
 
                 <GroupBox Header="FoundryVTT - Pfad" Margin="2,0,0,0">
@@ -60,7 +68,7 @@
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="197*"/>
+                                    <ColumnDefinition Width="197*" MinWidth="100"/>
                                     <ColumnDefinition Width="197*"/>
                                     <ColumnDefinition Width="196*"/>
                                 </Grid.ColumnDefinitions>
@@ -73,29 +81,34 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
-                                        <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
-                                    </StackPanel>
-                                </GroupBox>
-
                                 <Label Content="Verzeichnis" Grid.Row="1" />
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Left" Margin="10,0" >
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedGegnerFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                                Command="{Binding OnBtnCreateFolder}" >
+                                                Command="{Binding OnBtnCreateFolder}" CommandParameter="Actor">
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
 
                                 <Label Content="Portait-Pfad" Grid.Row="2"/>
-                                <TextBox Text="{Binding GegnerPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
+                                <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2">
+                                    <TextBox Text="{Binding FoundryPfad, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderThickness="0" Foreground="DarkGray" Padding="2,2,0,2"/>
+                                    <TextBox Text="{Binding GegnerPortraitPfad}" BorderThickness="0" Padding="0,2,2,2" MinWidth="300" />
+                                </StackPanel>
 
                                 <Label Content="Token-Pfad" Grid.Row="3"/>
-                                <TextBox Text="{Binding GegnerTokenPfad}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
+                                <StackPanel Orientation="Horizontal"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2">
+                                    <TextBox Text="{Binding FoundryPfad, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderThickness="0" Foreground="DarkGray" Padding="2,2,0,2"/>
+                                    <TextBox Text="{Binding GegnerTokenPfad}" BorderThickness="0" Padding="0,2,2,2" MinWidth="300" />
+                                </StackPanel>
 
-                                <Button Content="Export Gegner" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportGegner}" />
+                                <Button Content="Export Gegner" Margin="0,10" Grid.Row="4" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportGegner}" />
+
+                                <CheckBox x:Name="chkbxIsGegnerInKompendium" IsChecked="{Binding IsGegnerInKompendium}" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" 
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+
+                                <TextBox Text="{Binding GegnerKompendium}" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Height="24" Margin="180,0,0,0" Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsGegnerInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
 
                                 <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
@@ -135,28 +148,33 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <GroupBox Header="Foundry DSA Version" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="150" Height="40" Margin="0,5">
-                                    <StackPanel Orientation="Horizontal">
-                                        <RadioButton Content="DSA 4.1" IsChecked="{Binding DSA41Version}" GroupName="DSAVersion" Margin="0,0,15,0" />
-                                        <RadioButton Content="DSA 5" IsChecked="{Binding DSA41Version, Converter={StaticResource InverseBooleanConverter1}}"  GroupName="DSAVersion" />
-                                    </StackPanel>
-                                </GroupBox>
-
                                 <Label Content="Verzeichnis" Grid.Row="1" />
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedHeldenFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
+                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="Actor">
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
 
                                 <Label Content="Portait-Pfad" Grid.Row="2"/>
-                                <TextBox Text="{Binding HeldPortraitPfad}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
+                                <StackPanel Orientation="Horizontal"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2">
+                                    <TextBox Text="{Binding FoundryPfad, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderThickness="0" Foreground="DarkGray" Padding="2,2,0,2"/>
+                                    <TextBox Text="{Binding HeldPortraitPfad}" BorderThickness="0" Padding="0,2,2,2" MinWidth="300" />
+                                </StackPanel>
 
                                 <Label Content="Token-Pfad" Grid.Row="3"/>
-                                <TextBox Text="{Binding HeldTokenPfad}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2"/>
-                                <Button Content="Export Helden" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportHelden}" />
+                                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,2" >
+                                    <TextBox Text="{Binding FoundryPfad, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" BorderThickness="0" Foreground="DarkGray" Padding="2,2,0,2"/>
+                                    <TextBox Text="{Binding HeldTokenPfad}" BorderThickness="0" Padding="0,2,2,2" MinWidth="300" />
+                                </StackPanel>
+                                <Button Content="Export Helden" Margin="0,10" Grid.Row="4" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportHelden}" />
+
+                                <CheckBox x:Name="chkbxIsHeldenInKompendium" IsChecked="{Binding IsHeldenInKompendium}" Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" 
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+
+                                <TextBox Text="{Binding HeldenKompendium}" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Height="24" Margin="180,0,0,0" Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsHeldenInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
 
                                 <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
@@ -176,7 +194,18 @@
                                     <Label Content="{Binding FoundryPfad}" Padding="0,0,5,0" VerticalAlignment="Center" />
                                     <TextBox Text="{Binding MusikPfad}" Width="405" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
+
+                                <StackPanel Orientation="Horizontal" Margin="100,5,0,5" >
+                                    <Button Content="Export Playlists" Margin="0,0,10,0" Width="100" Command="{Binding OnBtnExportPlaylists}" />
+
+                                    <CheckBox x:Name="chkbxIsPlaylistsInKompendium" IsChecked="{Binding IsPlaylistsInKompendium}" VerticalAlignment="Center" Margin="50,0"
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+                                    <TextBox Text="{Binding PlaylistsKompendium}" Height="24"  Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsPlaylistsInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+
+                                </StackPanel>
+
+
                                 <CheckBox IsChecked="{Binding OverwritePlaylistFile}" Content="Vorhandene Foundry-Playlist-Datenbank überschreiben" />
                                 <CheckBox IsChecked="{Binding CopyTitelFile}" Content="Kopiere alle Musik-Dateien nach Foundry" />
                                 <Label Content="{Binding PlaylistStatus, UpdateSourceTrigger=PropertyChanged}" Height="30" />
@@ -184,7 +213,7 @@
                         </GroupBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Waffen" GotFocus="TabItem_GotFocus" >
+                <TabItem Header="Gegenstände" GotFocus="TabItem_GotFocus" >
                     <Grid Background="{StaticResource BackgroundMenu}">
 
                         <Grid.ColumnDefinitions>
@@ -199,7 +228,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <GroupBox Header="Waffen-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
+                        <GroupBox Header="Gegenstände-Export" Grid.ColumnSpan="3" Grid.Row="1" Margin="20,10">
                             <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80"/>
@@ -220,14 +249,35 @@
                                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0">
                                     <ComboBox ItemsSource="{Binding lstFolders}" SelectedItem="{Binding SelectedWaffenFolder}" DisplayMemberPath="name" Width="125"/>
                                     <Button Height="24" Width="24" ToolTip="Neues Verzeichnis erstellen" 
-                                            Command="{Binding OnBtnCreateFolder}" >
+                                            Command="{Binding OnBtnCreateFolder}" CommandParameter="Item" >
                                         <Image Source="/Images/Icons/General/add.png" />
                                     </Button>
                                 </StackPanel>
-                                <Button Content="Export Waffen" Margin="0,10,0,0" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Command="{Binding OnBtnExportWaffen}" />
 
-                                <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
+                                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="3" Margin="100,5,0,5" >
+                                    <Button Content="Export Gegenstände" Width="120" Command="{Binding OnBtnExportWaffen}" />
+
+                                    <CheckBox x:Name="chkbxIsWaffenInKompendium" IsChecked="{Binding IsWaffenInKompendium}" VerticalAlignment="Center" Margin="50,0"
+                                              Content="In Kompendium speichern" HorizontalAlignment="Left" />
+                                    <TextBox Text="{Binding WaffenKompendium}" Height="24"  Width="130" HorizontalAlignment="Left"
+                                         Visibility="{Binding ElementName=chkbxIsWaffenInKompendium, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                </StackPanel>
+
+                                <StackPanel  Grid.Row="5" Grid.ColumnSpan="4" >
+                                <CheckBox IsChecked="{Binding IncludeHandelsgut}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Handelsgüter" />
+                                    <CheckBox IsChecked="{Binding IncludeWaffe}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Nahkampfwaffen" />
+                                    <CheckBox IsChecked="{Binding IncludeFernkampfwaffe}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Fernkampfwaffen" />
+                                    <CheckBox IsChecked="{Binding IncludeSchild}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Schilde" />
+                                    <CheckBox IsChecked="{Binding IncludeRüstung}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5"
+                                              Content="Inkludiere Rüstungen" />
+
+                                    <CheckBox IsChecked="{Binding OverwritePictureFile}" Grid.Row="5" Grid.ColumnSpan="4" Margin="5,10"
                                               Content="Vorhandene Bilddateien überschreiben" />
+                                </StackPanel>
                             </Grid>
                         </GroupBox>
                     </Grid>

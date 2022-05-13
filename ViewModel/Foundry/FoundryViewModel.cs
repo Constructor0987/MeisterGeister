@@ -10,6 +10,9 @@ using MeisterGeister.Model;
 using MeisterGeister.View.General;
 //Eigene usings
 using MeisterGeister.Logic.Einstellung;
+using System.Windows.Forms;
+using System.Windows.Documents;
+using Newtonsoft.Json;
 
 namespace MeisterGeister.ViewModel.Foundry
 {
@@ -19,7 +22,792 @@ namespace MeisterGeister.ViewModel.Foundry
         //TODO:  Helden: Bars -Always visible, Lep, AsP
         //TODO:  Foundry Pfad vom User definierbar, read Options, set Web-Connection (lokal oder Inet auswählbar)
         //TODO:  SpielerScreen: Zeige WebBrowser
+        #region //---- Constante ----
 
+        private static string ErsetzeUmlaute(string s)
+        {
+            if (s == null)
+                return "";
+            s = s.Replace("ä", "ae");
+            s = s.Replace("ü", "ue");
+            s = s.Replace("ö", "oe");
+            s = s.Replace("ß", "ss");
+            return s.Replace("(", "").Replace(")", "").Replace(" ", "_").Replace("/", "_").ToLower();
+        }
+        public static string GetTalent_sid(string talent)
+        {
+            switch (talent)
+            {
+                case "Zweihandschwerter":
+                    return "talent-zweihandschwerter__saebel";
+                case "Zweihandsäbel":
+                    return "talent-zweihandschwerter__saebel";
+                case "Wurfbeile":
+                    return "talent-wurfbeile";
+                case "Peitsche":
+                    return "talent-peitsche";
+                case "Infanteriewaffen":
+                    return "talent-infanteriewaffen";
+                case "Wurfspeere":
+                    return "talent-wurfspeere";
+                case "Blasrohr":
+                    return "talent-blasrohr";
+                case "Ringen":
+                    return "talent-ringen";
+                case "Schleuder":
+                    return "talent-schleuder";
+                case "Diskus":
+                    return "talent-diskus";
+                case "Zweihandhiebwaffen":
+                    return "talent-zweihand_hiebwaffen";
+                case "Belagerungswaffen":
+                    return "talent-belagerungswaffen";
+                case "Raufen":
+                    return "talent-raufen";
+                case "Stäbe":
+                    return "talent-staebe";
+                case "Kettenstäbe":
+                    return "talent-kettenstaebe";
+                case "Lanzenreiten":
+                    return "talent-lanzenreiten";
+                case "Bogen":
+                    return "talent-bogen";
+                case "Kettenwaffen":
+                    return "talent-kettenwaffen";
+                case "Säbel":
+                    return "talent-saebel";
+                case "Hiebwaffen":
+                    return "talent-hiebwaffen";
+                case "Anderthalbhaender":
+                    return "talent-anderthalbhaender";
+                case "Fechtwaffen":
+                    return "talent-fechtwaffen";
+                case "Speere":
+                    return "talent-speere";
+                case "Dolche":
+                    return "talent-dolche";
+                case "Wurfmesser":
+                    return "talent-wurfmesser";
+                case "Zweihandflegel":
+                    return "talent-zweihandflegel";
+                case "Schwerter":
+                    return "talent-schwerter";
+                case "Armbrust":
+                    return "talent-armbrust";
+                default:
+                    return "talent-" + ErsetzeUmlaute(talent);
+            }
+        }
+        public static string GetCategory(string cat)
+        {
+            switch (cat)
+            {
+                case "Kampf":
+                    return "combat";
+                case "Körper":
+                    return "physical";
+                case "Handwerk":
+                    return "crafting";
+                case "Natur":
+                    return "nature";
+                case "Gabe":
+                    return "gift";
+                case "Wissen":
+                    return "knowledge";
+                case "Gesellschaft":
+                    return "social";
+                case "Liturgiekenntnis":
+                    return "ability-liturgiekenntnis";     //????
+                case "Ritualkenntnis":
+                    return "ability-ritualkenntnis";     //????
+                case "Meta":
+                    return "meta";       //????
+                case "Sprachen/Schriften":
+                    return "language";     //????
+                default:
+                    return cat.ToLower();
+            }
+        }
+        public static string GetAttribute(string cat)
+        {
+            switch (cat)
+            {
+                case "MU":
+                    return "courage";
+                case "KL":
+                    return "cleverness";
+                case "IN":
+                    return "intuition";
+                case "CH":
+                    return "charisma";
+                case "FF":
+                    return "agility";
+                case "GE":
+                    return "dexterity";
+                case "KO":
+                    return "constitution";
+                case "KK":
+                    return "strength";
+                default:
+                    return "";
+            }
+        }
+        public static string GetSF_sid(string sf)
+        {
+            if (sf == "Traumgänger I")
+                sf = "Traumgänger";
+            if (sf.StartsWith("Geländekunde") || sf.StartsWith("Kulturkunde") || sf.StartsWith("Schnellladen") || sf.StartsWith("Schnellziehen") || sf.StartsWith("Scharfschütze") ||
+                sf.StartsWith("Repräsentation")|| sf.StartsWith("Waffenloses Manöver")|| sf.StartsWith("Merkmalskenntnis")|| sf.StartsWith("Ritualkenntnis"))
+                sf = sf.Substring(0, sf.IndexOf(" ("));
+            if (sf.StartsWith("Elfenlied:")|| sf.StartsWith("Hexenfluch:"))
+                sf = sf.Substring(0, sf.IndexOf(":"));
+            switch (sf)
+            {
+                case "Ritualkenntnis":
+                    return "ability-ritualkenntnis";
+                case "Schildkampf II":
+                    return "ability-schildkampf-ii";
+                case "Ausweichen III":
+                    return "ability-ausweichen-iii";
+                case "Turnierreiterei":
+                    return "ability-turnierreiterei";
+                case "Ausfall":
+                    return "ability-ausfall";
+                case "Fälscher":
+                    return "ability-faelscher";
+                case "Hammerschlag":
+                    return "ability-hammerschlag";
+                case "Meisterliche Zauberkontrolle II":
+                    return "ability-meisterliche-zauberkontrolle-ii";
+                case "Standfest":
+                    return "ability-standfest";
+                case "Golembauer":
+                    return "ability-golembauer";
+                case "Matrixverständnis":
+                    return "ability-matrixverstaendnis";
+                case "Tierischer Begleiter":
+                    return "ability-tierischer-begleiter-";
+                case "Astrale Meditation":
+                    return "ability-astrale-meditation";
+                case "Regeneration II":
+                    return "ability-regeneration-ii";
+                case "Verbotene Pforten":
+                    return "ability-verbotene-pforten";
+                case "Defensiver Kampfstil":
+                    return "ability-defensiver-kampfstil";
+                case "Druidenrache":
+                    return "ability-druidenrache";
+                case "Berittener Schütze":
+                    return "ability-berittener-schuetze";
+                case "Exorzist":
+                    return "ability-exorzist";
+                case "Klingentänzer":
+                    return "ability-klingentaenzer";
+                case "Schnellziehen":
+                    return "ability-schnellziehen";
+                case "Elementarharmonisierte Aura":
+                    return "ability-elementarharmonisierte-aura";
+                case "Eiserner Wille II":
+                    return "ability-eiserner-wille-ii";
+                case "Stapeleffekt":
+                    return "ability-stapeleffekt";
+                case "Karmalqueste":
+                    return "ability-karmalqueste";
+                case "Waffenlose Kampftechnik (Bornländisch/Gossenstil)":
+                    return "ability-waffenlose-kampftechnik-bornlaendisch";
+                case "Salasandra":
+                    return "ability-salasandra";
+                case "Schamanistische":
+                    return "ability-schamanistische";
+                case "Elfenlied":
+                    return "ability-elfenlieder";
+                case "Schildkampf I":
+                    return "ability-schildkampf-i";
+                case "Semipermanenz I":
+                    return "ability-semipermanenz-i";
+                case "Matrixkontrolle":
+                    return "ability-matrixkontrolle";
+                case "Parierwaffen II":
+                    return "ability-parierwaffen-ii";
+                case "Parierwaffen I":
+                    return "ability-parierwaffen-i";
+                case "Invocatio Integra":
+                    return "ability-invocatio-integra";
+                case "Gedankenschutz":
+                    return "ability-gedankenschutz";
+                case "Spätweihe":
+                    return "ability-spaetweihe";
+                case "Rüstungsgewöhnung III":
+                    return "ability-ruestungsgewoehnung-iii";
+                case "Eiserner Wille I":
+                    return "ability-eiserner-wille-i";
+                case "Vertrautenbindung":
+                    return "ability-vertrautenbindung";
+                case "Ottagaldr, Nichtzauberer":
+                    return "ability-ottagaldr-nichtzauberer";
+                case "Schnellladen":
+                    return "ability-schnellladen";
+                case "Runenkunde":
+                    return "ability-runenkunde";
+                case "Kampf im Wasser":
+                    return "ability-kampf-im-wasser";
+                case "Beidhändiger Kampf II":
+                    return "ability-beidhaendiger-kampf-ii";
+                case "Betäubungsschlag":
+                    return "ability-betaeubungsschlag";
+                case "Hexenfluch":
+                    return "ability-hexenflueche-";
+                case "Zauberspezialisierung":
+                    return "ability-zauberspezialisierung";
+                case "Nandusgefälliges Wissen":
+                    return "ability-nandusgefaelliges-wissen";
+                case "Zauberkontrolle":
+                    return "ability-zauberkontrolle";
+                case "Waffenmeister":
+                    return "ability-waffenmeister";
+                case "Spießgespann":
+                    return "ability-spieszgespann";
+                case "Aufmerksamkeit":
+                    return "ability-aufmerksamkeit";
+                case "Druidische Herrschaftsrituale":
+                    return "ability-druidische-herrschaftsrituale";
+                case "Formation":
+                    return "ability-formation";
+                case "Wuchtschlag":
+                    return "ability-wuchtschlag";
+                case "Kristallomantische Rituale":
+                    return "ability-kristallomantische-rituale";
+                case "Linkhand":
+                    return "ability-linkhand";
+                case "Akklimatisierung Hitze":
+                    return "ability-akklimatisierung-hitze";
+                case "Befreiungsschlag":
+                    return "ability-befreiungsschlag";
+                case "Regeneration I":
+                    return "ability-regeneration-i";
+                case "Meisterliche Regeneration":
+                    return "ability-meisterliche-regeneration";
+                case "Kriegsreiterei":
+                    return "ability-kriegsreiterei";
+                case "Traumgänger":
+                    return "ability-traumgaenger";
+                case "Kugelzauber":
+                    return "ability-kugelzauber";
+                case "Waffenlose Kampftechnik (Hammerfaust)":
+                    return "ability-waffenlose-kampftechnik-hammerfaust";
+                case "Finte":
+                    return "ability-finte";
+                case "Nekromant":
+                    return "ability-nekromant";
+                case "Geschützmeister":
+                    return "ability-geschuetzmeister";
+                case "Waffenlose Kampftechnik (Unauer Schule)":
+                    return "ability-waffenlose-kampftechnik-unauer-schule";
+                case "Aura der Heiligkeit":
+                    return "ability-aura-der-heiligkeit";
+                case "Gegenhalten":
+                    return "ability-gegenhalten";
+                case "Ottagaldr, Zauberer":
+                    return "ability-ottagaldr-zauberer";
+                case "Blutmagie":
+                    return "ability-blutmagie";
+                case "Schuppenbeutel":
+                    return "ability-schuppenbeutel";
+                case "Binden":
+                    return "ability-binden";
+                case "Meisterliche Zauberkontrolle I":
+                    return "ability-meisterliche-zauberkontrolle-i";
+                case "Festnageln":
+                    return "ability-festnageln";
+                case "Kraftspeicher":
+                    return "ability-kraftspeicher";
+                case "Signaturkenntnis":
+                    return "ability-signaturkenntnis";
+                case "Vielfache Ladungen":
+                    return "ability-vielfache-ladungen";
+                case "Kontakt zum Großen Geist":
+                    return "ability-kontakt-zum-groszen-geist";
+                case "Odûns Gaben":
+                    return "ability-odns-gaben";
+                case "Lockeres Zaubern":
+                    return "ability-lockeres-zaubern";
+                case "Tanz der Mada":
+                    return "ability-tanz-der-mada";
+                case "Zauberzeichen":
+                    return "ability-zauberzeichen";
+                case "Zaubertänzer":
+                    return "ability-zaubertaenze";
+                case "Meister der Improvisation":
+                    return "ability-meister-der-improvisation";
+                case "Todesstoß":
+                    return "ability-todesstosz";
+                case "Repräsentation":
+                    return "ability-repraesentation";
+                case "Waffenlose Kampftechnik (Gladiatorenstil)":
+                    return "ability-waffenlose-kampftechnik-gladiatorenstil";
+                case "Trommelzauber":
+                    return "ability-trommelzauber-";
+                case "Matrixregeneration I":
+                    return "ability-matrixregeneration-i";
+                case "Höhere Dämonenbindung":
+                    return "ability-hoehere-daemonenbindung";
+                case "Ausweichen II":
+                    return "ability-ausweichen-ii";
+                case "Liturgiekenntnis":
+                    return "ability-liturgiekenntnis";
+                case "Schlangenring-Zauber":
+                    return "ability-schlangenringzauber";
+                case "Improvisierte Waffen":
+                    return "ability-improvisierte-waffen";
+                case "Meisterschütze":
+                    return "ability-meisterschuetze";
+                case "Geodenrituale":
+                    return "ability-geodenrituale-";
+                case "Beidhändiger Kampf I":
+                    return "ability-beidhaendiger-kampf-i";
+                case "Klingensturm":
+                    return "ability-klingensturm";
+                case "Dämonenbindung I":
+                    return "ability-daemonenbindung-i";
+                case "Simultanzaubern":
+                    return "ability-simultanzaubern";
+                case "Keulenrituale":
+                    return "ability-keulenrituale-";
+                case "Waffenloses Manöver":
+                    return "ability-waffenloses-manoever";
+                case "Zauber vereinigen":
+                    return "ability-zauber-vereinigen";
+                case "Unterwasserkampf":
+                    return "ability-unterwasserkampf";
+                case "Rüstungsgewöhnung I":
+                    return "ability-ruestungsgewoehnung-i";
+                case "Ortskenntnis":
+                    return "ability-ortskenntnis";
+                case "Waffenlose Kampftechnik (Mercenario)":
+                    return "ability-waffenlose-kampftechnik-mercenario";
+                case "Geber der Gestalt":
+                    return "ability-geber-der-gestalt";
+                case "Merkmalskenntnis":
+                    return "ability-merkmalskenntnis";
+                case "Zauberroutine":
+                    return "ability-zauberroutine";
+                case "Sturmangriff":
+                    return "ability-sturmangriff";
+                case "Zibilja-Rituale":
+                    return "ability-zibiljarituale";
+                case "Aura verhüllen":
+                    return "ability-aura-verhuellen";
+                case "Halbschwert":
+                    return "ability-halbschwert";
+                case "Akklimatisierung Kälte":
+                    return "ability-akklimatisierung-kaelte";
+                case "Chimärenmeister":
+                    return "ability-chimaerenmeister";
+                case "Geländekunde":
+                    return "ability-gelaendekunde";
+                case "Zauber bereithalten":
+                    return "ability-zauber-bereithalten";
+                case "Hypervehemenz":
+                    return "ability-hypervehemenz";
+                case "Waffenspezialisierung":
+                    return "ability-waffenspezialisierung";
+                case "Umreißen":
+                    return "ability-umreiszen";
+                case "Scharfschütze":
+                    return "ability-scharfschuetze";
+                case "Matrixregeneration II":
+                    return "ability-matrixregeneration-ii";
+                case "Berufsgeheimnis":
+                    return "ability-berufsgeheimnis";
+                case "Stabzauber":
+                    return "ability-stabzauber";
+                case "Waffe zerbrechen":
+                    return "ability-waffe-zerbrechen";
+                case "Zauber unterbrechen":
+                    return "ability-zauber-unterbrechen";
+                case "Gezielter Stich":
+                    return "ability-gezielter-stich";
+                case "Entwaffnen":
+                    return "ability-entwaffnen";
+                case "Kraftlinienmagie II":
+                    return "ability-kraftlinienmagie-ii";
+                case "Konzentrationsstärke":
+                    return "ability-konzentrationsstaerke";
+                case "Akoluth":
+                    return "ability-akoluth";
+                case "Eisenhagel":
+                    return "ability-eisenhagel";
+                case "Fernzauberei":
+                    return "ability-fernzauberei";
+                case "Gefäß der Sterne":
+                    return "ability-gefaesz-der-sterne";
+                case "Apport":
+                    return "ability-apport";
+                case "Meisterparade":
+                    return "ability-meisterparade";
+                case "Klingenwand":
+                    return "ability-klingenwand";
+                case "Liturgien":
+                    return "ability-liturgien";
+                case "Tod von links":
+                    return "ability-tod-von-links";
+                case "Kraftkontrolle":
+                    return "ability-kraftkontrolle";
+                case "Kampfreflexe":
+                    return "ability-kampfreflexe";
+                case "Schalenzauber":
+                    return "ability-schalenzauber";
+                case "Waffenlose Kampftechnik (Hruruzat)":
+                    return "ability-waffenlose-kampftechnik-hruruzat";
+                case "Bannschwert":
+                    return "ability-bannschwert";
+                case "Große Meditation":
+                    return "ability-grosze-meditation";
+                case "Blindkampf":
+                    return "ability-blindkampf";
+                case "Reiterkampf":
+                    return "ability-reiterkampf";
+                case "Talentspezialisierung":
+                    return "ability-talentspezialisierung";
+                case "Kulturkunde":
+                    return "ability-kulturkunde";
+                case "Kampfgespür":
+                    return "ability-kampfgespuer";
+                case "Doppelangriff":
+                    return "ability-doppelangriff";
+                case "Ausweichen I":
+                    return "ability-ausweichen-i";
+                case "Meisterliches Entwaffnen":
+                    return "ability-meisterliches-entwaffnen";
+                case "Aurapanzer":
+                    return "ability-aurapanzer";
+                case "Niederwerfen":
+                    return "ability-niederwerfen";
+                case "Semipermanenz II":
+                    return "ability-semipermanenz-ii";
+                case "Rosstäuscher":
+                    return "ability-rosstaeuscher";
+                case "Rüstungsgewöhnung II":
+                    return "ability-ruestungsgewoehnung-ii";
+                case "Druidische Dolchrituale":
+                    return "ability-druidische-dolchrituale";
+                case "Matrixgeber":
+                    return "ability-matrixgeber";
+                case "Schildspalter":
+                    return "ability-schildspalter";
+                case "Windmühle":
+                    return "ability-windmuehle";
+                case "Kraftlinienmagie I":
+                    return "ability-kraftlinienmagie-i";
+                case "Dämonenbindung II":
+                    return "ability-daemonenbindung-ii";
+                case "Form der Formlosigkeit":
+                    return "ability-form-der-formlosigkeit";
+                default:
+                    return "ability-" + ErsetzeUmlaute(sf);
+            }
+        }
+
+        public static string GetZauber_sid(string z)
+        {
+            switch (z)
+            {
+                case "Applicatus Zauberspeicher": return "spell-applicatus";
+                case "Murks und Patz": return "spell-murks-und-patz";
+                case "Aquasphaero": return "spell-aquasphaero";
+                case "Falkenauge Meisterschuss": return "spell-falkenauge";
+                case "Humofaxius Humusstrahl": return "spell-humofaxius";
+                case "Levthans Feuer": return "spell-levthans-feuer";
+                case "Heilkraft bannen": return "spell-heilkraft-bannen";
+                case "Manifesto Element": return "spell-manifesto";
+                case "Gedankenbilder Elfenruf": return "spell-gedankenbilder";
+                case "Skelettarius": return "spell-skelettarius";
+                case "Visibili Vanitar": return "spell-visibili";
+                case "Meister der Elemente": return "spell-meister-der-elemente";
+                case "Aquafaxius": return "spell-aquafaxius";
+                case "Verständigung stören": return "spell-verstaendigung-stoeren";
+                case "Beherrschung brechen": return "spell-beherrschung-brechen";
+                case "Lach dich gesund": return "spell-lach-dich-gesund";
+                case "Elementarbann": return "spell-elementarbann";
+                case "Ignifaxius Flammenstrahl": return "spell-ignifaxius";
+          //      case "Wand aus Erz": return "spell-wand-aus-gletscher";
+                case "Nebelwand und Morgendunst": return "spell-nebelwand";
+                case "Pestilenz erspüren": return "spell-pestilenz-erspueren";
+                case "Ignisphaero Feuerball": return "spell-ignisphaero";
+                case "Leib des Feuers": return "spell-leib-des-feuers";
+                case "Motoricus": return "spell-motoricus";
+                case "Transformatio Formgestalt": return "spell-transformatio";
+                case "Zorn der Elemente": return "spell-zorn-der-elemente";
+                case "Vogelzwitschern Glockenspiel": return "spell-vogelzwitschern";
+                case "Große Verwirrung": return "spell-grosze-verwirrung";
+                case "Staub wandle!": return "spell-staub-wandle";
+                case "Traumgestalt": return "spell-traumgestalt";
+                case "Adlerauge Luchsenohr": return "spell-adlerauge";
+                case "Band und Fessel": return "spell-band-und-fessel";
+                case "Tempus Stasis": return "spell-tempus-stasis";
+                case "Fulminictus Donnerkeil": return "spell-fulminictus";
+                case "Ängste lindern": return "spell-aengste-lindern";
+                case "Custodosigil Diebesbann": return "spell-custodosigil";
+                case "Zunge lähmen": return "spell-zunge-laehmen";
+                case "Tlalucs Odem Pestgestank": return "spell-tlalucs-odem";
+                case "Spurlos Trittlos": return "spell-spurlos";
+                case "Arcanovi Artefakt": return "spell-arcanovi-aufladbar";
+                case "Memorans Gedächtniskraft": return "spell-memorans";
+                case "Corpofrigo Kälteschock": return "spell-corpofrigo";
+                case "Böser Blick": return "spell-boeser-blick";
+                case "Foramen Foraminor": return "spell-foramen";
+        //        case "Destructibo Arcanitas": return "spell-aurarcania-deleatur";
+                case "Zagibu Ubigaz": return "spell-zagibu";
+                case "Wand aus Wogen": return "spell-wand-aus-wogen";
+                case "Tiere besprechen": return "spell-tiere-besprechen";
+                case "Pfeil der Luft": return "spell-pfeil-der-luft";
+                case "Invocatio maior": return "spell-invocatio-maior";
+                case "Archosphaero Erzball": return "spell-archophaero";
+                case "Caldofrigo heiß und kalt": return "spell-caldofrigo";
+                case "Blick in die Gedanken": return "spell-blick-in-die-gedanken";
+                case "Leib des Windes": return "spell-leib-des-windes";
+                case "Langer Lulatsch": return "spell-langer-lulatsch";
+                case "Aerogelo Atemqual": return "spell-aerogelo";
+                case "Krötensprung": return "spell-kroetensprung";
+                case "Serpentialis Schlangenleib": return "spell-serpentialis";
+                case "Mahlstrom": return "spell-mahlstrom";
+                case "Blick durch fremde Augen": return "spell-blick-durch-fremde-augen";
+                case "Sanftmut": return "spell-sanftmut";
+                case "Wipfellauf": return "spell-wipfellauf";
+                case "Eigne Ängste quälen dich!": return "spell-eigne-aengste";
+                case "Herr über das Tierreich": return "spell-herr-ueber-das-tierreich";
+                case "Totes handle!": return "spell-totes-handle";
+                case "Reversalis Revidum": return "spell-reversalis";
+                case "Transversalis Teleport": return "spell-transversalis";
+                case "Psychostabilis": return "spell-psychostabilis";
+                case "Metamagie neutralisieren": return "spell-metamagie-neutral";
+                case "Humosphaero Humusball": return "spell-humophaero";
+                case "Elfenstimme Flötenton": return "spell-elfenstimme";
+                case "Orcanofaxius Luftstrahl": return "spell-orcanofaxius";
+                case "Lunge des Leviatan": return "spell-lunge-des-leviatan";
+                case "Wellenlauf": return "spell-wellenlauf";
+                case "Objekt entzaubern": return "spell-objekt-entzaubern";
+                case "Tiergedanken": return "spell-tiergedanken";
+                case "Zaubernahrung Hungerbann": return "spell-zaubernahrung";
+                case "Dichter und Denker": return "spell-dichter-und-denker";
+                case "Delicioso Gaumenschmaus": return "spell-delicioso";
+                case "Unitatio Geistesbund": return "spell-unitatio";
+                case "Gardianum Zauberschild": return "spell-gardianum";
+                case "Sumus Elixiere": return "spell-sumus-elixiere";
+                case "Zauberzwang": return "spell-zauberzwang";
+                case "Große Gier": return "spell-grosze-gier";
+              //  case "Fortifex arkane Wand": return "spell-wand-aus-wind";
+                case "Pectetondo Zauberhaar": return "spell-pectetondo";
+                case "Weiße Mähn' und gold'ner Huf": return "spell-weisze-maehn";
+                case "Zwingtanz": return "spell-zwingtanz";
+                case "Klickeradomms": return "spell-klickeradomms";
+                case "Chamaelioni Mimikry": return "spell-chamaelioni";
+                case "Fortifex arkane Wand": return "spell-fortifex";
+                case "Magischer Raub": return "spell-magischer-raub";
+                case "Pfeil des Erzes": return "spell-pfeil-des-erzes";
+                case "Archofaxius Erzstrahl": return "spell-archofaxius";
+                case "Respondami": return "spell-respondami";
+                case "Invocatio minor": return "spell-invocatio-minor";
+                case "Memorabia Falsifir": return "spell-memorabia";
+                case "Schwarzer Schrecken": return "spell-schwarzer-schrecken";
+                case "Projektimago Ebenbild": return "spell-projektimago";
+                case "Herzschlag ruhe!": return "spell-herzschlag";
+                case "Aureolus Güldenglanz": return "spell-aureolus";
+                case "Blick aufs Wesen": return "spell-blick-aufs-wesen";
+                case "Bärenruhe Winterschlaf": return "spell-baerenruhe";
+                case "Ecliptifactus Schattenkraft": return "spell-ecliptifactus";
+                case "Flim Flam Funkel": return "spell-flim-flam";
+                case "Metamorpho Gletscherform": return "spell-metamorpho-gletscherform";
+                case "Herbeirufung vereiteln": return "spell-herbeirufung-vereiteln";
+                case "Harmlose Gestalt": return "spell-harmlose-gestalt";
+                case "Eisenrost und Patina": return "spell-eisenrost";
+                case "Hexengalle": return "spell-hexengalle";
+                case "Verwandlung beenden": return "spell-verwandlung-beenden";
+                case "Unberührt von Satinav": return "spell-unberuehrt-von-satinav";
+                case "Meister minderer Geister": return "spell-meister-mind-geister";
+                case "Lachkrampf": return "spell-lachkrampf";
+                case "Klarum Purum": return "spell-klarum-purum";
+                case "Hexenkrallen": return "spell-hexenkrallen";
+                case "Objectofixo": return "spell-objectofixo";
+                case "Axxeleratus Blitzgeschwind": return "spell-axxeleratus";
+                case "Windstille": return "spell-windstille";
+                case "Armatrutz": return "spell-armatrutz";
+                case "Metamorpho Felsenform": return "spell-metamorpho-felsenform";
+                case "Invercano Spiegeltrick": return "spell-invercano";
+                case "Unsichtbarer Jäger": return "spell-unsichtbarer-jaeger";
+                case "Dschinnenruf": return "spell-dschinnenruf";
+                case "Arachnea Krabbeltier": return "spell-arachnea";
+                case "Geisterbann": return "spell-geisterbann";
+                case "Analys Arkanstruktur": return "spell-analys";
+                case "Schelmenmaske": return "spell-schelmenmaske";
+                case "Objectovoco": return "spell-objectovoco";
+                case "Stein wandle!": return "spell-stein-wandle";
+                case "Bewegung stören": return "spell-bewegung-stoeren";
+                case "Illusion auflösen": return "spell-illusion-aufloesen";
+                case "Pentagramma Sphärenbann": return "spell-pentagramma";
+                case "Karnifilio Raserei": return "spell-karnifilo";
+                case "Krabbelnder Schrecken": return "spell-krabbelnder-schrecken";
+                case "Aerofugo Vakuum": return "spell-aerofugo";
+                case "Weihrauchwolke Wohlgeruch": return "spell-weihrauchwolke";
+                case "Hellsicht trüben": return "spell-hellsicht-trueben";
+                case "Solidirid Weg aus Licht": return "spell-solidirid";
+                case "Xenographus Schriftenkunde": return "spell-xenographus";
+                case "Seidenzunge Elfenwort": return "spell-seidenzunge";
+                case "Schelmenkleister": return "spell-schelmenkleister";
+                case "Pfeil des Feuers": return "spell-pfeil-des-feuers";
+                case "Reptilea Natternest": return "spell-reptilea";
+            //    case "Auris Nasus Oculus": return "spell-oculus";
+                case "Zauberklinge Geisterspeer": return "spell-zauberklinge";
+                case "Koboldgeschenk": return "spell-koboldgeschenk";
+                case "Firnlauf": return "spell-firnlauf";
+                case "Windhose": return "spell-windhose";
+                case "Kusch!": return "spell-kusch";
+                case "Holterdipolter": return "spell-holterdipolter";
+                case "Corpofesso Gliederschmerz": return "spell-corpofesso";
+                case "Eiseskälte Kämpferherz": return "spell-eiseskaelte";
+                case "Imperavi Handlungszwang": return "spell-imperavi";
+                case "Beschwörung vereiteln": return "spell-beschwoerung-vereiteln";
+                case "Exposami Lebenskraft": return "spell-exposami";
+                case "Horriphobus Schreckgestalt": return "spell-horriphobus";
+                case "Wand aus Erz": return "spell-wand-aus-erz";
+                case "Vipernblick": return "spell-vipernblick";
+                case "Schadenszauber bannen": return "spell-schadenszauber-bannen";
+                case "Menetekel Flammenschrift": return "spell-menetekel";
+                case "Aufgeblasen Abgehoben": return "spell-aufgeblasen";
+                case "Vocolimbo hohler Klang": return "spell-vocolimbo";
+                case "Radau": return "spell-radau";
+                case "Hilfreiche Tatze, rettende Schwinge": return "spell-hilfreiche-tatze";
+                case "Bannbaladin": return "spell-bannbaladin";
+                case "Orcanosphaero Orkanball": return "spell-orcanosphaero";
+                case "Iribaars Hand": return "spell-iribaars-hand";
+                case "Madas Spiegel": return "spell-madas-spiegel";
+                case "Pfeil des Humus": return "spell-pfeil-des-humus";
+                case "Eins mit der Natur": return "spell-eins-mit-der-natur";
+                case "Leib der Erde": return "spell-leib-der-erde";
+                case "Favilludo Funkentanz": return "spell-favilludo";
+                case "Stillstand": return "spell-stillstand";
+                case "Penetrizzel Tiefenblick": return "spell-penetrizzel";
+                case "Objecto Obscuro": return "spell-objecto-obscuro";
+                case "Immortalis Lebenszeit": return "spell-immortalis";
+                case "Juckreiz": return "spell-juckreiz-daemlicher";
+                case "Verschwindibus": return "spell-verschwindibus";
+                case "Seelentier erkennen": return "spell-seelentier-erkennen";
+                case "Panik überkomme euch!": return "spell-panik";
+                case "Auris Nasus Oculus": return "spell-auris-nasus";
+                case "Hexenholz": return "spell-hexenholz";
+                case "Körperlose Reise": return "spell-koerperlose-reise";
+                case "Pfeil des Eises": return "spell-pfeil-des-eises";
+                case "Nebelleib": return "spell-nebelleib";
+                case "Ruhe Körper, ruhe Geist": return "spell-ruhe-koerper";
+                case "Leidensbund": return "spell-leidensbund";
+                case "Sapefacta Zauberschwamm": return "spell-sapefacta";
+                case "Accuratum Zaubernadel": return "spell-accuratum";
+                case "Widerwille Ungemach": return "spell-widerwille";
+                case "Gefunden!": return "spell-gefunden";
+                case "Alpgestalt": return "spell-alpgestalt";
+                case "Claudibus Clavistibor": return "spell-claudibus";
+                case "Kulminatio Kugelblitz": return "spell-kulminatio";
+                case "Pandaemonium": return "spell-pandaemonium";
+                case "Schleier der Unwissenheit": return "spell-schleier-der-unwissenheit";
+                case "Hexenknoten": return "spell-hexenknoten";
+                case "Halluzination": return "spell-halluzination";
+                case "Chrononautos Zeitenfahrt": return "spell-chrononautos";
+                case "Dunkelheit": return "spell-dunkelheit";
+                case "Nuntiovolo Botenvogel": return "spell-nuntiovolo";
+                case "Tauschrausch": return "spell-tauschrausch";
+                case "Duplicatus Doppelbild": return "spell-duplicatus";
+                case "Seidenweich Schuppengleich": return "spell-seidenweich";
+                case "Plumbumbarum schwerer Arm": return "spell-plumbumbarum";
+                case "Blitz dich find": return "spell-blitz-dich-find";
+                case "Höllenpein zerreiße dich!": return "spell-hoellenpein";
+                case "Spinnenlauf": return "spell-spinnenlauf";
+                case "Leib des Eises": return "spell-leib-des-eises";
+                case "Aeolitus Windgebraus": return "spell-aeolitus";
+                case "Erinnerung verlasse dich!": return "spell-erinnerung-verlasse-dich";
+                case "Blendwerk": return "spell-blendwerk";
+                case "Salander Mutander": return "spell-salander";
+                case "Kraft des Erzes": return "spell-kraft-des-erzes";
+                case "Weisheit der Bäume": return "spell-weisheit";
+                case "Transmutare Körperform": return "spell-transmutare";
+                case "Chimaeroform Hybridgestalt": return "spell-chimaeroform";
+                case "Zauberwesen der Natur": return "spell-zauberwesen";
+                case "Protectionis Kontrabann": return "spell-protectionis";
+                case "Sensibar Empathicus": return "spell-sensibar";
+                case "Balsam Salabunde": return "spell-balsam";
+                case "Wasseratem": return "spell-wasseratem";
+                case "Impersona Maskenbild": return "spell-impersona";
+                case "Granit und Marmor": return "spell-granit";
+                case "Seelenwanderung": return "spell-seelenwanderung";
+                case "Movimento Dauerlauf": return "spell-movimento";
+                case "Eigenschaft wiederherstellen": return "spell-eigenschaften-wiederherstellen";
+                case "Paralysis starr wie Stein": return "spell-paralysis";
+                case "Lockruf und Feenfüße": return "spell-lockruf";
+                case "Attributo": return "spell-attributo";
+                case "Einfluss bannen": return "spell-einfluss-bannen";
+                case "Last des Alters": return "spell-last-des-alters";
+                case "Warmes Blut": return "spell-warmes-blut";
+                case "Katzenaugen": return "spell-katzenaugen";
+                case "Nihilogravo Schwerelos": return "spell-nihilogravo";
+                case "Gefäß der Jahre": return "spell-gefaesz-der-jahre";
+                case "Ignorantia Ungesehn": return "spell-ignorantia";
+                case "Schelmenlaune": return "spell-schelmenlaune";
+                case "Odem Arcanum": return "spell-odem";
+                case "Auge des Limbus": return "spell-auge-des-limbus";
+                case "Weiches erstarre!": return "spell-weiches-erstarre";
+                case "Hartes schmelze!": return "spell-hartes-schmelze";
+                case "Schwarz und Rot": return "spell-schwarz-und-rot";
+                case "Krähenruf": return "spell-kraehenruf";
+                case "Somnigravis tiefer Schlaf": return "spell-somnigravis";
+                case "Dämonenbann": return "spell-daemonenbann";
+                case "Haselbusch und Ginsterkraut": return "spell-haselbusch";
+                case "Adlerschwinge Wolfsgestalt": return "spell-adlerschwinge";
+                case "Hexenspeichel": return "spell-hexenspeichel";
+                case "Sensattacco Meisterstreich": return "spell-sensattacco";
+                case "Cryptographo Zauberschrift": return "spell-cryptographo";
+                case "Leib des Erzes": return "spell-leib-des-erzes";
+                case "Pfeil des Wassers": return "spell-pfeil-des-wassers";
+                case "Schabernack": return "spell-schabernack";
+                case "Papperlapapp": return "spell-papperlapapp";
+                case "Destructibo Arcanitas": return "spell-destructibo";
+                case "Hexenblick": return "spell-hexenblick";
+                case "Atemnot": return "spell-atemnot";
+                case "Elementarer Diener": return "spell-elementarer-diener";
+                case "Geisterruf": return "spell-geisterruf";
+                case "Nekropathia Seelenreise": return "spell-nekropathia";
+                case "Reflectimago Spiegelschein": return "spell-reflectimago";
+                case "Schelmenrausch": return "spell-schelmenrausch";
+                case "Blick in die Vergangenheit": return "spell-blick-in-die-vergangenheit";
+                case "Silentium": return "spell-silentium";
+                case "Frigifaxius Eisstrahl": return "spell-frigifaxius";
+                case "Limbus versiegeln": return "spell-limbus-versiegeln";
+                case "Standfest Katzengleich": return "spell-standfest";
+                case "Animatio stummer Diener": return "spell-animatio";
+                case "Wand aus Flammen": return "spell-wand-aus-flammen";
+                case "Infinitum Immerdar": return "spell-infinitum";
+                case "Desintegratus Pulverstaub": return "spell-desintegratus";
+                case "Abvenenum reine Speise": return "spell-abvenenum";
+                case "Nackedei": return "spell-nackedei";
+                case "Wand aus Dornen": return "spell-wand-aus-dornen";
+                case "Zappenduster": return "spell-zappenduster";
+                case "Veränderung aufheben": return "spell-veraenderung-aufheben";
+                case "Komm Kobold Komm": return "spell-komm-kobold-komm";
+                case "Fluch der Pestilenz": return "spell-fluch-der-pestilenz";
+                case "Planastrale Anderswelt": return "spell-planastrale";
+                case "Wettermeisterschaft": return "spell-wettermeisterschaft";
+                case "Leib der Wogen": return "spell-leib-der-wogen";
+                case "Koboldovision": return "spell-koboldovision";
+                case "Chronoklassis Urfossil": return "spell-chronoklassis";
+                case "Sinesigil unerkannt": return "spell-sinesigil";
+                case "Satuarias Herrlichkeit": return "spell-satuarias-herrlichkeit";
+                case "Adamantium Erzstruktur": return "spell-adamantium";
+                case "Frigisphaero Eisball": return "spell-frigosphaero";
+                case "Brenne toter Stoff!": return "spell-brenne-toter-stoff";
+
+                default:
+                    return "spell-" + ErsetzeUmlaute(z);
+            }
+        }
+        #endregion
         #region //---- Classes ----
         public class MyTimer
         {
@@ -46,11 +834,13 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+
         public class folder
         {
             public string name { get; set; }
             public string typ { get; set; }
             public string sorting { get; set; }
+            public string parent { get; set; }
             public string color { get; set; }
             public string _id { get; set; }
         }
@@ -62,6 +852,555 @@ namespace MeisterGeister.ViewModel.Foundry
             public string guidvalue { get; set; }
             public string wtype { get; set; }
             public string img { get; set; }
+        }
+
+        public class DSA41_KämpferTalent
+        {
+            public Guid _id { get; set; }
+            public string GMid { get; set; }
+            public string USERid { get; set; }
+            public string name { get; set; }
+            public string type { get; set; }
+            public string img { get; set; }
+            public bool isKampfTalent { get; set; }
+            public dat Data { get; set; }
+            public Held_Talent ht { get; set; }
+            public Held_Ausrüstung ha { get; set; }
+            public Held_Inventar hi { get; set; }
+            public Held_Sonderfertigkeit hsf { get; set; }
+            public Held_Zauber hz { get; set; }
+            public GegnerBase_Zauber gbz { get; set; }
+            public Held_VorNachteil hvn { get; set; }
+
+            public string shortInfo { get; set; }
+            public DSA41_KämpferTalent()
+            {
+                _id = Guid.NewGuid();
+            }
+
+            public string GetShortInfo()
+            {
+                isKampfTalent = true;
+                char A = (char)34;
+                string back = A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ":{";
+                back += A + "data" + A + ":{" + A + "combat" + A + ":{";
+                if (ht.HatAttacke)
+                    back += A + "attack" + A + ":" + Convert.ToString(ht.ZuteilungAT) + ",";
+                if (ht.HatParade)
+                    back += A + "parry" + A + ":" + Convert.ToString(ht.ZuteilungPA) + ",";
+                if (ht.HatFernkampf)
+                    back += A + "rangedAttack" + A + ":" + Convert.ToString(ht.Fernkampfwert) + ",";
+                back = back.TrimEnd(new Char[] { ',' });
+                back += "},";
+                back += A + "value" + A + ":" + (ht.TaW != null? ht.TaW.Value.ToString():"null") + "}},";
+
+                return back;            
+            }
+
+            public string GetLongInfoSF()
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + hsf.Sonderfertigkeit.Name + A + ",";
+                back += A + "type" + A + ":" + A + "specialAbility" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                string beschreibung = 
+                    (hsf.Sonderfertigkeit.Name.StartsWith("Geländekunde") || 
+                     hsf.Sonderfertigkeit.Name.StartsWith("Kulturkunde") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Schnellladen") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Schnellziehen")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Scharfschütze") ||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Repräsentation")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Waffenloses Manöver")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Merkmalskenntnis")||
+                     hsf.Sonderfertigkeit.Name.StartsWith("Ritualkenntnis")) ?
+                     hsf.Sonderfertigkeit.Name.Substring(hsf.Sonderfertigkeit.Name.IndexOf(" (")+1) :
+                    (hsf.Sonderfertigkeit.Name.StartsWith("Elfenlied:")|| hsf.Sonderfertigkeit.Name.StartsWith("Hexenfluch:")) ?
+                     hsf.Sonderfertigkeit.Name.Substring(hsf.Sonderfertigkeit.Name.IndexOf(":")+2) :
+                    hsf.Sonderfertigkeit.Voraussetzungen;
+
+                back += A + "description" + A + ":" + A + beschreibung + A + ",";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetSF_sid(hsf.Sonderfertigkeit.Name) + A + ",";
+                back += A + "type" + A + ":" + (hsf.Sonderfertigkeit.HatWert.HasValue && hsf.Sonderfertigkeit.HatWert.Value ? A + hsf.Wert + A : "null") + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoVN()
+            {
+                string VNname = hvn.VorNachteil.Name;
+                char A = (char)34;
+                if (hvn.Wert != null && hvn.Wert.Contains("("))
+                    VNname += " " + hvn.Wert.Substring(0, hvn.Wert.LastIndexOf("(") - 1);
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + VNname + A + ",";
+                back += A + "type" + A + ":" + A + (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value?"dis":"")+ "advantage" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                
+                back += A + "description" + A + ":" + A +  A + ",";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+
+                string b = (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value ? "dis" : "") +
+                    "advantage-" + ErsetzeUmlaute(VNname);
+                if (b.Contains("("))
+                {
+                    b = b.Substring(0, b.IndexOf("("));
+                    back += A + "value" + A + ":" + A + hvn.Wert + A + ",";
+                }
+                back += A + "sid" + A + ":" + A + b + A + ",";
+                back += A + "negativeAttribute" + A + ":" + (hvn.VorNachteil.Nachteil.HasValue && hvn.VorNachteil.Nachteil.Value ? "true" : "false") + ",";
+                if (!string.IsNullOrEmpty(hvn.Wert) && hvn.Wert.Contains("(") && hvn.Wert.Any(char.IsDigit))
+                    back += A + "value" + A + ":" + hvn.Wert.Substring(hvn.Wert.LastIndexOf("(") + 1, hvn.Wert.IndexOf(")") - hvn.Wert.LastIndexOf("(") - 1) + ",";
+                else
+                if (!string.IsNullOrEmpty(hvn.Wert) && hvn.VorNachteil.WertTyp?.ToLowerInvariant() == "int")
+                    back += A + "value" + A + ":" + hvn.Wert + ",";
+                else
+                    back += A + "value" + A + ":" + A + A + ",";
+
+                back += A + "type" + A + ":" +  "null" + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":0,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoAngriff41(int nummer)
+            {
+                Model.Zauber z = hz != null ? hz.Zauber : gbz != null ? gbz.Zauber : null;
+                if (z == null)
+                    return null;
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + z.Name + A + ",";
+                back += A + "type" + A + ":" + A + "spell" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + (hz!= null? hz.Bemerkung: gbz.Bemerkung) + A + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" + (z.Eigenschaft1 != null ? (A + GetAttribute(z.Eigenschaft1) + A) : "null") + ",";
+                back += A + "secondAttribute" + A + ":" + (z.Eigenschaft2 != null ? (A + GetAttribute(z.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (z.Eigenschaft3 != null ? (A + GetAttribute(z.Eigenschaft3) + A) : "null") + "},";
+                back += A + "castTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Zauberdauer??0) + ",";
+                back += A + "unit" + A + ":" + A+"Aktionen"+A + ",";
+                back += A + "info" + A + ":" + A+A + "},";
+                back += A + "effectTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Wirkungsdauer??"0") + ",";
+                back += A + "unit" + A + ":" + A + "Aktionen" + A + ",";
+                back += A + "info" + A + ":" + A + (z.Wirkungsradius??"0")+ A + "},";
+                back += A + "targetClasses" + A + ":[],";
+                back += A + "range" + A + ":" + A + (z.Reichweite??"0") + A + ",";
+                back += A + "technique" + A + ":" + A + A + ",";
+                back += A + "effect" + A + ":" + A + A + ",";
+                back += A + "variants" + A + ":[],";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetZauber_sid(z.Name) + A + ",";
+                back += A + "value" + A + ":" + (hz != null ? hz.ZfW: gbz.ZfW)+ ",";
+                back += A + "testMod" + A + ":null" + ",";
+                back += A + "astralCost" + A + ":" +A+(z.Kosten??"0")+A +",";
+                back += A + "modifications" + A + ":[],";
+                back += A + "lcdPage" + A + ":" + A+z.Literatur +A+ ",";
+                back += A + "reversalis" + A + ":" + A + A + ",";
+                back += A + "antimagic" + A + ":" + A + A + ",";
+                back += A + "properties" + A + ":[],";
+                back += A + "complexity" + A + ":" + A+z.Komplex + A + ",";
+                back += A + "representation" + A + ":" + A+z.Repräsentationen + A + ",";
+                back += A + "spread" + A + ":null" + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoZauber(int nummer)
+            {
+                Model.Zauber z = hz != null ? hz.Zauber : gbz != null ? gbz.Zauber : null;
+                if (z == null)
+                    return null;
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + z.Name + A + ",";
+                back += A + "type" + A + ":" + A + "spell" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + (hz!= null? hz.Bemerkung: gbz.Bemerkung) + A + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" + (z.Eigenschaft1 != null ? (A + GetAttribute(z.Eigenschaft1) + A) : "null") + ",";
+                back += A + "secondAttribute" + A + ":" + (z.Eigenschaft2 != null ? (A + GetAttribute(z.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (z.Eigenschaft3 != null ? (A + GetAttribute(z.Eigenschaft3) + A) : "null") + "},";
+                back += A + "castTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Zauberdauer??0) + ",";
+                back += A + "unit" + A + ":" + A+"Aktionen"+A + ",";
+                back += A + "info" + A + ":" + A+A + "},";
+                back += A + "effectTime" + A + ":{";
+                back += A + "duration" + A + ":" + (z.Wirkungsdauer??"0") + ",";
+                back += A + "unit" + A + ":" + A + "Aktionen" + A + ",";
+                back += A + "info" + A + ":" + A + (z.Wirkungsradius??"0")+ A + "},";
+                back += A + "targetClasses" + A + ":[],";
+                back += A + "range" + A + ":" + A + (z.Reichweite??"0") + A + ",";
+                back += A + "technique" + A + ":" + A + A + ",";
+                back += A + "effect" + A + ":" + A + A + ",";
+                back += A + "variants" + A + ":[],";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetZauber_sid(z.Name) + A + ",";
+                back += A + "value" + A + ":" + (hz != null ? hz.ZfW: gbz.ZfW)+ ",";
+                back += A + "testMod" + A + ":null" + ",";
+                back += A + "astralCost" + A + ":" +A+(z.Kosten??"0")+A +",";
+                back += A + "modifications" + A + ":[],";
+                back += A + "lcdPage" + A + ":" + A+z.Literatur +A+ ",";
+                back += A + "reversalis" + A + ":" + A + A + ",";
+                back += A + "antimagic" + A + ":" + A + A + ",";
+                back += A + "properties" + A + ":[],";
+                back += A + "complexity" + A + ":" + A+z.Komplex + A + ",";
+                back += A + "representation" + A + ":" + A+z.Repräsentationen + A + ",";
+                back += A + "spread" + A + ":null" + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoTalent(int nummer)
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + ht.Talent.Name + A + ",";
+                back += A + "type" + A + ":" + A + "talent" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + (string.IsNullOrEmpty(ht.Bemerkung) ? ("" + A + A) : ht.Bemerkung) + ",";
+                string typ = ht.Talent.Talenttyp == "Basis" ? "basic" : "special";
+                back += A + "type" + A + ":" + A + typ + A + ",";
+                back += A + "category" + A + ":" + A + GetCategory(ht.Talent.Talentgruppe.Kurzname) + A + ",";
+                back += A + "effectiveEncumbarance" + A + ":{";
+                back += A + "type" + A + ":" + A + "formula" + A + ",";
+                back += A + "formula" + A + ":" + A + (ht.Talent.IsBehinderung && ht.Talent.eBE != null? ht.Talent.eBE : "none") + A + "},";
+                back += A + "value" + A + ":" + ht.TaW + ",";
+                back += A + "test" + A + ":{";
+                back += A + "firstAttribute" + A + ":" +(ht.Talent.Eigenschaft1!= null?(A + GetAttribute(ht.Talent.Eigenschaft1) + A):"null") + ",";
+                back += A + "secondAttribute" + A + ":" + (ht.Talent.Eigenschaft2 != null ? (A + GetAttribute(ht.Talent.Eigenschaft2) + A) : "null") + ",";
+                back += A + "thirdAttribute" + A + ":" + (ht.Talent.Eigenschaft3 != null ? (A + GetAttribute(ht.Talent.Eigenschaft3) + A) : "null") + "},";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetTalent_sid(ht.Talent.Name) + A + "},";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "flags" + A + ":{},";
+                back += A + "img" + A + ":" + A + "icons/svg/mystery-man.svg" + A + ",";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0},";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                return back;
+            }
+
+            public string GetLongInfo(int nummer)
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + ht.Talent.Name + A + ",";
+                string typ = ht.Talent.Talentgruppe.Kurzname == "Kampf"? "combatTalent":"";
+                back += A + "type" + A + ":" + A + typ + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + ht.Bemerkung + A + ",";
+                typ = ht.Talent.Talenttyp == "Basis" ? "basic" :
+                    "special";
+                back += A + "type" + A + ":" + A + typ + A + ",";
+                back += A + "category" + A + ":" + A + "combat" + A + ",";
+                back += A + "effectiveEncumbarance" + A + ":{";
+                back += A + "type" + A + ":" + A + "formula" + A + ",";
+                back += A + "formula" + A + ":" + A + (ht.Talent.IsBehinderung? ht.Talent.eBE: "null") + A + "},";
+                back += A + "value" + A + ":" + ht.TaW + ",";
+                back += A + "isUniquelyOwnable" + A + ":" + "true" + ",";
+                back += A + "sid" + A + ":" + A + GetTalent_sid(ht.Talent.Name) + A + ",";
+                back += A + "combat" + A + ":{";
+                string cat = ht.Talent.Untergruppe == "Fernkampf" ? "ranged" :
+                    ht.Talent.Untergruppe == "Bewaffneter Nahkampf" ? "melee":
+                    ht.Talent.Untergruppe == "Waffenloser Kampf" ? "unarmed" :
+                    "special";
+                // unarmed armed ranged melee special
+                back += A + "category" + A + ":" + A + cat + A + ",";
+                back += A + "attack" + A + ":" +  Convert.ToString(ht.ZuteilungAT) + ","; //ht.Talent.ModifikatorenListeAT ???
+                back += A + "parry" + A + ":" + Convert.ToString(ht.HatFernkampf ? ht.Fertigkeitswert : ht.ZuteilungPA) + ",";
+                back += A + "rangedAttack" + A + ":" + Convert.ToString(ht.Fertigkeitswert) + "}},";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "flags" + A + ":{},";
+                back += A + "img" + A + ":" + A + "icons/svg/mystery-man.svg" + A + ",";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0},";
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+
+                return back;
+            }
+
+            public string GetLongInfoInventar(int nummer)
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A + hi.Inventar.Name.Replace(A.ToString(), "'") + A + ",";
+                back += A + "type" + A + ":" + A + "genericItem" + A + ",";
+                back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                back += A + "data" + A + ":{";
+                back += A + "description" + A + ":" + A + hi.Inventar.Gewicht +" Uz" + A + ",";
+                back += A + "isConsumable" + A + ":" + "false" + ",";
+                back += A + "quantity" + A + ":" + hi.Anzahl + "},";
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":null,";
+                back += A + "sort" + A + ":" + nummer + "00000,";
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+
+                back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+                return back;
+            }
+
+            public string GetLongInfoAusrüstung(int nummer, string folder, string InventarBemerkung = null)
+            {
+                char A = (char)34;
+
+                string back = "{" + A + "_id" + A + ":" + A + _id.ToString().Substring(19, 17).Replace("-", "") + A + ",";
+                back += A + "name" + A + ":" + A +ha.Name.Replace(A.ToString(),"'") + A + ",";
+
+                string typ =
+                    ha.Waffe != null ? "meleeWeapon" :
+                    ha.Held_Fernkampfwaffe != null ? "rangedWeapon" :
+                    ha.Held_Rüstung != null ? "armor" :
+                    ha.Schild != null ? "shield" :
+                    "genericItem";
+
+                back += A + "type" + A + ":" + A + typ + A + ",";
+
+                switch (typ)
+                {
+                    case "genericItem":
+                        back += A + "img" + A + ":" + A + "icons/svg/item-bag.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A+ InventarBemerkung + A + ",";
+                        back += A + "isConsumable" + A + ":" + "false" + ",";
+                        back += A + "quantity" + A + ":" + "0" + "},";
+                    break;
+                    case "meleeWeapon":
+                        back += A + "img" + A + ":" + A + "icons/svg/sword.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A + ha.Waffe.Bemerkung + A + ",";
+                        switch (ha.Waffe.Talent.FirstOrDefault().Name)
+                        {
+                            case "Zweihandschwerter/-säbel": back += A + "talent" + A + ":" + A + "talent-zweihandschwerter__saebel" + A + ",";
+                                break;
+                            case "Infanteriewaffen": back += A + "talent" + A + ":" + A + "talent-infanteriewaffen" + A + ",";
+                                break;
+                            case "Zweihand-Hiebwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-zweihand-Hiebwaffen" + A + ",";
+                                break;
+                            case "Stäbe":
+                                back += A + "talent" + A + ":" + A + "talent-staebe" + A + ",";
+                                break;
+                            case "Kettenstäbe":
+                                back += A + "talent" + A + ":" + A + "talent-kettenstaebe" + A + ",";
+                                break;
+                            case "Kettenwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-kettenwaffen" + A + ",";
+                                break;
+                            case "Säbel":
+                                back += A + "talent" + A + ":" + A + "talent-saebel" + A + ",";
+                                break;
+                            case "Hiebwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-hiebwaffen" + A + ",";
+                                break;
+                            case "Anderthalbhänder":
+                                back += A + "talent" + A + ":" + A + "talent-anderthalbhaender" + A + ",";
+                                break;
+                            case "Fechtwaffen":
+                                back += A + "talent" + A + ":" + A + "talent-fechtwaffen" + A + ",";
+                                break;
+                            case "Speere":
+                                back += A + "talent" + A + ":" + A + "talent-speere" + A + ",";
+                                break;
+                            case "Dolche":
+                                back += A + "talent" + A + ":" + A + "talent-dolche" + A + ",";
+                                break;
+                            case "Zweihandflegel":
+                                back += A + "talent" + A + ":" + A + "talent-zweihandflegel" + A + ",";
+                                break;
+                            case "Schwerter":
+                                back += A + "talent" + A + ":" + A + "talent-schwerter" + A + ",";
+                                break;
+                        }
+                        back += A + "damage" + A + ":" + A + ha.Waffe.TPString.Replace("W", "d") + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Waffe.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Waffe.Gewicht + ",";
+                        back += A + "length" + A + ":"  + (ha.Waffe.Länge??0) + ",";
+                        back += A + "strengthMod" + A + ":{";
+                        back += A + "threshold" + A + ":" + (ha.Waffe.TPKKSchwelle??0) + ",";
+                        back += A + "hitPointStep" + A + ":" + (ha.Waffe.TPKKSchritt??0) + "},";
+                        back += A + "breakingFactor" + A + ":" + (ha.Waffe.BF??0) + ",";
+                        back += A + "initiativeMod" + A + ":" + (ha.Waffe.INI??0) + ",";
+                        back += A + "weaponMod" + A + ":{";
+                        back += A + "attack" + A + ":" + (ha.Waffe.WMAT ?? 0) + ",";
+                        back += A + "parry" + A + ":" + (ha.Waffe.WMPA ?? 0) + "},";
+                        back += A + "distanceClass" + A + ":" + A + ha.Waffe.DK + A + ",";
+                        back += A + "twoHanded" + A + ":" + "false" + ",";
+                        back += A + "improvised" + A + ":" +  ha.Waffe.Improvisiert.ToString().ToLower() + ",";
+                        back += A + "priviledged" + A + ":" + "false" + "},";
+                    break;
+                    case "rangedWeapon":
+                        back += A + "img" + A + ":" + A + "icons/svg/net.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A + ha.Fernkampfwaffe.Bemerkung + A + ",";
+                        switch (ha.Fernkampfwaffe.Talent.FirstOrDefault()?.Name)
+                        {
+                            case "Wurfbeile": back += A + "talent" + A + ":" + A + "talent-wurfbeile" + A + ",";
+                                break;
+                            case "Wurfspeere": back += A + "talent" + A + ":" + A + "talent-wurfspeere" + A + ",";
+                                break;
+                            case "Blasrohr": back += A + "talent" + A + ":" + A + "talent-blasrohr" + A + ",";
+                                break;
+                            case "Schleuder": back += A + "talent" + A + ":" + A + "talent-schleuder" + A + ",";
+                                break;
+                            case "Diskus": back += A + "talent" + A + ":" + A + "talent-diskus" + A + ",";
+                                break;
+                            case "Belagerungswaffen": back += A + "talent" + A + ":" + A + "talent-belagerungswaffen" + A + ",";
+                                break;
+                            case "Bogen": back += A + "talent" + A + ":" + A + "talent-bogen" + A + ",";
+                                break;
+                            case "Wurfmesser": back += A + "talent" + A + ":" + A + "talent-wurfmesser" + A + ",";
+                                break;
+                            case "Armbrust": back += A + "talent" + A + ":" + A + "talent-armbrust" + A + ",";
+                                break;
+                            default: back += A + "talent" + A + ":" + A + "talent-bogen" + A + ",";
+                                break;
+                        }
+                        back += A + "damage" + A + ":" + A + ha.Fernkampfwaffe.TPString.Replace("W","d") + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Fernkampfwaffe.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Fernkampfwaffe.Gewicht + ",";
+                        back += A + "ranges" + A + ":{";
+                        back += A + "veryClose" + A + ":" + (ha.Fernkampfwaffe.TPSehrNah??0) + ",";
+                        back += A + "close" + A + ":" + (ha.Fernkampfwaffe.TPNah ?? 0) + ",";
+                        back += A + "medium" + A + ":" + (ha.Fernkampfwaffe.TPMittel ?? 0) + ",";
+                        back += A + "far" + A + ":" + (ha.Fernkampfwaffe.TPWeit ?? 0) + ",";
+                        back += A + "veryFar" + A + ":" + (ha.Fernkampfwaffe.TPSehrWeit ?? 0) + "},";
+                        back += A + "loadtime" + A + ":" + ha.Fernkampfwaffe.LadeZeit + ",";
+                        back += A + "projectilePrice" + A + ":" + (ha.Fernkampfwaffe.Munitionspreis??0).ToString().Replace(",",".") + ",";
+                        back += A + "loweredWoundThreshold" + A + ":" + ha.Fernkampfwaffe.Verwundend.ToString().ToLower() + ",";
+                        back += A + "improvised" + A + ":" + ha.Fernkampfwaffe.Improvisiert.ToString().ToLower() + ",";
+                        back += A + "entangles" + A + ":" + "false" + "},";
+                    break;
+
+                    case "armor":
+                        back += A + "img" + A + ":" + A + "icons/svg/statue.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A + ha.Rüstung.Bemerkung + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Rüstung.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Rüstung.Gewicht + ",";
+                        back += A + "equipped" + A + ":" + ha.Angelegt.ToString().ToLower() + ",";
+                        back += A + "armorClass" + A + ":" + (ha.Rüstung.RS?? 0) + ",";
+                        back += A + "encumbarance" + A + ":" + Convert.ToString(ha.Rüstung.gBE??0).Replace(",",".") + "},";
+                    break;
+                    case "shield":
+                        back += A + "img" + A + ":" + A + "icons/svg/shield.svg" + A + ",";
+                        back += A + "data" + A + ":{";
+                        back += A + "description" + A + ":" + A + ha.Schild.Bemerkung + A + ",";
+                        back += A + "price" + A + ":" + Math.Round(ha.Schild.Preis) + ",";
+                        back += A + "weight" + A + ":" + ha.Schild.Gewicht + ",";
+                        back += A + "type" + A + ":" + A + "???" + A + ",";
+                        back += A + "sizeClass" + A + ":" + A + ha.Schild.Größe + A + ",";
+                        back += A + "weaponMod" + A + ":{";
+                        back += A + "attack" + A + ":" + ha.Schild.WMAT  + ",";
+                        back += A + "parry" + A + ":" + ha.Schild.WMPA  + "},";
+                        back += A + "initiativeMod" + A + ":" + ha.Schild.INI + ",";
+                        back += A + "breakingFactor" + A + ":" + ha.Schild.BF + "},";
+                        break;
+                };
+                back += A + "effects" + A + ":[],";
+                back += A + "folder" + A + ":" + (folder == null ? "null" : A + folder + A) + ",";
+                back += A + "sort" + A + ":" +( nummer != 0?nummer + "00000,":"0,");
+                back += A + "permission" + A + ":{";
+                back += A + "default" + A + ":0,";
+
+                if (USERid != null)
+                    back += A + USERid + A + ":3,";
+                back += A + GMid + A + ":3},";
+                back += A + "flags" + A + ":{}},";
+
+                return back;
+            }
+
+            public class dat
+            {
+                public string description { get; set; }
+                public string type { get; set; }
+                public string category { get; set; }
+                public eE effectiveEncumbarance { get; set; }
+                public string value { get; set; }
+
+                public bool isUniquelyOwnable { get; set; }
+                public string sid { get; set; }
+                public com combat { get; set; }
+                public string effects { get; set; }
+                public string folder { get; set; }
+                public int sort { get; set; }
+                public per permission { get; set; }
+
+                public class eE
+                {
+                    public string type { get; set; }
+                    public string formular { get; set; }
+                }
+                public class com
+                {
+                    public string category { get; set; }
+                    public int attack { get; set; }
+                    public int parry { get; set; }
+                    public int rangedAttack { get; set; }
+                }
+                public class per
+                {
+                    public int Default { get; set; }
+                    public string gm { get; set; }
+                    public int gm_int { get; set; }
+                    public string user { get; set; }
+                    public int user_int { get; set; }
+                    public string flags { get; set; }
+                }
+            }
+
+
         }
 
         #endregion
@@ -104,12 +1443,84 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        private bool _startup = true;
+        public bool startup
+        {
+            get { return _startup; }
+            set { Set(ref _startup, value); }
+        }
+        private bool _includeHandelsgut = true;
+        public bool IncludeHandelsgut
+        {
+            get { return _includeHandelsgut; }
+            set { Set(ref _includeHandelsgut, value); }
+        }
+        private bool _includeWaffe = true;
+        public bool IncludeWaffe
+        {
+            get { return _includeWaffe; }
+            set { Set(ref _includeWaffe, value); }
+        }
+        private bool _includeFernkampfwaffe = true;
+        public bool IncludeFernkampfwaffe
+        {
+            get { return _includeFernkampfwaffe; }
+            set { Set(ref _includeFernkampfwaffe, value); }
+        }
+        private bool _includeSchild = true;
+        public bool IncludeSchild
+        {
+            get { return _includeSchild; }
+            set { Set(ref _includeSchild, value); }
+        }
+        private bool _includeRüstung = true;
+        public bool IncludeRüstung
+        {
+            get { return _includeRüstung; }
+            set { Set(ref _includeRüstung, value); }
+        }
+        private bool _isWaffenInKompendium = true;
+        public bool IsWaffenInKompendium
+        {
+            get { return _isWaffenInKompendium; }
+            set { Set(ref _isWaffenInKompendium, value); }
+        }
+
+        private bool _isPlaylistsInKompendium = true;
+        public bool IsPlaylistsInKompendium
+        {
+            get { return _isPlaylistsInKompendium; }
+            set { Set(ref _isPlaylistsInKompendium, value); }
+        }
+
+        private bool _isGegnerInKompendium = true;
+        public bool IsGegnerInKompendium
+        {
+            get { return _isGegnerInKompendium; }
+            set { Set(ref _isGegnerInKompendium, value); }
+        }
+
+        private bool _isHeldenInKompendium = true;
+        public bool IsHeldenInKompendium
+        {
+            get { return _isHeldenInKompendium; }
+            set { Set(ref _isHeldenInKompendium, value); }
+        }
+
+        private bool _doLoad = false;
+        public bool doLoad
+        {
+            get { return _doLoad; }
+            set { Set(ref _doLoad, value); }
+        }
+
         private bool _isLokalInstalliert = false;
         public bool IsLocalInstalliert
         {
             get { return _isLokalInstalliert; }
             set
             {
+                lstWorlds = new List<string>();
                 bool didChange = _isLokalInstalliert != value;
                 Set(ref _isLokalInstalliert, value);
                 if (!value)
@@ -493,7 +1904,7 @@ namespace MeisterGeister.ViewModel.Foundry
             set { Set(ref _representedName, value); }
         }
 
-        private bool _dsa41Version = false;
+        private bool _dsa41Version = true;
         public bool DSA41Version
         {
             get { return _dsa41Version; }
@@ -567,20 +1978,57 @@ namespace MeisterGeister.ViewModel.Foundry
         public folder SelectedWaffenFolder
         {
             get { return _selectedWaffenFolder; }
-            set { Set(ref _selectedWaffenFolder, value); }
+            set { Set(ref _selectedWaffenFolder, value);
+                if (value != null && string.IsNullOrEmpty(WaffenKompendium))
+                    WaffenKompendium = value.name;
+            }
         }
 
         private folder _selectedHeldenFolder = null;
         public folder SelectedHeldenFolder
         {
             get { return _selectedHeldenFolder; }
-            set { Set(ref _selectedHeldenFolder, value); }
+            set
+            {
+                Set(ref _selectedHeldenFolder, value);
+                if (value != null && string.IsNullOrEmpty(HeldenKompendium))
+                    HeldenKompendium = value.name;
+            }
         }
         private folder _selectedGegnerFolder = null;
         public folder SelectedGegnerFolder
         {
             get { return _selectedGegnerFolder; }
-            set { Set(ref _selectedGegnerFolder, value); }
+            set { Set(ref _selectedGegnerFolder, value);
+                if (value != null && string.IsNullOrEmpty(GegnerKompendium))
+                    GegnerKompendium = value.name;
+            }
+        }
+
+        private string _gegnerKompendium = null;
+        public string GegnerKompendium
+        {
+            get { return _gegnerKompendium; }
+            set { Set(ref _gegnerKompendium, value); }
+        }
+        private string _heldenKompendium = null;
+        public string HeldenKompendium
+        {
+            get { return _heldenKompendium; }
+            set { Set(ref _heldenKompendium, value); }
+        }
+        private string _playlistsKompendium = null;
+        public string PlaylistsKompendium
+        {
+            get { return _playlistsKompendium; }
+            set { Set(ref _playlistsKompendium, value); }
+        }
+
+        private string _waffenKompendium = null;
+        public string WaffenKompendium
+        {
+            get { return _waffenKompendium; }
+            set { Set(ref _waffenKompendium, value); }
         }
 
         private string _selectedWorld = null;
@@ -597,6 +2045,11 @@ namespace MeisterGeister.ViewModel.Foundry
                         GetActorFolders(string.Format(@"{0}worlds\{1}\data\folders.db", FoundryPfad, value));
                     else
                         GetActorFolders(string.Format("{0}worlds/{1}/data/folders.db", FoundryPfad, value));
+                    HeldenKompendium = null;
+                    GegnerKompendium = null;
+                    PlaylistsKompendium = null;
+                    WaffenKompendium = null;
+                    SelectedWaffenFolder = null;
                 }
             }
         }
@@ -706,6 +2159,7 @@ namespace MeisterGeister.ViewModel.Foundry
             TokenDisposition = lstTokenDisposition.Last();
 
             stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
+            startup = false;
         }
 
         private List<string> _stdPfad = new List<string>();
@@ -829,6 +2283,7 @@ namespace MeisterGeister.ViewModel.Foundry
                     string nameF = line.FirstOrDefault(t => t.StartsWith("\"name\":"));
                     string typF = line.FirstOrDefault(t => t.StartsWith("\"type\":"));
                     string sortingF = line.FirstOrDefault(t => t.StartsWith("\"sorting\":"));
+                    string parentF = line.FirstOrDefault(t => t.StartsWith("\"parent\":"));
                     string colorF = line.FirstOrDefault(t => t.StartsWith("\"color\":"));
                     string _idF = line.FirstOrDefault(t => t.StartsWith("\"_id\":"));
 
@@ -837,6 +2292,7 @@ namespace MeisterGeister.ViewModel.Foundry
                         name = nameF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         typ = typF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         sorting = sortingF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
+                        parent = parentF.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         color = colorF?.Split(new Char[] { ':' }).Last().Replace("\"", ""),
                         _id = _idF.Split(new Char[] { ':' }).Last().Replace("\"", "")
                     });
@@ -893,6 +2349,12 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
                 else
                 {
+                    if (startup)
+                        doLoad = ViewHelper.Confirm("Auf FTP-Adresse zugreifen?", "Soll versucht werden auf die vorherig gespeicherte FTP-Seite zuzugreifen:\n\n" +
+                        "FTP-Adresse:  " + FTPAdresse + "/config/options.json<\n" + "Pfad:   " + FoundryPfad + "\n"+
+                        "FTP-User:  "+FTPUser+"\nFPT-Password:  "+MachSterne(FTPPasswort));
+                    if (!doLoad)
+                        return null;
                     FtpWebRequest request = (FtpWebRequest)WebRequest.Create(filepath);
                     request.Method = WebRequestMethods.Ftp.DownloadFile;
                     request.Credentials = new NetworkCredential(FTPUser, FTPPasswort, "");
@@ -913,22 +2375,41 @@ namespace MeisterGeister.ViewModel.Foundry
                 return null;
             }
         }
+
+        private string MachSterne(string s)
+        {
+            string back = "";
+            bool jump = false;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (jump) back += s.Substring(i, 1); else back += "*";
+                jump = !jump;
+            }
+            return back;
+        }
         private string GetUserID(string filepath, string username)
         {
             char A = (char)34;
             string id = null;
-            string FileData = GetFileData(filepath);
-
-            if (FileData != null)
+            try
             {
-                List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
-                string uLine = lstFileData.FirstOrDefault(t => t.Contains(A + "name" + A + ":" + A + username + A));
-                string d = uLine.Substring(1, uLine.Length - 3);
-                List<string> line = d.Split(new Char[] { ',' }).ToList();
-                string _idF = line.FirstOrDefault(t => t.StartsWith(A + "_id" + A + ":"));
-                id = _idF.Substring(7, _idF.Length - 8);
+                string FileData = GetFileData(filepath);
+
+                if (FileData != null)
+                {
+                    List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
+                    string uLine = lstFileData.FirstOrDefault(t => t.Contains(A + "name" + A + ":" + A + username + A));
+                    if (uLine == null)
+                        return null;
+                    string d = uLine.Substring(1, uLine.Length - 3);
+                    List<string> line = d.Split(new Char[] { ',' }).ToList();
+                    string _idF = line.FirstOrDefault(t => t.StartsWith(A + "_id" + A + ":"));
+                    id = _idF.Substring(7, _idF.Length - 8);
+                }
+                return id;
             }
-            return id;
+            catch (Exception ex)
+            { return null; }
         }
 
         #endregion
@@ -961,7 +2442,11 @@ namespace MeisterGeister.ViewModel.Foundry
                 }
             }
             else
+            {
                 FoundryPfad = null;
+                if (startup)
+                    IsLocalInstalliert = true;
+            }
         }
         private void BildSpeichern(string bildDateiname, string WesenPfad, string MGPfad, List<string> lstFTPGegnerPics, List<string> lstDateienKopiert)
         {
@@ -1007,9 +2492,14 @@ namespace MeisterGeister.ViewModel.Foundry
                 {
                     if (IsLocalInstalliert)
                     {
-                        if (!File.Exists(FoundryPfad + srcCharFilename) || OverwritePictureFile)
+                        if (!File.Exists(FoundryPfad + WesenPfad.Replace("/", @"\") + srcCharFilename) || OverwritePictureFile)
                         {
-                            File.Copy(charBild, FoundryPfad + srcCharFilename, OverwritePictureFile);
+                            try
+                            {
+                                File.Copy(charBild, FoundryPfad + WesenPfad.Replace("/", @"\") + srcCharFilename, OverwritePictureFile);
+                            }
+                            catch (Exception)
+                            { }
                         }
                     }
                     else
@@ -1024,19 +2514,39 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id)
+        public static string FlowDocument_GetText(System.Windows.Documents.FlowDocument fd)
         {
-            List<dbArgument> lstArg = new List<dbArgument>();
-            char A = (char)34;
+            System.Windows.Documents.TextRange tr = new System.Windows.Documents.TextRange(fd.ContentStart, fd.ContentEnd);
+            return tr.Text;
+        }
 
-            //gArg.lstArguments = new List<dbArgument>();
+        private List<dbArgument> SetDSA41Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
+        {
+            char A = (char)34;
+            string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
+
+            List<dbArgument> lstArg = new List<dbArgument>();
+
             lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
             lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" : GetFilenamePortrait), Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "base" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "basicAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "courage" + A + ":{" + A + "value" + A + ":", ArgString = (g.MU ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "cleverness" + A + ":{" + A + "value" + A + ":", ArgString = (g.KL ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "intuition" + A + ":{" + A + "value" + A + ":", ArgString = (g.IN ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "charisma" + A + ":{" + A + "value" + A + ":", ArgString = (g.CH ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dexterity" + A + ":{" + A + "value" + A + ":", ArgString = (g.FF ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "agility" + A + ":{" + A + "value" + A + ":", ArgString = (g.GE ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "constitution" + A + ":{" + A + "value" + A + ":", ArgString = (g.KO).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "strength" + A + ":{" + A + "value" + A + ":", ArgString = (g.KK ?? 0).ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "resources" + A + ":{" });
+
+            lstArg.Add(new dbArgument { Prefix = A + "vitality" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
@@ -1044,157 +2554,218 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "karmicEnergy" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "astralEnergy" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "combatAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "active" + A + ":{" + A + "baseInitiative" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}}}," });
 
-            //Folder
-            if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
+            lstArg.Add(new dbArgument { Prefix = A + "baseAttack" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseParry" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseRangedAttack" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dodge" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "passive" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "magicResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.MRGeist.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "physicalResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (g.RS[Kampf.Logic.Trefferzone.Gesamt]).ToString(), Suffix = "}}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "movement" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.GS.ToString(), Suffix = "," + A + "unit" + A + ":" + A + "Schritt(" +(g.GS2??0)+"/"+(g.GS3??0)+")"+ A + "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "combatState" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "isArmed" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":", ArgString = A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":", ArgString = A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "unarmedTalent" + A + ":" + A + "null" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "race" + A + ":" + "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":" + "null", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "profession" + A + ":" + "null", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "social" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "social_status" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (g.SO ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "titles" + A + ":[]," });
+            lstArg.Add(new dbArgument { Prefix = A + "nobility" + A + ":" + "null", Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "appearance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "birthday" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "eye_colour" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "hair_colour" + A + ":" + A + A, Suffix = "," });
+
+            string outcome = g.Bemerkung??"";
+            outcome = outcome.Replace(A.ToString(), ((char)92).ToString() + ((char)34).ToString())
+                    .Replace(((char)9).ToString(), "  ")
+                    .Replace("\r\n", ((char)92).ToString() + ((char)110).ToString())
+                    .Replace(((char)13).ToString() , ((char)92).ToString() + ((char)110).ToString())
+                    .Replace(((char)10).ToString(), ((char)92).ToString() + ((char)110).ToString());
+            
+            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":" + A + (outcome) + A, Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "equiped" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" + A + "null" + A, Suffix = "}}," });
+
+            //Talent-Werte
+            lstArg.Add(new dbArgument { Prefix = A + "owned" + A + ":{" });
+
+            List<string> ZBAattackIDs = new List<string>();
+
+            //Spezielle Angriffe
+            if (g.GegnerBase_Angriff.Count > 0)
             {
-                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
+                string atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+                ZBAattackIDs.Add(atGuid);
+                lstArg.Add(new dbArgument { Prefix = A + atGuid + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "combat" + A + ":{" });
+                lstArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = "0", Suffix = "," });                    
+                lstArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = "0", Suffix = "}," });
+                lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = "0", Suffix = "}}," });
+
+                lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
             }
 
-            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
-
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-
-            //Portrait Image
-            lstArg.Add(new dbArgument
-            {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-                 GetFilenamePortrait),
-                Suffix = A + ","
-            });
+            lstArg.Add(new dbArgument { Prefix = "", Suffix = "}}," });
+            //ENDE Talent-werte
 
             lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-
-            //Token Image
-            lstArg.Add(new dbArgument
-            {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-                GetFilenameToken),
-                Suffix = A + ","
-            });
-
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" : GetFilenameToken), Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = g.TokenOversize == null ? "1" : Math.Round(g.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "rotation" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "0", Suffix = "," }); //360
             lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":", ArgString = A + id + A, Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-            lstArg.Add(new dbArgument { Prefix = "}" });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.vitality" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.astralEnergy" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorX" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorY" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "light" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "angle" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bright" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "coloration" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dim" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "gradual" + A + ":", ArgString = "true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "luminosity" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "saturation" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "contrast" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "shadows" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "animation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "reverse" + A + ":", ArgString = "false", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "darkness" + A + ":{", ArgString = A + "min" + A + ":0," + A + "max" + A + ":1", Suffix = "}}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[" });
+            
+            int no = 1;
+            foreach (GegnerBase_Zauber gbZ in g.GegnerBase_Zauber)
+            {
+                GegnerBase_Zauber gbZauber = new GegnerBase_Zauber();
+                DSA41_KämpferTalent KämpferT = new DSA41_KämpferTalent();
+                KämpferT.gbz = gbZ;
+                KämpferT.GMid = GMid;
+                KämpferT.USERid = "wEwtIaGkqxrjiQ8r";
+                lstArg.Add(new dbArgument { Prefix = KämpferT.GetLongInfoZauber(no) });
+                no++;
+            }
+
+            string primHand = null;
+            string secHand = null;
+            lstArg.AddRange(AddAngriffeArgument41(g, ZBAattackIDs, GMid, out primHand, out secHand));
+            if (g.GegnerBase_Angriff.Count > 0)
+            {
+                lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
+
+                try
+                {
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "isArmed" + A + ":").ArgString = "true";
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "primaryHand" + A + ":").ArgString = A + primHand + A;
+                    lstArg.FirstOrDefault(t => t.Prefix == A + "secondaryHand" + A + ":").ArgString = A + secHand + A;
+                }
+                catch { }
+            }
+
+            lstArg.Add(new dbArgument { Prefix = "", Suffix = "]," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+            if (SelectedGegnerFolder== null)
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+            else
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = A + SelectedGegnerFolder._id + A, Suffix = "," });   //welches Verzeichnis 
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (100000 + AnzChr).ToString(), Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{", ArgString = A + "default" + A + ":0," + A + GMid + A + ":3", Suffix = "}," });  //wer darf editieren
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", ArgString = A + "core" + A + ":{" + A + "sheetClass" + A + ":" + A + "dsa-4.1.DsaFourOneActorSheet" + A + "}", Suffix = "}}" });
+
 
             return lstArg;
-
         }
 
-        private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id)
+        private List<dbArgument> SetDSA41Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
         {
+            char A = (char)34;
+            string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
+            string Userid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), h.Spieler) ?? "wEwtIaGkqxrjiQ8r";
 
             List<dbArgument> lstArg = new List<dbArgument>();
-            char A = (char)34;
 
             lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
             lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-            lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" : GetFilenamePortrait), Suffix = A + "," });
+            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
+            lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "base" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "basicAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "courage" + A + ":{" + A + "value" + A + ":", ArgString = (h.MU ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "cleverness" + A + ":{" + A + "value" + A + ":", ArgString = (h.KL ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "intuition" + A + ":{" + A + "value" + A + ":", ArgString = (h.IN ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "charisma" + A + ":{" + A + "value" + A + ":", ArgString = (h.CH ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dexterity" + A + ":{" + A + "value" + A + ":", ArgString = (h.FF ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "agility" + A + ":{" + A + "value" + A + ":", ArgString = (h.GE ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "constitution" + A + ":{" + A + "value" + A + ":", ArgString = (h.KO ?? 0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "strength" + A + ":{" + A + "value" + A + ":", ArgString = (h.KK ?? 0).ToString(), Suffix = "}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "resources" + A + ":{" });
+
+            lstArg.Add(new dbArgument { Prefix = A + "vitality" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.LebensenergieAktuell.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.LebensenergieMax.ToString(), Suffix = "}," });
@@ -1202,306 +2773,234 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AusdauerAktuell.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AusdauerMax.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "karmicEnergy" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.KarmaenergieAktuell.ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.KarmaenergieMax.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "astralEnergy" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AstralenergieAktuell.ToString(), Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = h.AstralenergieMax.ToString(), Suffix = "}}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Geschwindigkeit.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Initiative(false).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.AT ?? 0).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.PA ?? 0).ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "combatAttributes" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "active" + A + ":{"+A+ "baseInitiative"+A+":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.InitiativeBasis.ToString(), Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "baseAttack" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.AttackeBasis.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseParry" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.ParadeBasis.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "baseRangedAttack" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.FernkampfBasis.ToString(), Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Wundschwelle.ToString(), Suffix = "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.MU ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KL ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.IN ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.CH ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.FF ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.GE ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KO ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (h.KK ?? 0).ToString() });
-            lstArg.Add(new dbArgument { Prefix = "}}}," });
+            lstArg.Add(new dbArgument { Prefix = A + "dodge" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Ausweichen.ToString(), Suffix = "}}," });
 
-            //Folder
-            if (SelectedHeldenFolder != null && !string.IsNullOrEmpty(SelectedHeldenFolder.name))
+            lstArg.Add(new dbArgument { Prefix = A + "passive" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "magicResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Magieresistenz.ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "physicalResistance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString =  h.BerechneRüstungswerte().ToString(), Suffix = "}}}," });  
+
+            lstArg.Add(new dbArgument { Prefix = A + "movement" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = h.Geschwindigkeit.ToString(), Suffix = ","+A+"unit"+A+":"+A+"Schritt"+A+"}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "combatState" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "isArmed" + A + ":true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" + A + "null" + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "unarmedTalent" + A + ":" + "null" , Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "race" + A + ":" +  "null" , Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "culture" + A + ":" + "null" , Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "profession" + A + ":" + "null", Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "social" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "social_status" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = (h.SO??0).ToString(), Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "titles" + A + ":[]," });
+            lstArg.Add(new dbArgument { Prefix = A + "nobility" + A + ":" + "null" , Suffix = "}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "appearance" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "weight" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "birthday" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "eye_colour" + A + ":" + A + A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "hair_colour" + A + ":" + A + A, Suffix = "," });
+
+            string outcome = null;
+            if (h.Notizen != null)
             {
-                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedHeldenFolder._id, Suffix = "\"," });
+                FlowDocument Document = System.Windows.Markup.XamlReader.Parse(h.Notizen) as FlowDocument;
+                outcome = FlowDocument_GetText(Document)
+                    .Replace(A.ToString(), ((char)92).ToString() + ((char)34).ToString())
+                    .Replace(((char)9).ToString(), "  ")
+                    .Replace("\r\n", ((char)92).ToString() + ((char)110).ToString());
             }
-            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "description" + A + ":" + A + outcome + A, Suffix = "}," });
 
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "equiped" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "primaryHand" + A + ":" +A+ "null"+A, Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "secondaryHand" + A + ":" +A+ "null"+A, Suffix = "}}," });
 
-            //Portrait Image
-            lstArg.Add(new dbArgument
+            //Talent-Werte
+            lstArg.Add(new dbArgument { Prefix = A + "owned" + A + ":{" });
+            List<DSA41_KämpferTalent> lstHeldT = new List<DSA41_KämpferTalent>();
+            foreach (Held_Talent ht in h.Kampftalente)
             {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-                 GetFilenamePortrait),
-                Suffix = A + ","
-            });
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.ht = ht;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstHeldT.Add(heldT);
+                lstArg.Add(new dbArgument { Prefix = heldT.GetShortInfo() });
+            }
+
+            foreach (Held_Talent ht in h.Held_Talent.Where(t => t.Talent.Talentgruppe.Kurzname != "Kampf"))
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.ht = ht;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstHeldT.Add(heldT);
+
+                lstArg.Add(new dbArgument { 
+                    Prefix = A + heldT._id.ToString().Substring(19, 17).Replace("-", "") + A + ":{", 
+                    ArgString= A + "data" + A + ":{" + A + "value" + A + ":"+ht.TaW, 
+                    Suffix="}},"
+                });
+            }
+            lstArg.Last().Suffix = lstArg.Last().Suffix.TrimEnd(new Char[] { ',' });
+            lstArg.Add(new dbArgument { Prefix = "",Suffix="}}," });
+            //ENDE Talent-werte
 
             lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}," });
             lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = h.Name, Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-
-            //Token Image
-            lstArg.Add(new dbArgument
-            {
-                Prefix = A + "img" + A + ":\"",
-                ArgString =
-                (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-                GetFilenameToken),
-                Suffix = A + ","
-            });
-
+            lstArg.Add(new dbArgument { Prefix = A + "img" + A + ":\"", ArgString = (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" : GetFilenameToken), Suffix = A + "," });
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = h.TokenOversize == null?"1":Math.Round(h.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "rotation" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "true", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "20", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "7", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "180", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "180", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "0", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
             lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":", ArgString = A+id+A, Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-            lstArg.Add(new dbArgument { Prefix = "}," });
-            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-            lstArg.Add(new dbArgument { Prefix = "}" });
+            lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.vitality" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = A + "attribute" + A + ":" + A + "base.resources.astralEnergy" + A, Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorX" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "mirrorY" + A + ":", ArgString = "false", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "light" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "alpha" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "angle" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "bright" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "coloration" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "dim" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "gradual" + A + ":", ArgString = "true", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "luminosity" + A + ":", ArgString = "0.5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "saturation" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "contrast" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "shadows" + A + ":", ArgString = "0", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "animation" + A + ":{" });
+            lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "reverse" + A + ":", ArgString = "false", Suffix = "}," });
+            lstArg.Add(new dbArgument { Prefix = A + "darkness" + A + ":{", ArgString =A+ "min"+A+":0,"+A+"max"+A+":1", Suffix = "}}}," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[" });
+            //Talente
+            int no = 1;
+
+            foreach (DSA41_KämpferTalent heldT in lstHeldT)
+            {
+                if (heldT.isKampfTalent)
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfo(no) }); 
+                else
+                {
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoTalent(no) });
+                }
+                no++;
+            }
+            foreach (Held_Sonderfertigkeit heldSF in h.Held_Sonderfertigkeit)
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.hsf = heldSF;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoSF() });
+            }
+            foreach (Held_VorNachteil heldVN in h.Held_VorNachteil)
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.hvn = heldVN;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoVN() });
+            }
+            foreach (Held_Zauber heldZ in h.Held_Zauber)
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.hz = heldZ;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoZauber(no) });
+                no++;
+            }
+
+            foreach (Held_Ausrüstung heldA in h.Held_Ausrüstung)
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.ha = heldA;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(no, null) });
+                no++;
+            }
+
+            foreach (Held_Inventar heldI in h.Held_Inventar)
+            {
+                DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                heldT.hi = heldI;
+                heldT.GMid = GMid;
+                heldT.USERid = Userid;
+                lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoInventar(no) });
+                no++;
+            }
+
+            lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+            //ENDE Talente
+            lstArg.Add(new dbArgument { Prefix ="",Suffix="]," });
+            lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+            if (SelectedHeldenFolder == null)
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+            else
+                lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString =A+ SelectedHeldenFolder._id+A, Suffix = "," });   //welches Verzeichnis 
+            lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = (100000+AnzChr).ToString(), Suffix = "," });
+
+            lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{", ArgString = 
+                A + "default" + A + ":0," +
+                A + GMid + A + ":3," +
+                A + Userid + A + ":3", Suffix = "}," });  //wer darf editieren
+            lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{",ArgString=A+"core"+A+":{"+A+ "sheetClass"+A+":"+A+ "dsa-4.1.DsaFourOneActorSheet" +A+"}", Suffix = "}}" });
+
 
             return lstArg;
-
-
-            //hArg.outcome = "";
-            //foreach (dbArgument arg in lstArg)
-            //{ hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-            //lstHeldArgument.Add(hArg);
-
-
-
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            ////gArg.lstArguments = new List<dbArgument>();
-            //lstArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = id, Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{\"default" + A + ":", ArgString = "0,\"3WHJiGe2LNC2VNeR" + A + ":", Suffix = "3}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "character", Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "data" + A + ":{\"biography" + A + ":\"", ArgString = "", Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "stats" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "health" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.LE.ToString(), Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.LE.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "endurance" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AU.ToString(), Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AU.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "astral" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AE.ToString(), Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.AE.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "karmal" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.KE.ToString(), Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "min" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "max" + A + ":", ArgString = g.KE.ToString(), Suffix = "}," });
-
-            //lstArg.Add(new dbArgument { Prefix = A + "magic_resistance" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = Math.Max(g.MRKörper.HasValue ? g.MRKörper.Value : 0, g.MRGeist).ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "INI" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.INIBasis.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "AT" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.AT.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "PA" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.PA.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "FK" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = g.FK.ToString(), Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "WS" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = ((int)g.KO / 2).ToString(), Suffix = "}" });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "attributes" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "MU" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.MU ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "KL" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KL ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "IN" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.IN ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "CH" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.CH ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "FF" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.FF ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "GE" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.GE ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "KO" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = g.KO.ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "KK" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "start" + A + ":", ArgString = "8", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "mod" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "current" + A + ":", ArgString = (g.KK ?? 0).ToString() });
-            //lstArg.Add(new dbArgument { Prefix = "}}}," });
-
-            ////Folder
-            //if (SelectedGegnerFolder != null && !string.IsNullOrEmpty(SelectedGegnerFolder.name))
-            //{
-            //    lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":\"", ArgString = SelectedGegnerFolder._id, Suffix = "\"," });
-            //}
-
-            //lstArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "100001", Suffix = "," });
-
-            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "core" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "sourceId" + A + ":\"", ArgString = "Compendium.world.dsa-gegner.KBxxxx0000000001", Suffix = A + "}" });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-
-            ////Portrait Image
-            //lstArg.Add(new dbArgument
-            //{
-            //    Prefix = A + "img" + A + ":\"",
-            //    ArgString =
-            //    (string.IsNullOrEmpty(GetFilenamePortrait) ? "icons/svg/mystery-man.svg" :
-            //     GetFilenamePortrait),
-            //    Suffix = A + ","
-            //});
-
-            //lstArg.Add(new dbArgument { Prefix = A + "token" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = g.Name, Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "displayName" + A + ":", ArgString = "0", Suffix = "," });
-
-            ////Token Image
-            //lstArg.Add(new dbArgument
-            //{
-            //    Prefix = A + "img" + A + ":\"",
-            //    ArgString =
-            //    (string.IsNullOrEmpty(GetFilenameToken) ? "icons/svg/mystery-man.svg" :
-            //    GetFilenameToken),
-            //    Suffix = A + ","
-            //});
-
-            //lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "brightSight" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "dimLight" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "brightLight" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "sightAngle" + A + ":", ArgString = "360", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "lightAngle" + A + ":", ArgString = "360", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "lightAlpha" + A + ":", ArgString = "1", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "lightAnimation" + A + ":{" });
-            //lstArg.Add(new dbArgument { Prefix = A + "speed" + A + ":", ArgString = "5", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "intensity" + A + ":", ArgString = "5" });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "actorId" + A + ":\"", ArgString = id, Suffix = A + "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "actorLink" + A + ":", ArgString = "false", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "disposition" + A + ":", ArgString = "-1", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "displayBars" + A + ":", ArgString = "0", Suffix = "," });
-            //lstArg.Add(new dbArgument { Prefix = A + "bar1" + A + ":{", ArgString = "", Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "bar2" + A + ":{", ArgString = "", Suffix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "randomImg" + A + ":", ArgString = "false", Suffix = "" });
-            //lstArg.Add(new dbArgument { Prefix = "}," });
-            //lstArg.Add(new dbArgument { Prefix = A + "items" + A + ":[", ArgString = "", Suffix = "]," });
-            //lstArg.Add(new dbArgument { Prefix = A + "effects" + A + ":[", ArgString = "", Suffix = "]" });
-            //lstArg.Add(new dbArgument { Prefix = "}" });
-
-            //return lstArg;
-
         }
-
 
         private List<dbArgument> AddGegnerArgument(string eigenschaft, string color, int? wert, string lastEigenschaft = ",")
         {
@@ -1687,12 +3186,10 @@ namespace MeisterGeister.ViewModel.Foundry
 
             return addArg;
         }
-        private List<dbArgument> AddAngriffeArgument(GegnerBase g)
+        private List<dbArgument> AddAngriffeArgument50(GegnerBase g)
         {
-
             List<dbArgument> addArg = new List<dbArgument>();
             char A = (char)34;
-
             if (g.GegnerBase_Angriff.Count > 0)
             {
                 g.GegnerBase_Angriff.ToList().ForEach(delegate (GegnerBase_Angriff ga)
@@ -1778,7 +3275,88 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             return addArg;
         }
-        private List<dbArgument> AddAngriffeArgument(Held h)
+
+
+        private List<dbArgument> AddAngriffeArgument41(GegnerBase g, List<string> ZBAattackIDs, string GMid, out string primHand, out string secHand)
+        {
+            string tmp_primHand = null;
+            string tmp_secHand = null;
+            List<dbArgument> addArg = new List<dbArgument>();
+            char A = (char)34;
+            string atGuid = null;
+            if (g.GegnerBase_Angriff.Count > 0)
+            {
+                atGuid = ZBAattackIDs.First();
+                addArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = atGuid, Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = "ZBA Attacke", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "combatTalent", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "icons/svg/mystery-man.svg", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "description" + A + ":\"", ArgString = "MG Attack_Export", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "basic", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "category" + A + ":\"", ArgString = "combat", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "effectiveEncumbarance" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "formula", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "formula" + A + ":\"", ArgString = "BE-4", Suffix = A + "}," });
+                addArg.Add(new dbArgument { Prefix = A + "value" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "isUniquelyOwnable" + A + ":", ArgString = "true", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "sid" + A + ":\"", ArgString = "talent-hiebwaffen", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "combat" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "category" + A + ":\"", ArgString = "melee", Suffix = A + "," });
+                addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "rangedAttack" + A + ":", ArgString = "-1", Suffix = "}}," });
+                addArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{" });
+                addArg.Add(new dbArgument { Prefix = A + "default" + A + ":", ArgString = "0", Suffix = "," });
+                addArg.Add(new dbArgument { Prefix = A + GMid + A + ":", ArgString = "3", Suffix = "}," });
+                addArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", ArgString = A+ "core"+A+":{"+A+"sourceId"+A+":"+A+"Compendium.dsa-4.1.combattalent.h2FZZhU6fCgwI31Q"+A, Suffix = "}}}," });
+                
+                g.GegnerBase_Angriff.ToList().ForEach(delegate (GegnerBase_Angriff ga)
+                {
+                    atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
+                    if (tmp_primHand == null) tmp_primHand = atGuid; else tmp_secHand = atGuid;
+                    addArg.Add(new dbArgument { Prefix = "{" + A + "_id" + A + ":\"", ArgString = atGuid, Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "name" + A + ":\"", ArgString = ga.Name.Trim(), Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "type" + A + ":\"", ArgString = "meleeWeapon", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "img" + A + ":", ArgString = A + "icons/svg/item-bag.svg", Suffix = A + "," });//systems/dsa5/icons/categories/ability_combat.webp
+                    addArg.Add(new dbArgument { Prefix = A + "data" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "description" + A + ":\"", ArgString = "MG Attack_Export", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "talent" + A + ":\"", ArgString = "talent-hiebwaffen", Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "damage" + A + ":\"", ArgString =(ga.TPWürfelAnzahl+"d"+ ga.TPWürfel + (ga.TPBonus>=0?"+":"-")+ ga.TPBonus), Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "price" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "weight" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "length" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "strengthMod" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "threshold" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "hitPointStep" + A + ":", ArgString = "999", Suffix =  "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "breakingFactor" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "initiativeMod" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "weaponMod" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "attack" + A + ":", ArgString = (ga.AT - g.AT).ToString(), Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "parry" + A + ":", ArgString = (ga.PA - g.PA).ToString(), Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "distanceClass" + A + ":\"", ArgString = ga.DK, Suffix = A + "," });
+                    addArg.Add(new dbArgument { Prefix = A + "twoHanded" + A + ":", ArgString = "false", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "improvised" + A + ":", ArgString = "false", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "priviledged" + A + ":", ArgString = "false", Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "effects" + A + ":", ArgString = "[]", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = "null", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "sort" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + "permission" + A + ":{" });
+                    addArg.Add(new dbArgument { Prefix = A + "default" + A + ":", ArgString = "0", Suffix = "," });
+                    addArg.Add(new dbArgument { Prefix = A + GMid + A + ":", ArgString = "3", Suffix = "}," });
+                    addArg.Add(new dbArgument { Prefix = A + "flags" + A + ":{", Suffix = "}}," });
+                });
+            }
+            primHand = tmp_primHand;
+            secHand = tmp_secHand;
+            return addArg;
+        }
+
+
+        private List<dbArgument> AddAngriffeArgument50(Held h)
         {
 
             List<dbArgument> addArg = new List<dbArgument>();
@@ -1972,7 +3550,7 @@ namespace MeisterGeister.ViewModel.Foundry
             return addArg;
         }
 
-        private List<dbArgument> SetDSA5Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id)
+        private List<dbArgument> SetDSA5Arguments(GegnerBase g, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr)
         {
             List<dbArgument> lstArg = new List<dbArgument>();
             char A = (char)34;
@@ -2091,7 +3669,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = "null", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = g.TokenOversize == null ? "1" : Math.Round(g.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
@@ -2132,7 +3710,7 @@ namespace MeisterGeister.ViewModel.Foundry
               Waffe:
              {"_id":"6BVLO6Q8311fc2OJ","name":"Heshthot-Peitsche*","type":"meleeweapon","data":{"price":{"value":0},"quantity":{"value":1},"weight":{"value":1},"effect":{"value":"1 Stufe Schmerz"},"description":{"value":"Erzielt der Heshthot mit der Peitsche SP, erhält sein Opfer pro Treffer eine Stufe Schmerz bis zum nächsten Sonnenaufgang."},"gmdescription":{"value":""},"damage":{"value":"1d6+1"},"atmod":{"value":0,"offhandMod":0},"pamod":{"value":0,"offhandMod":0},"reach":{"value":"long"},"damageThreshold":{"value":16},"guidevalue":{"value":"ff"},"combatskill":{"value":"Peitschen"},"worn":{"value":true,"offhand":false,"offHand":false},"structure":{"max":0,"value":0}},"sort":100000,"flags":{},"img":"icons/weapons/swords/greatsword-blue.webp","effects":[]}
               */
-            lstArg.AddRange(AddAngriffeArgument(g));
+            lstArg.AddRange(AddAngriffeArgument50(g));
             lstArg.AddRange(AddZauberArgument(g));
 
             string atGuid = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
@@ -2171,7 +3749,7 @@ namespace MeisterGeister.ViewModel.Foundry
 
         }
 
-        private List<dbArgument> SetDSA5Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id)
+        private List<dbArgument> SetDSA5Arguments(Held h, string GetFilenamePortrait, string GetFilenameToken, string id, int AnzChr )
         {
             List<dbArgument> lstArg = new List<dbArgument>();
             char A = (char)34;
@@ -2301,7 +3879,7 @@ namespace MeisterGeister.ViewModel.Foundry
             lstArg.Add(new dbArgument { Prefix = A + "tint" + A + ":", ArgString = A + "" + A, Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "width" + A + ":", ArgString = "1", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "height" + A + ":", ArgString = "1", Suffix = "," });
-            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = "1", Suffix = "," });
+            lstArg.Add(new dbArgument { Prefix = A + "scale" + A + ":", ArgString = h.TokenOversize == null ? "1" : Math.Round(h.TokenOversize.Value, 1).ToString(), Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "lockRotation" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "vision" + A + ":", ArgString = "false", Suffix = "," });
             lstArg.Add(new dbArgument { Prefix = A + "dimSight" + A + ":", ArgString = "0", Suffix = "," });
@@ -2339,7 +3917,7 @@ namespace MeisterGeister.ViewModel.Foundry
               Waffe:
              {"_id":"6BVLO6Q8311fc2OJ","name":"Heshthot-Peitsche*","type":"meleeweapon","data":{"price":{"value":0},"quantity":{"value":1},"weight":{"value":1},"effect":{"value":"1 Stufe Schmerz"},"description":{"value":"Erzielt der Heshthot mit der Peitsche SP, erhält sein Opfer pro Treffer eine Stufe Schmerz bis zum nächsten Sonnenaufgang."},"gmdescription":{"value":""},"damage":{"value":"1d6+1"},"atmod":{"value":0,"offhandMod":0},"pamod":{"value":0,"offhandMod":0},"reach":{"value":"long"},"damageThreshold":{"value":16},"guidevalue":{"value":"ff"},"combatskill":{"value":"Peitschen"},"worn":{"value":true,"offhand":false,"offHand":false},"structure":{"max":0,"value":0}},"sort":100000,"flags":{},"img":"icons/weapons/swords/greatsword-blue.webp","effects":[]}
               */
-            lstArg.AddRange(AddAngriffeArgument(h));
+            lstArg.AddRange(AddAngriffeArgument50(h));
             lstArg.AddRange(AddZauberArgument(h));
 
             //Add all Talente
@@ -2434,58 +4012,70 @@ namespace MeisterGeister.ViewModel.Foundry
 
         public void GetGegnerData()
         {
-            lstGegnerArgument.Clear();
-            MyTimer.start_timer();
-            List<string> lstPicKopiert = new List<string>();
-            List<string> lstTokenKopiert = new List<string>();
-            string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
-
-            List<string> lstFTPGegnerPics = new List<string>();
-            if (!IsLocalInstalliert)
+            Global.SetIsBusy(true, "Gegner werden exportiert");
+            try
             {
-                List<string> list = new List<string>();
-                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
-                ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
-                lstFTPGegnerPics = list;
+                lstGegnerArgument.Clear();
+                MyTimer.start_timer();
+                List<string> lstPicKopiert = new List<string>();
+                List<string> lstTokenKopiert = new List<string>();
+                string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+                List<string> lstFTPGegnerPics = new List<string>();
+                if (!IsLocalInstalliert)
+                {
+                    List<string> list = new List<string>();
+                    NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                    ListFtpDirectory(FoundryPfad + GegnerPortraitPfad, "", false, credentials, list);
+                    lstFTPGegnerPics = list;
+                }
+                int AnzChr = 1001;
+                foreach (GegnerBase g in lstGegnerBase)
+                {
+                    Global.SetIsBusy(true, "Exportiere: " + g.Name);
+                    BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
+                    BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
+
+                    string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
+                    //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
+                    string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
+
+                    //char A = (char)34; // (new Char[] { '"' });
+                    //                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
+                    string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
+
+                    GegnerArgument gArg = new GegnerArgument();
+                    gArg.g = g;
+                    gArg.lstArguments = new List<dbArgument>();
+                    if (DSA41Version)
+                        gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    else
+                        gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    AnzChr++;
+                    gArg.outcome = "";
+                    foreach (dbArgument arg in gArg.lstArguments)
+                    { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
+
+                    lstGegnerArgument.Add(gArg);
+                }
+                MyTimer.stop_timer("Gegner-DB-Argument");
+                Global.SetIsBusy(false);
             }
-            foreach (GegnerBase g in lstGegnerBase)
+            catch (Exception ex)
             {
-                BildSpeichern(g.Bild, GegnerPortraitPfad, MGPfad, lstFTPGegnerPics, lstPicKopiert);
-                BildSpeichern(g.Bild, GegnerTokenPfad, MGPfad, lstFTPGegnerPics, lstTokenKopiert);
 
-                string GetFilenamePortrait = string.IsNullOrEmpty(g.Bild) ? null : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
-                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(g.Bild) ? GetFilenamePortrait : (GegnerPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(g.Bild));
-
-                //char A = (char)34; // (new Char[] { '"' });
-                //                       //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                string id = g.GegnerBaseGUID.ToString().Substring(19, 17).Replace("-", "");
-
-                GegnerArgument gArg = new GegnerArgument();
-                gArg.g = g;
-                gArg.lstArguments = new List<dbArgument>();
-                if (DSA41Version)
-                    gArg.lstArguments.AddRange(SetDSA41Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
-                else
-                    gArg.lstArguments.AddRange(SetDSA5Arguments(g, GetFilenamePortrait, GetFilenameToken, id));
-                gArg.outcome = "";
-                foreach (dbArgument arg in gArg.lstArguments)
-                { gArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-                lstGegnerArgument.Add(gArg);
+                Global.SetIsBusy(false);
             }
-            MyTimer.stop_timer("Gegner-DB-Argument");
         }
 
 
-        public void GetWaffenData()
+        public void GetWaffenData_DSA50()
         {
             List<dbArgument> lstWaffen = new List<dbArgument>();
             lstWaffenArgument.Clear();
             MyTimer.start_timer();
 
             string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
-
 
             int i = 100001;
             string wname = "";
@@ -2545,51 +4135,187 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
-        public void GetHeldenData()
+        public void GetWaffenData_DSA41()
         {
-            lstHeldArgument.Clear();
+            char A = (char)34;
+            List<dbArgument> lstWaffen = new List<dbArgument>();
+            lstWaffenArgument.Clear();
             MyTimer.start_timer();
 
-            List<string> lstPicKopiert = new List<string>();
-            List<string> lstTokenKopiert = new List<string>();
             string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+            string wname = "";
+            List<dbArgument> lstArg = new List<dbArgument>();
 
-            List<string> lstFTPHeldenPics = new List<string>();
-            if (!IsLocalInstalliert)
+            string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
+
+            string folderID = SelectedWaffenFolder == null ? "null" : (SelectedWaffenFolder._id);
+            //Klappt nicht ?!?
+            //folder f = lstFolders.FirstOrDefault(t => t.name == "Fernkampfwaffen" && t.parent == folderID && t.typ == "JournalEntry");            
+            //if (f == null)
+            //    folderID = DoCreateFolder("Fernkampfwaffen", folderID, "JournalEntry", "#816a6a");
+            //lstArg.Add(new dbArgument { Prefix = A + "folder" + A + ":", ArgString = folderID, Suffix = "," });
+
+            if (IncludeHandelsgut)
+                foreach (Handelsgut hg in Global.ContextHandelsgut.HandelsgüterListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = hg.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    //newHA.Held_BFAusrüstung.Held_Ausrüstung = new Held_Ausrüstung() { new Ausrüstung(){
+                    //    Bemerkung = hg.Bemerkung + @"\n" + (hg.Gewicht != null ? hg.Gewicht.Value + " Uz" : ""),
+                    //    Gewicht = Convert.ToInt32(hg.Gewicht != null ? hg.Gewicht.Value : 1) }};
+
+
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                   
+                    heldT.ha.Name = hg.Name;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID, hg.Bemerkung + @"\n" + (hg.Gewicht != null ? hg.Gewicht.Value + " Uz" : "")) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+
+            if (IncludeWaffe)
+                foreach (Waffe w in Global.ContextInventar.WaffeListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = w.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    newHA.Held_BFAusrüstung.Held_Waffe = new Held_Waffe() { Waffe = w };
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+
+            if (IncludeFernkampfwaffe)
+                foreach (Fernkampfwaffe fern in Global.ContextInventar.FernkampfwaffeListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = fern.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_Fernkampfwaffe = new Held_Fernkampfwaffe();
+                    newHA.Held_Fernkampfwaffe.Fernkampfwaffe = fern;
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+
+            if (IncludeSchild)
+                foreach (Schild s in Global.ContextInventar.SchildListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = s.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+                    newHA.Held_BFAusrüstung = new Held_BFAusrüstung();
+                    newHA.Held_BFAusrüstung.Schild = s;
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+
+            if (IncludeRüstung)
+                foreach (Rüstung r in Global.ContextInventar.RuestungListe)
+                {
+                    GegenstandArgument newGeg = new GegenstandArgument();
+                    newGeg.name = r.Name;
+                    Held_Ausrüstung newHA = new Held_Ausrüstung();
+
+                    DSA41_KämpferTalent heldT = new DSA41_KämpferTalent();
+                    newHA.Held_Rüstung = new Held_Rüstung() { Rüstung = r } ;
+                    heldT.ha = newHA;
+                    heldT.GMid = GMid;
+                    heldT.USERid = null;
+                    lstArg.Add(new dbArgument { Prefix = heldT.GetLongInfoAusrüstung(0, folderID) });
+                    lstArg.Last().Prefix = lstArg.Last().Prefix.TrimEnd(new Char[] { ',' });
+
+                    string outc = lstArg.Last().Prefix;
+                    lstWaffenArgument.Add(new GegenstandArgument() { name = newGeg.name, lstArguments = lstArg, outcome = outc });
+                }
+        }
+
+
+        public void GetHeldenData()
+        {
+            Global.SetIsBusy(true, "Exportiere Helden");
+            try
             {
-                List<string> list = new List<string>();
-                NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
-                ListFtpDirectory(FoundryPfad + HeldPortraitPfad, "", false, credentials, list);
-                lstFTPHeldenPics = list;
-            }
+                lstHeldArgument.Clear();
+                MyTimer.start_timer();
 
-            foreach (Held h in Global.ContextHeld.HeldenGruppeListe.Where(t => t.AktiveHeldengruppe.Value))
+                List<string> lstPicKopiert = new List<string>();
+                List<string> lstTokenKopiert = new List<string>();
+                string MGPfad = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\";
+
+                List<string> lstFTPHeldenPics = new List<string>();
+                if (!IsLocalInstalliert)
+                {
+                    List<string> list = new List<string>();
+                    NetworkCredential credentials = new NetworkCredential(FTPUser, FTPPasswort);
+                    ListFtpDirectory(FoundryPfad + HeldPortraitPfad, "", false, credentials, list);
+                    lstFTPHeldenPics = list;
+                }
+                int AnzChr = 1;
+                foreach (Held h in Global.ContextHeld.HeldenGruppeListe.Where(t => t.AktiveHeldengruppe.Value))
+                {
+                    Global.SetIsBusy(true, "Exportiere: " + h.Name);
+                    BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
+                    BildSpeichern(h.Token, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
+
+                    string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
+                    string GetFilenameToken = string.IsNullOrEmpty(h.Token) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Token));
+
+                    char A = (char)34;
+                    string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
+
+                    HeldenArgument hArg = new HeldenArgument();
+                    hArg.h = h;
+                    hArg.lstArguments = new List<dbArgument>();
+                    if (DSA41Version)
+                        hArg.lstArguments.AddRange(SetDSA41Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    else
+                        hArg.lstArguments.AddRange(SetDSA5Arguments(h, GetFilenamePortrait, GetFilenameToken, id, AnzChr));
+                    AnzChr++;
+                    hArg.outcome = "";
+                    foreach (dbArgument arg in hArg.lstArguments)
+                    { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
+
+                    lstHeldArgument.Add(hArg);
+                }
+                MyTimer.stop_timer("Helden-DB-Argument");
+                Global.SetIsBusy(false);
+            }
+            catch (Exception ex)
             {
-                BildSpeichern(h.Bild, HeldPortraitPfad, MGPfad, lstFTPHeldenPics, lstPicKopiert);
-                BildSpeichern(h.Bild, HeldTokenPfad, MGPfad, lstFTPHeldenPics, lstTokenKopiert);
-
-                string GetFilenamePortrait = (string.IsNullOrEmpty(h.Bild) ? null : (HeldPortraitPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild)));
-                //Todo: muss auf g.Token abgeändert werden, sobald Token DB vorhanden & GegnerTokenPfad
-                string GetFilenameToken = string.IsNullOrEmpty(h.Bild) ? GetFilenamePortrait : (HeldTokenPfad.Replace(@"\", "/") + System.IO.Path.GetFileName(h.Bild));
-
-                char A = (char)34; // (new Char[] { '"' });
-                //4e1d3250-f700-3000-0001-387712958942  => 0001387712958942
-                string id = h.HeldGUID.ToString().Substring(19, 17).Replace("-", "");
-
-                HeldenArgument hArg = new HeldenArgument();
-                hArg.h = h;
-                hArg.lstArguments = new List<dbArgument>();
-                if (DSA41Version)
-                    hArg.lstArguments.AddRange(SetDSA41Arguments(h, GetFilenamePortrait, GetFilenameToken, id));
-                else
-                    hArg.lstArguments.AddRange(SetDSA5Arguments(h, GetFilenamePortrait, GetFilenameToken, id));
-                hArg.outcome = "";
-                foreach (dbArgument arg in hArg.lstArguments)
-                { hArg.outcome += arg.Prefix + arg.ArgString + arg.Suffix; }
-
-                lstHeldArgument.Add(hArg);
+                Global.SetIsBusy(false);
             }
-            MyTimer.stop_timer("Helden-DB-Argument");
         }
 
         public void InitWaffen()
@@ -2619,7 +4345,7 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             else
             {
-                ReadFoundryOptions(FTPAdresse + "/config/options.json");
+                if (doLoad) ReadFoundryOptions(FTPAdresse + "/config/options.json");
             }
 
             GegnerPortraitPfad = Einstellungen.GetEinstellung<string>("FoundryGegnerPortraitPfad");
@@ -2633,7 +4359,8 @@ namespace MeisterGeister.ViewModel.Foundry
                 (IsLocalInstalliert && !Directory.Exists(FoundryPfad)))
                 return;
 
-            LoadWorldsFolder();
+            if (doLoad || IsLocalInstalliert)
+                LoadWorldsFolder();
         }
         private void CreateFolder(object sender)
         {
@@ -2651,12 +4378,21 @@ namespace MeisterGeister.ViewModel.Foundry
                 ViewHelper.Popup(string.Format("Das Verzeichnis {0} existiert bereits.\nFunktion abgebrochen", newFolder));
                 return;
             }
-            char A = (char)34; // (new Char[] { '"' });
+            string typ = sender as string;
+
+            DoCreateFolder(newFolder, null, typ);
+
+            ViewHelper.Popup("Verzeichnis erstellt");
+        }
+
+        private string DoCreateFolder(string newFolder, string partentID, string typ, string color = null)
+        {            
+            char A = (char)34; 
             string _id = Guid.NewGuid().ToString().Substring(19, 17).Replace("-", "");
 
-            string outdata = "{" + A + "name:" + A + newFolder + A + "," + A + "type" + A + ":" + A + "Actor" + A + "," + A + "sort" + A +
-                ":null," + A + "flags" + A + ":{}," + A + "parent" + A + ":null," + A + "sorting" + A + ":" + A + "a" + A +
-                "," + A + "color" + A + ":" + A + A + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
+            string outdata = "{" + A + "name" + A + ":" + A + newFolder + A + "," + A + "type" + A + ":" + A + typ + A + "," + A + "sort" + A +
+                ":0," + A + "flags" + A + ":{}," + A + "parent" + A + ":"+ (partentID??"null") + "," + A + "sorting" + A + ":" + A + "a" + A +
+                "," + A + "color" + A + ":" + (string.IsNullOrEmpty( color)?"null": A +color+ A ) + "," + A + "_id" + A + ":" + A + _id + A + "}\n";
 
             if (IsLocalInstalliert)
             {
@@ -2698,11 +4434,11 @@ namespace MeisterGeister.ViewModel.Foundry
             }
             List<folder> lst = new List<folder>();
             lst.AddRange(lstFolders);
-            lst.Add(new folder() { name = newFolder, color = "", sorting = "a", typ = "Actor", _id = _id });
+            lst.Add(new folder() { name = newFolder, color = "", sorting = "a", typ = typ, parent= partentID, _id = _id });
             lstFolders = lst;
-
-            ViewHelper.Popup("Verzeichnis erstellt");
+            return _id;
         }
+
         private bool PathExists(string path)
         {
             if (IsLocalInstalliert)
@@ -2740,6 +4476,57 @@ namespace MeisterGeister.ViewModel.Foundry
             }
         }
 
+        public class worldJSON
+        {
+            public List<Pack> packs;
+        }
+        public class Pack
+        {
+            public string label;
+            public string type;
+            public string name;
+            public string path;
+            public string system;
+            public string package;
+            public string entity;
+            public bool privat;
+        }
+
+        private void AddKompendium(string filename, string Kompendium, string Kompendiumtype)
+        {
+            string json;
+            char A = (char)34;
+            List<Pack> PackItems = new List<Pack>();
+            worldJSON world = new worldJSON();
+            using (StreamReader r = new StreamReader(filename))
+            {
+                json = r.ReadToEnd();
+                json = json.Replace(A + "private" + A, A + "privat" + A);
+                world = JsonConvert.DeserializeObject<worldJSON>(json);
+            }
+            world.packs.Remove( world.packs.Where(t => t.label == Kompendium).FirstOrDefault());
+            Pack kampferPack = new Pack()                
+            {
+                label = Kompendium,
+                type = Kompendiumtype,
+                name = ErsetzeUmlaute(Kompendium),
+                path = "packs/"+ ErsetzeUmlaute(Kompendium) + ".db",
+                system = DSA41Version?"dsa-4.1": "dsa5",
+                package = "world",
+                entity = Kompendiumtype,
+                privat = false
+            };
+            world.packs.Add(kampferPack);
+
+            int start = json.IndexOf(A+"packs"+A);
+            int end = json.IndexOf("]",start+6);
+            string newJSON = json.Substring(0, start) + json.Substring(end+1);
+            string jsonNewPacks = JsonConvert.SerializeObject(world).TrimStart((char)123).TrimEnd((char)125).Replace("privat","private");
+
+            json = newJSON.Substring(0,start) + jsonNewPacks + newJSON.Substring(start);
+            File.WriteAllText(filename, json);
+        }
+
         private Base.CommandBase _onBtnExportGegner = null;
         public Base.CommandBase OnBtnExportGegner
         {
@@ -2759,11 +4546,14 @@ namespace MeisterGeister.ViewModel.Foundry
                     ViewHelper.Popup("Wähle zuerst eine Welt");
                     return;
                 }
-                if ((SelectedGegnerFolder == null || SelectedGegnerFolder.name == "") &&
+                if ((SelectedGegnerFolder == null || SelectedGegnerFolder.name == "") && !IsGegnerInKompendium &&
                     !ViewHelper.Confirm("Export der Gegner", "Die Gegner-Datenbank wird ins das Hauptverzeichnis exportiert\n" +
                     "Wir empfehlen hier dringend zuvor ein Verzeichnis zu erstellen, um Gegner, NSC und Helden zu separieren\n\nSollen die Gegner in das " +
                     "Hauptverzeichnis exportiert werden?"))
                     return;
+
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n"+
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?")) return;
 
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
                 MyTimer.start_timer();
@@ -2772,11 +4562,38 @@ namespace MeisterGeister.ViewModel.Foundry
                 List<string> lstErsetzt = new List<string>();
                 string A = (new Char[] { '"' }).ToString();
 
-                //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
-                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
-                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string actorsPath = null;
+                if (IsGegnerInKompendium)
+                {
+                    if (string.IsNullOrEmpty(GegnerKompendium))
+                        GegnerKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", GegnerKompendium);
+
+                    if (string.IsNullOrEmpty(GegnerKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddKompendium(worldsFile, GegnerKompendium, "Actor");
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(GegnerKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(GegnerKompendium) + ".db";
+                }
+                else
+                {
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsGegnerInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath)) { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
@@ -2799,14 +4616,15 @@ namespace MeisterGeister.ViewModel.Foundry
                     SetFileData(actorsPath, newFile);
                     MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert"+
+                        (!IsGegnerInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
                         lstGegnerArgument.Count, lstErsetzt.Count));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                        "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsGegnerInKompendium ? GegnerKompendium : "actors.db", actorsPath));
                 }
             }
             finally
@@ -2851,18 +4669,54 @@ namespace MeisterGeister.ViewModel.Foundry
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                    return;
+
+
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
 
-                GetWaffenData();
+                if (!DSA41Version)
+                    GetWaffenData_DSA50();
+                else
+                    GetWaffenData_DSA41();
 
                 List<string> lstErsetzt = new List<string>();
                 string A = (new Char[] { '"' }).ToString();
 
-                //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
+                string actorsPath = null;
+                if (IsWaffenInKompendium)
+                {
+                    if (string.IsNullOrEmpty(WaffenKompendium))
+                        WaffenKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", WaffenKompendium);
+
+                    if (string.IsNullOrEmpty(WaffenKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddKompendium(worldsFile, WaffenKompendium, "Item");
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(WaffenKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(WaffenKompendium) + ".db";
+                }
+                else
+                {
+                    //Open actors.db
+                    actorsPath = IsLocalInstalliert ?
                     FoundryPfad + @"worlds\" + SelectedWorld + @"\data\items.db" :
                     FoundryPfad + @"worlds/" + SelectedWorld + @"/data/items.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsWaffenInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath)) { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
@@ -2884,21 +4738,21 @@ namespace MeisterGeister.ViewModel.Foundry
                     //Waffen einfügen
                     SetFileData(actorsPath, newFile);
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup(MyTimer.stop_timer("Refresh Waffen-Daten aktualisiert in") + "\n\nAlle Waffen wurden eingefügt.\n");
+                    ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft.\nEs wurden {1} aktualisiert und nach Foundry exportiert" +
+                        (!IsWaffenInKompendium?"":"\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
+                        lstWaffenArgument.Count, lstErsetzt.Count));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                    "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsWaffenInKompendium ? WaffenKompendium : "items.db", actorsPath));
                 }
             }
             finally
             {
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
             }
-
-
         }
 
         private Base.CommandBase _onBtnExportHelden = null;
@@ -2921,18 +4775,16 @@ namespace MeisterGeister.ViewModel.Foundry
                     ViewHelper.Popup("Wähle zuerst eine Welt");
                     return;
                 }
-                if ((SelectedHeldenFolder == null || SelectedHeldenFolder.name == "") &&
+                if (SelectedHeldenFolder == null || SelectedHeldenFolder.name == "" && !IsHeldenInKompendium &&
                     !ViewHelper.Confirm("Export der Helden", "Die Helden werden ins das Hauptverzeichnis exportiert\n" +
                     "Wir empfehlen hier zuvor ein Verzeichnis zu erstellen, um Helden, NSC und Gegner zu separieren\n\nSollen die Helden in das" +
                     "Hauptverzeichnis exportiert werden?"))
                     return;
 
-                //if (!PathExists(FoundryPfad + HeldPortraitPfad) || !PathExists(FoundryPfad + HeldTokenPfad))
-                //{ 
-                //    ViewHelper.Popup(string.Format("Nicht alle Pfade sind vorhanden.\nBitte überprüfe folgende Pfade:\n\n* {0}\n* {1}",
-                //        FoundryPfad + HeldPortraitPfad, FoundryPfad + HeldTokenPfad));
-                //    return;
-                //}
+                if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                    "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                    return;
+
 
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
                 MyTimer.start_timer();
@@ -2943,10 +4795,39 @@ namespace MeisterGeister.ViewModel.Foundry
                 string A = (new Char[] { '"' }).ToString();
 
                 //Open actors.db
-                string actorsPath = IsLocalInstalliert ?
-                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
-                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                string actorsPath = null;
+                if (IsHeldenInKompendium)
+                {
+                    if (string.IsNullOrEmpty(HeldenKompendium))
+                        HeldenKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", HeldenKompendium);
+
+                    if (string.IsNullOrEmpty(HeldenKompendium))
+                        return;
+                    string worldsFile = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                    AddKompendium(worldsFile, HeldenKompendium, "Actor");
+
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(HeldenKompendium) + ".db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(HeldenKompendium) + ".db";
+                }
+                else
+                {
+                    actorsPath = IsLocalInstalliert ?
+                        FoundryPfad + @"worlds\" + SelectedWorld + @"\data\actors.db" :
+                        FoundryPfad + @"worlds/" + SelectedWorld + @"/data/actors.db";
+                }
                 string FileData = GetFileData(actorsPath);
+                if (IsHeldenInKompendium && FileData == null)
+                {
+                    if (IsLocalInstalliert)
+                        using (StreamWriter sw = File.CreateText(actorsPath))
+                        { }
+                    else
+                    { }
+                    FileData = "";
+                }
                 if (FileData != null)
                 {
                     List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList();
@@ -2964,18 +4845,20 @@ namespace MeisterGeister.ViewModel.Foundry
                     }
                     string newFile = string.Join("\n", lstFileData);
                     newFile += newFileDataAdd;
-
+                    newFile = newFile.TrimEnd(new Char[] { ',' });
                     //Held einfügen
                     SetFileData(actorsPath, newFile);
+                    MyTimer.stop_timer("");
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                     ViewHelper.Popup(MyTimer.stop_timer("Refresh Helden-Daten aktualisiert in") + "\n\nAlle Helden wurden eingefügt.\n" +
-                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : ""));
+                        "Folgende Helden wurden ersetzt:\n" + (lstErsetzt.Count > 0 ? string.Join("\n", lstErsetzt.Select(t => "  * " + t).ToList()) : "") +
+                    (!IsHeldenInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."));
                 }
                 else
                 {
                     System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                    ViewHelper.Popup("Die Foundry Datenbank 'actors.db' konnte nicht gefunden werden.\n\n Diese Datei sollte unter " +
-                    "folgendem Pfad sein:\n" + actorsPath);
+                    ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                        IsHeldenInKompendium ? HeldenKompendium : "actors.db", actorsPath));
                 }
             }
             finally
@@ -3060,6 +4943,10 @@ namespace MeisterGeister.ViewModel.Foundry
                 ViewHelper.Popup("Wähle zuerst eine Welt");
                 return;
             }
+            if (!ViewHelper.Confirm("Export von Daten zu FoundryVTT", "Um die Datenbank der FoundryVTT von extern zu ändern, muss die zu bearbeitende Welt abgemeldet sein!\n" +
+                "Ist dies nicht der Fall, werden Änderung nicht wirksam.\n\nSoll der Vorgang fortgesetzt werden?"))
+                return;
+
             Global.SetIsBusy(true, string.Format("Export der Playlisten..."));
             System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.AppStarting);
             MyTimer.start_timer();
@@ -3074,8 +4961,9 @@ namespace MeisterGeister.ViewModel.Foundry
             else
             {
                 MakeFTPDir(FoundryPfad, MusikPfad, FTPUser, FTPPasswort, null, null);
-            }
+            } 
 
+            //Daten zusammenstellen
             List<PlaylistArgument> lstPArg = new List<PlaylistArgument>();
             string GMid = GetUserID(string.Format(@"{0}worlds\{1}\data\users.db", FoundryPfad, SelectedWorld), "Gamemaster");
 
@@ -3143,14 +5031,33 @@ namespace MeisterGeister.ViewModel.Foundry
                     anzTotalTitel++;
                 }
                 lstPArg.Add(pArg);
-
-                if (anzTotalTitel >= 100)
-                { }
             }
+            //Daten zusammenstellen ENDE
 
-            //Open playlists.db
-            string worldPath = FoundryPfad + @"worlds\" + SelectedWorld + @"\data\";
-            string playlistsFile = worldPath + "playlists.db";
+
+            string playlistsFile = null;
+            if (IsPlaylistsInKompendium)
+            {
+                if (string.IsNullOrEmpty(PlaylistsKompendium))
+                    PlaylistsKompendium = ViewHelper.InputDialog("Name des Kompendiums", "Das Kompendium hat noch keinen Namen.\n\nWie soll das Kompendium heißen?", PlaylistsKompendium);
+
+                if (string.IsNullOrEmpty(PlaylistsKompendium))
+                    return;
+                string worldsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\world.json" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/world.json";
+                AddKompendium(worldsFile, PlaylistsKompendium, "Playlist");
+
+                playlistsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\packs\" + ErsetzeUmlaute(PlaylistsKompendium) + ".db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/packs/" + ErsetzeUmlaute(PlaylistsKompendium) + ".db";
+            }
+            else
+            {
+                playlistsFile = IsLocalInstalliert ?
+                    FoundryPfad + @"worlds\" + SelectedWorld + @"\data\playlists.db" :
+                    FoundryPfad + @"worlds/" + SelectedWorld + @"/data/playlists.db";
+            }
 
             if (!IsLocalInstalliert)
                 playlistsFile = playlistsFile.Replace(@"\", "/");
@@ -3162,12 +5069,19 @@ namespace MeisterGeister.ViewModel.Foundry
                     DeleteFileOnFtpServer(new Uri(playlistsFile.Replace(@"\", "/")), FTPUser, FTPPasswort);
             }
 
-
-            //*********************************
-
             Global.SetIsBusy(true, "Daten werden zusammengestellt");
             List<string> lstErsetzt = new List<string>();
             string FileData = GetFileData(playlistsFile);
+
+            if (IsPlaylistsInKompendium && FileData == null)
+            {
+                if (IsLocalInstalliert)
+                    using (StreamWriter sw = File.CreateText(playlistsFile))
+                    { }
+                else
+                { }
+                FileData = "";
+            }
             if (FileData != null)
             {
                 List<string> lstFileData = FileData.Split(new Char[] { '\n' }).ToList(); //oldFileData
@@ -3195,14 +5109,18 @@ namespace MeisterGeister.ViewModel.Foundry
                 MyTimer.stop_timer("");
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
                 Global.SetIsBusy(false);
-                ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert",
+                ViewHelper.Popup(string.Format("Alle {0} Einträge wurden überprüft. Es wurden {1} aktualisiert und nach Foundry exportiert" +
+                    (!IsPlaylistsInKompendium ? "" : "\n\nWenn Foundry bereits läuft muss die Welt evtl 1x angemeldet und wieder abgemeldet werden, bevor die Änderung sichtbar werden."),
                     lstPArg.Count, lstErsetzt.Count));
             }
             else
             {
                 Global.SetIsBusy(false);
                 System.Windows.Input.Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-                ViewHelper.Popup("Die Foundry Datenbank 'playlists.db' konnte nicht gefunden werden.\n\n ");
+                ViewHelper.Popup(string.Format("Die Foundry Datenbank '{0}' konnte nicht gefunden werden.\n\n Diese Datei sollte unter folgendem Pfad sein:\n{1}",
+                    IsPlaylistsInKompendium ? PlaylistsKompendium : "playlists.db", playlistsFile));
+                PlaylistStatus = null;
+                return;
             }
             Global.SetIsBusy(false);
 
