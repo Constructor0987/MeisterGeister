@@ -3033,6 +3033,7 @@ if not $(ConfigurationName) == Debug (
    copy "$(TargetDir)Ares.MeisterGeisterPlugin.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)ArtefaktGenerator.dll" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)DG-Suche.dll" "$(ProjectDir)publish\$(TargetName)"
+   copy "$(TargetDir)DereGlobusIndex.csv" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)EntityFramework.dll" "$(ProjectDir)publish\$(TargetName)"
 REM   copy "$(TargetDir)EntityFramework.xml" "$(ProjectDir)publish\$(TargetName)"
    copy "$(TargetDir)EntityFramework.SqlServer.dll" "$(ProjectDir)publish\$(TargetName)"
