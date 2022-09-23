@@ -655,6 +655,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
             FileInfo fi = new FileInfo(aTitel.Pfad + @"\" + aTitel.Datei);
             string aktDir = Environment.CurrentDirectory;
+            if (Directory.Exists(fi.DirectoryName))
             Environment.CurrentDirectory = fi.DirectoryName;
             string datei = ViewHelper.ChooseFile("Datei auswählen", fi.Name, false, PlayerVM.validExt);
             Environment.CurrentDirectory = aktDir;

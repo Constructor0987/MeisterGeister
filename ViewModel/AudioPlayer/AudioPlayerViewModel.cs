@@ -8834,6 +8834,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         int setTitelStdPfad_AufrufeHintereinander = 0;
         public Audio_Titel setTitelStdPfad(Audio_Titel aTitel)
         {
+            if (aTitel.Pfad == null)
+                return aTitel;
             setTitelStdPfad_AufrufeHintereinander++;
             try
             {
