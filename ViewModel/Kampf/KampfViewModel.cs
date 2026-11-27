@@ -23,6 +23,7 @@ namespace MeisterGeister.ViewModel.Kampf
             Global.CurrentKampf = this;
             this.showGegnerView = showGegnerView;
             _kampf = new K();
+            RequestClose += OnKampfRequestClose;
         }
 
         public K Kampf
@@ -58,6 +59,27 @@ namespace MeisterGeister.ViewModel.Kampf
         {
             get { return _bodenplanViewModel; }
             set { Set(ref _bodenplanViewModel, value); }
+        }
+
+        public BattlegroundViewModel GetOrCreateBodenplanViewModel()
+        {
+            return BodenplanViewModel ?? new BattlegroundViewModel();
+        }
+
+        private void OnKampfRequestClose(object sender, EventArgs e)
+        {
+            var bodenplan = BodenplanViewModel;
+            if (bodenplan == null)
+                return;
+
+            if (bodenplan.KampfWindow != null)
+            {
+                bodenplan.KampfWindow.Tag = true;
+                bodenplan.KampfWindow.Close();
+            }
+            bodenplan.Dispose();
+            bodenplan.AreanGrid = null;
+            BodenplanView = null;
         }
 
         public List<GegnerBase> lstGegnerBase

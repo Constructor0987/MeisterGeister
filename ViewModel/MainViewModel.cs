@@ -148,7 +148,13 @@ namespace MeisterGeister.ViewModel
         #region Held
         public void InvalidateHelden()
         {
-            helden = null;
+            if (helden == null)
+                return;
+            // In-place neu laden, damit bestehende Views/CollectionViews aktuell bleiben
+            var aktuell = Global.ContextHeld.Liste<Model.Held>().ToList();
+            helden.Clear();
+            foreach (var h in aktuell)
+                helden.Add(h);
         }
 
         private ExtendedObservableCollection<Model.Held> helden = null;
@@ -254,6 +260,52 @@ namespace MeisterGeister.ViewModel
         #endregion
 
         #region ProgressBar
+        private bool isBusyProgressVisible;
+        public bool IsBusyProgressVisible { get { return isBusyProgressVisible; } private set { Set(ref isBusyProgressVisible, value); } }
+
+        private bool isBusyProgressIndeterminate;
+        public bool IsBusyProgressIndeterminate { get { return isBusyProgressIndeterminate; } private set { Set(ref isBusyProgressIndeterminate, value); } }
+
+        private int busyProgress;
+        public int BusyProgress { get { return busyProgress; } private set { Set(ref busyProgress, value); } }
+
+        private string busyProgressText;
+        public string BusyProgressText { get { return busyProgressText; } private set { Set(ref busyProgressText, value); } }
+
+        private string busyProgressCount;
+        public string BusyProgressCount { get { return busyProgressCount; } private set { Set(ref busyProgressCount, value); } }
+
+        private CancellationTokenSource busyCancellation;
+        public bool CanCancelBusy { get { return busyCancellation != null && !busyCancellation.IsCancellationRequested; } }
+        private CommandBase cancelBusyCommand;
+        public CommandBase CancelBusyCommand
+        {
+            get { return cancelBusyCommand ?? (cancelBusyCommand = new CommandBase(_ => CancelBusy(), _ => CanCancelBusy)); }
+        }
+
+        private void CancelBusy()
+        {
+            if (!CanCancelBusy) return;
+            busyCancellation.Cancel();
+            BusyProgressText = "Abbruch wird ausgeführt...";
+            OnChanged(nameof(CanCancelBusy));
+            CancelBusyCommand.Invalidate();
+        }
+
+        public void SetBusyProgress(bool isBusy, string text, int? progress, CancellationTokenSource cancellation = null, string progressCount = null)
+        {
+            if (progress < 0 || progress > 100)
+                throw new ArgumentOutOfRangeException(nameof(progress));
+            busyCancellation = isBusy ? cancellation : null;
+            BusyProgress = isBusy ? progress.GetValueOrDefault() : 0;
+            IsBusyProgressIndeterminate = isBusy && !progress.HasValue;
+            BusyProgressText = isBusy ? text : null;
+            BusyProgressCount = isBusy ? progressCount : null;
+            IsBusyProgressVisible = isBusy;
+            OnChanged(nameof(CanCancelBusy));
+            if (cancelBusyCommand != null) cancelBusyCommand.Invalidate();
+        }
+
         private int currentProgress;
         public int CurrentProgress
         {
@@ -386,6 +438,13 @@ namespace MeisterGeister.ViewModel
             set { Set(ref openTools, value); }
         }
 
+        ExtendedObservableCollection<ToolViewModelBase> floatingTools;
+        public ExtendedObservableCollection<ToolViewModelBase> FloatingTools
+        {
+            get { return floatingTools; }
+            private set { Set(ref floatingTools, value); }
+        }
+
         int selectedTab = 0;
         public int SelectedTabIndex
         {
@@ -414,20 +473,30 @@ namespace MeisterGeister.ViewModel
         {
             OpenTools = new ExtendedObservableCollection<ToolViewModelBase>();
             OpenTools.CollectionChanged += OpenTools_CollectionChanged;
+            FloatingTools = new ExtendedObservableCollection<ToolViewModelBase>();
+            FloatingTools.CollectionChanged += OpenTools_CollectionChanged;
             //StartTabs
             string[] tabs = Einstellungen.StartTabs.Split('#');
             foreach (string tab in tabs)
             {
-                if(Tool.ToolListe.ContainsKey(tab))
-                    OpenTool(Tool.ToolListe[tab]);
+                if (Tool.ToolListe.ContainsKey(tab))
+                {
+                    Tool tool = Tool.ToolListe[tab];
+                    App.ReportStartupProgress(string.Format("Modul {0} wird geladen...", tool.Name));
+                    LogInfo log = Logger.PerformanceLogStart(string.Format("Modul {0} laden", tool.Name));
+                    OpenTool(tool);
+                    Logger.PerformanceLogEnd(log);
+                }
             }
-            SelectedTabIndex = Einstellungen.SelectedTab;
+            SelectedTabIndex = OpenTools.Count == 0
+                ? -1
+                : Math.Max(0, Math.Min(Einstellungen.SelectedTab, OpenTools.Count - 1));
         }
 
         private string OpenedTabs()
         {
             string tabs = string.Empty;
-            foreach (var tab in OpenTools)
+            foreach (var tab in OpenTools.Concat(FloatingTools))
             {
                 if (tabs != string.Empty)
                     tabs += "#";
@@ -443,9 +512,16 @@ namespace MeisterGeister.ViewModel
 
             // Falls Tool bereits geöffnet, kein zweites öffnen, sondern geöffnetes aktivieren
             var tvm = OpenTools.Where(tv => tv.Tool == t).FirstOrDefault();
-            if(tvm != null)
+            if (tvm != null)
             {
                 SelectTool(tvm);
+                return;
+            }
+
+            tvm = FloatingTools.FirstOrDefault(tv => tv.Tool == t);
+            if (tvm != null)
+            {
+                DockTool(tvm);
                 return;
             }
 
@@ -475,11 +551,53 @@ namespace MeisterGeister.ViewModel
             Einstellungen.StartTabs = OpenedTabs();
         }
 
+        public void FloatTool(ToolViewModelBase tool)
+        {
+            if (tool == null || !OpenTools.Contains(tool))
+                return;
+
+            OpenTools.Remove(tool);
+            FloatingTools.Add(tool);
+
+            if (OpenTools.Count == 0)
+                SelectedTabIndex = -1;
+            else if (SelectedTabIndex >= OpenTools.Count)
+                SelectedTabIndex = OpenTools.Count - 1;
+        }
+
+        public int DockTool(ToolViewModelBase tool, int targetIndex = -1)
+        {
+            if (tool == null)
+                return -1;
+
+            int sourceIndex = OpenTools.IndexOf(tool);
+            if (sourceIndex >= 0)
+            {
+                OpenTools.RemoveAt(sourceIndex);
+                if (targetIndex >= 0 && sourceIndex < targetIndex)
+                    targetIndex--;
+            }
+            else if (FloatingTools.Contains(tool))
+                FloatingTools.Remove(tool);
+            else
+                return -1;
+
+            if (targetIndex < 0 || targetIndex > OpenTools.Count)
+                targetIndex = OpenTools.Count;
+
+            OpenTools.Insert(targetIndex, tool);
+            SelectedTabIndex = targetIndex;
+            return targetIndex;
+        }
+
         void ToolRequestClose(object sender, EventArgs e)
         {
             Base.ToolViewModelBase tool = sender as Base.ToolViewModelBase;
-            if(tool != null)
-                this.OpenTools.Remove(tool);
+            if (tool != null)
+            {
+                OpenTools.Remove(tool);
+                FloatingTools.Remove(tool);
+            }
         }
 
 
@@ -611,8 +729,8 @@ namespace MeisterGeister.ViewModel
             }
         }
 
-        LinearGradientBrush _alphaBrush = new LinearGradientBrush();
-        LinearGradientBrush alphaBrush
+        private LinearGradientBrush _alphaBrush = new LinearGradientBrush();
+        public LinearGradientBrush AlphaBrush
         {
             get { return _alphaBrush; }
             set { Set(ref _alphaBrush, value); }
@@ -625,7 +743,7 @@ namespace MeisterGeister.ViewModel
         {
             Color startColor = Color.FromArgb((byte)0, SelectedColor.R, SelectedColor.G, SelectedColor.B);
             Color endColor = Color.FromArgb((byte)255, SelectedColor.R, SelectedColor.G, SelectedColor.B);
-            alphaBrush = new LinearGradientBrush(startColor, endColor, new System.Windows.Point(0, 0), new System.Windows.Point(1, 0));
+            AlphaBrush = new LinearGradientBrush(startColor, endColor, new System.Windows.Point(0, 0), new System.Windows.Point(1, 0));
         }
 
         private double _hueLampeSaettigung = 255;

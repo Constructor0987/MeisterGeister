@@ -154,7 +154,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             e.Literatur = null as String;
             e.Erstellt = DateTime.Now;
             e.Auswirkung = String.Empty;
-            e.Methoden = new Dictionary<string, Expression>();
+            e.Methoden = new Dictionary<string, Expression<Func<int, int>>>();
             e.Types = new List<string>();
             return e;
         }
@@ -363,7 +363,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             // Impromptu Proxy entfernen
             var obj = Impromptu.UndoActLike(mod);
             // Klon erstellen, um das original nicht zu verändern (ist protected also per Reflection)
-            var obj2 = Impromptu.InvokeMember(obj, "MemberwiseClone");
+            var obj2 = Dynamitey.Dynamic.InvokeMember(obj, "MemberwiseClone");
             var d = obj2 as IDictionary<string, object>;
             // Delegat-Methoden löschen, weil diese nicht serialisiert werden können
             foreach(var key in d.Keys.Where(k => k.StartsWith("Apply") && k.EndsWith("Mod")).ToArray())
@@ -376,10 +376,9 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Modifikatoren
             return s;*/
 
             var obj = Impromptu.UndoActLike(mod);
-            var obj2 = Impromptu.InvokeMember(obj, "MemberwiseClone");
-            var d = obj2 as IDictionary<string, object>;
+            var d = new Dictionary<string, object>((IDictionary<string, object>)obj);
 
-            var methoden = d["Methoden"] as IDictionary<string, Expression<Func<int, int>>>;
+            var methoden = (IDictionary<string, Expression<Func<int, int>>>)d["Methoden"];
 
             var wrapperDict = new Dictionary<string, ExpressionWrapper>();
             foreach (var kvp in methoden)

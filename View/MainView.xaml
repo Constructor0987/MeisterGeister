@@ -9,7 +9,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
         Height="650" Width="1045" Closing="Window_Closing" KeyDown="Window_KeyDown" 
         Loaded="Window_Loaded" Title="DSA MeisterGeister" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
-        TextOptions.TextFormattingMode="Display">
+        AllowDrop="True" Drop="TabItem_Drop" TextOptions.TextFormattingMode="Display">
     <Window.Resources>
         <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <Storyboard x:Key="MenuPopOut" x:Name="PopIn">
@@ -63,6 +63,33 @@
         <ViewGeneral:HUEGroupNoToNameConverter x:Key="HUEGroupNoToNameConverter1"/>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <ControlTemplate x:Key="BusyStatusTemplate" TargetType="ContentControl">
+            <Grid Background="#80000000">
+                <Grid Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="BusyStatusBorder" Padding="16" Background="{DynamicResource Background1}" BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
+                            Visibility="{Binding IsBusyProgressVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding BusyProgressText}" TextWrapping="Wrap" Margin="0,0,24,8" />
+                            <ProgressBar Height="18" Minimum="0" Maximum="100" Value="{Binding BusyProgress, Mode=OneWay}" IsIndeterminate="{Binding IsBusyProgressIndeterminate}" />
+                            <TextBlock Text="{Binding BusyProgressCount}" HorizontalAlignment="Center" Margin="0,4,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding BusyProgressCount}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="X" Width="24" Height="24" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,4,4,0" ToolTip="Vorgang abbrechen" Command="{Binding CancelBusyCommand}" Cursor="Hand" ForceCursor="True"
+                            Visibility="{Binding CanCancelBusy, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                </Grid>
+            </Grid>
+        </ControlTemplate>
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -138,18 +165,16 @@
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=VM.OnBtnFavPlaylistClick}" CommandParameter="{Binding}">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Height="12" Margin="-1,-2" >
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Source" Value="/Images/Icons/General/audio.png" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Audio_ThemeGUID, Converter={StaticResource IsNullOrEmptyConverter}}" Value="false" >
-                                                                    <Setter Property="Source" Value="/Images/Icons/General/copy.png" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
+                                                <ContentControl Content="{Binding}">
+                                                    <ContentControl.Resources>
+                                                        <DataTemplate DataType="{x:Type model:Audio_Theme}">
+                                                            <Image Height="12" Margin="-1,-2" Source="/Images/Icons/General/copy.png" />
+                                                        </DataTemplate>
+                                                        <DataTemplate DataType="{x:Type model:Audio_Playlist}">
+                                                            <Image Height="12" Margin="-1,-2" Source="/Images/Icons/General/audio.png" />
+                                                        </DataTemplate>
+                                                    </ContentControl.Resources>
+                                                </ContentControl>
                                                 <TextBlock Text="{Binding Name}" />
                                             </StackPanel>
                                         </Button.Content>
@@ -199,7 +224,7 @@
                         </ColumnDefinition.Style>
                     </ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" 
+                <TabControl AllowDrop="True" Drop="TabItem_Drop" PreviewMouseLeftButtonDown="TabItem_PreviewMouseLeftButtonDown" PreviewMouseMove="TabItem_PreviewMouseMove"
                             x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True"
                             ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" Margin="0,4,0,-4" Grid.ColumnSpan="2">
                     <TabControl.Style>
@@ -376,7 +401,7 @@
                                                                 <MenuItem.Header>
                                                                     <TextBlock Text="MeisterGeister in Archiven..." VerticalAlignment="Center" />
                                                                 </MenuItem.Header>
-                                                                <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
+                                                                <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
                                                                     <MenuItem.Header>
                                                                         <TextBlock Text="Download bei Orkenspalter" VerticalAlignment="Center" />
                                                                     </MenuItem.Header>
@@ -586,7 +611,7 @@
 
                                 <StackPanel Grid.Row="3" Grid.Column="1" Margin="40,0,0,0">
                                     <Label Content="Sättigung" Padding="0,2,0,0"/>
-                                    <Border Background="{Binding alphaBrush}"
+                                    <Border Background="{Binding AlphaBrush}"
                                         BorderBrush="Black"
                                         Height="25"
                                         BorderThickness="2"
@@ -608,7 +633,7 @@
                                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,100,0">
                                     <Label Content="Helligkeit (0=aus)" Padding="0,2,0,0"/>
                                     <Border x:Name="BrightnessBorder"
-                                        Background="{Binding alphaBrush}"
+                                        Background="{Binding AlphaBrush}"
                                     BorderBrush="Black"
                                     Height="25"
                                     BorderThickness="2"
@@ -692,6 +717,8 @@
                     </Grid>
                 </Expander>
             </Grid>
+            <ContentControl Grid.ColumnSpan="2" Panel.ZIndex="100" Template="{StaticResource BusyStatusTemplate}"
+                            Visibility="{Binding IsBusyProgressVisible, Converter={StaticResource BooleanToVisibilityConverter1}}" />
         </Grid>
 
     </DockPanel>

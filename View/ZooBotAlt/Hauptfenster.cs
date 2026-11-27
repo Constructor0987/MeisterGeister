@@ -131,6 +131,7 @@ namespace MeisterGeister.View.ZooBotAlt
 
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int AktiverReiter
         {
             get { return this.Registerkontrolle.SelectedIndex; }

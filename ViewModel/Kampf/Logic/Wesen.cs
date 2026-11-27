@@ -96,7 +96,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return wert ?? 0.0;
             foreach (System.Reflection.MethodInfo mi in typ.GetMethods())
                 if (mi.Name.StartsWith("Apply"))
-                    return ImpromptuInterface.Impromptu.InvokeMember(mod, mi.Name, wert);
+                    return Dynamitey.Dynamic.InvokeMember(mod, mi.Name, wert);
             return wert ?? 0.0;
         }
 
@@ -106,7 +106,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 return wert ?? 0;
             foreach (System.Reflection.MethodInfo mi in typ.GetMethods())
                 if (mi.Name.StartsWith("Apply"))
-                    return ImpromptuInterface.Impromptu.InvokeMember(mod, mi.Name, wert);
+                    return Dynamitey.Dynamic.InvokeMember(mod, mi.Name, wert);
             return wert ?? 0;
         }
 
@@ -175,8 +175,8 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         /// <returns>Veränderung der Modifikatorenanzahl</returns>
         public int SetModifikatorCount(Type t, int targetCount)
         {
-            var name = ImpromptuInterface.InvokeMemberName.Create;
-            return ImpromptuInterface.Impromptu.InvokeMember(this, name("SetModifikatorCount", new[] { t }), targetCount);
+            var name = Dynamitey.InvokeMemberName.Create;
+            return Dynamitey.Dynamic.InvokeMember(this, name("SetModifikatorCount", new[] { t }), targetCount);
         }
 
         /// <returns>Veränderung der Modifikatorenanzahl</returns>
@@ -370,7 +370,11 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
         protected void CheckLePModifikatoren()
         {
             IKämpfer k = this as IKämpfer;
-            if (k == null || k.LebensenergieMax == 0)
+            if (k == null)
+                return;
+            if (k.LebensenergieAktuell <= 0)
+                Position = Position.Liegend;
+            if (k.LebensenergieMax == 0)
                 return;
             double percent = (double)k.LebensenergieAktuell / (double)k.LebensenergieMax;
             int targetModCount = 0;

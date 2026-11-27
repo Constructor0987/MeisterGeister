@@ -340,10 +340,10 @@ namespace MeisterGeister.ViewModel.Basar
         public void Init()
         {
             HandelsgutListe = Global.ContextHandelsgut == null ? new List<Model.Handelsgut>() : Global.ContextHandelsgut.HandelsgüterListe;
-            WaffeListe = Global.ContextInventar == null ? new List<Model.Waffe>() : Global.ContextInventar.WaffeListe;
-            FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.FernkampfwaffeListe;
-            SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.SchildListe;
-            RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.RuestungListe;
+            WaffeListe = Global.ContextInventar == null ? new List<Model.Waffe>() : Global.ContextInventar.BasarWaffeListe;
+            FernkampfwaffeListe = Global.ContextInventar == null ? new List<Model.Fernkampfwaffe>() : Global.ContextInventar.BasarFernkampfwaffeListe;
+            SchildListe = Global.ContextInventar == null ? new List<Model.Schild>() : Global.ContextInventar.BasarSchildListe;
+            RüstungListe = Global.ContextInventar == null ? new List<Model.Rüstung>() : Global.ContextInventar.BasarRuestungListe;
             Währungen = new Währung();
             FillBasarListe();
         }
@@ -515,19 +515,18 @@ namespace MeisterGeister.ViewModel.Basar
         /// </summary>
         private void FilterListe()
         {
-            FilteredBasarItemListe = (NurVorhandeneWaren) ?
-                BasarItemListe.AsParallel().Where(t => t.ImGebietVorhanden).ToList():
-                BasarItemListe;
-
             string suchText = _suchText.ToLower().Trim();
             string[] suchWorte = suchText.Split(' ');
-            
-            if (suchText == string.Empty) // kein Suchwort
-                FilteredBasarItemListe = FilteredBasarItemListe.OrderBy(n => n.Name).ToList(); //AsParallel().
-            else if (suchWorte.Length == 1) // nur ein Suchwort
-                FilteredBasarItemListe = FilteredBasarItemListe.Where(s => s.Contains(suchWorte[0])).OrderBy(n => n.Name).ToList();
-            else // mehrere Suchwörter
-                FilteredBasarItemListe = FilteredBasarItemListe.Where(s => s.Contains(suchWorte)).OrderBy(n => n.Name).ToList();
+
+            IEnumerable<BasarItem> items = BasarItemListe;
+            if (NurVorhandeneWaren)
+                items = items.Where(t => t.ImGebietVorhanden);
+            if (suchText != string.Empty)
+                items = suchWorte.Length == 1
+                    ? items.Where(s => s.Contains(suchWorte[0]))
+                    : items.Where(s => s.Contains(suchWorte));
+
+            FilteredBasarItemListe = items.OrderBy(n => n.Name).ToList();
         }
 
         #endregion

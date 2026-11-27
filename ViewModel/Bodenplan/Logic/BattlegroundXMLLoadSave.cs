@@ -30,6 +30,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 {
                     if (!(o is BattlegroundCreature) &&
                         !(o is TurnMarker) &&
+                        !o.IsDistanceMeasurement &&
                         ((o is ImageObject && !SaveWithoutPictures) || 
                         (!(o is ImageObject)) ||
                         (!(o is MP4Object))) &&
@@ -107,6 +108,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                     //Pos
                     dtSettings.Columns.Add("ShowCreaturePos");
+                    dtSettings.Columns.Add("GrosseMap");
 
                     dtSettings.Rows.Add();
                     dtSettings.Rows[0]["BackgroundOffsetSize"] = Settings[0];
@@ -140,6 +142,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
 
                     //Pos
                     dtSettings.Rows[0]["ShowCreaturePos"] = Settings[22];
+                    dtSettings.Rows[0]["GrosseMap"] = Settings[23];
                     xmlH.AddObsDT(dtSettings);
                 }
                 using (StreamWriter wr = new StreamWriter(filename))
@@ -177,6 +180,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Rows[dt.Rows.Count - 1]["ZLevel"] = o.ZLevel;
             dt.Rows[dt.Rows.Count - 1]["SightLineSektor"] = o.SightLineSektor;
             dt.Rows[dt.Rows.Count - 1]["RotateImageDegrees"] = o.RotateImageDegrees;
+            dt.Rows[dt.Rows.Count - 1]["RotateFrameDegrees"] = o.RotateFrameDegrees;
             dt.Rows[dt.Rows.Count - 1]["HinweisText"] = (o as IKämpfer).HinweisText;
             dt.Rows[dt.Rows.Count - 1]["KämpferTempName"] = (o is Gegner) ? (o as Gegner).KämpferTempName: null;
             dt.Rows[dt.Rows.Count - 1]["ObjectSize"] = o.ObjectSize;
@@ -260,6 +264,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             dt.Columns.Add("IstUnsichtbar");
             dt.Columns.Add("Angriffsaktionen");
             dt.Columns.Add("IstImKampf");
+            dt.Columns.Add("RotateFrameDegrees");
             return dt;
         }
 
@@ -318,6 +323,10 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             if (drow.ItemArray.Length > 22)
                             {
                                 back.Add(Convert.ToDouble(drow["ShowCreaturePos"]));
+                            }
+                            if (dt.Columns.Contains("GrosseMap") && !drow.IsNull("GrosseMap"))
+                            {
+                                back.Add(Convert.ToDouble(drow["GrosseMap"]));
                             }
                         }
                     }
@@ -412,8 +421,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                             if (drow.ItemArray.Length > 12)
                             {
                                 (bObj as BattlegroundCreature).SightLineSektor = Convert.ToInt32(drow["SightLineSektor"]);
-                                if (drow.Table.Columns.Contains("RotateImageDegrees"))
-                                    (bObj as BattlegroundCreature).RotateImageDegrees = Convert.ToDouble(drow["RotateImageDegrees"]);
+                                var creature = (BattlegroundCreature)bObj;
+                                creature.RotateImageDegrees = drow.Table.Columns.Contains("RotateImageDegrees") && !drow.IsNull("RotateImageDegrees")
+                                    ? Convert.ToDouble(drow["RotateImageDegrees"])
+                                    : 0;
+                                creature.RotateFrameDegrees = drow.Table.Columns.Contains("RotateFrameDegrees") && !drow.IsNull("RotateFrameDegrees")
+                                    ? Convert.ToDouble(drow["RotateFrameDegrees"])
+                                    : BattlegroundCreature.GetLegacyFrameRotation(creature.SightLineSektor, creature.RotateImageDegrees);
 
                                 (bObj as IKämpfer).HinweisText = drow["HinweisText"].ToString();
                                 (bObj as BattlegroundCreature).ObjectSize = Convert.ToDouble(drow["ObjectSize"]);

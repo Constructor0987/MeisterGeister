@@ -60,7 +60,7 @@ namespace MeisterGeister.ViewModel.Basar.Logic
 
         public string Tags
         {
-            get { return Item == null || Item.Tags == null ? string.Empty : Item.Tags; }
+            get { return Item == null ? string.Empty : Item.Tags ?? string.Empty; }
         }
 
         public double? Gewicht

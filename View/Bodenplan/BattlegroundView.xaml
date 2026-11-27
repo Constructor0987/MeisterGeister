@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ViewGeneral="clr-namespace:MeisterGeister.View.General"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:karte="clr-namespace:MeisterGeister.View.Karte"
     xmlns:kampflogic="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic"
     xmlns:local="clr-namespace:MeisterGeister.View.Bodenplan"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,11 +12,11 @@
     xmlns:KampfManöver="clr-namespace:MeisterGeister.ViewModel.Kampf.Logic.Manöver"
     xmlns:s="clr-namespace:MeisterGeister.View.Bodenplan"
     xmlns:wpfxc="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+    xmlns:zoomConverters="clr-namespace:WPFExtensions.Converters;assembly=WPFExtensions"
     xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
     x:Name="view"
     d:DesignHeight="1100"
     d:DesignWidth="1280"
-    Unloaded="View_Unloaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ViewGeneral:EnumItemsSource x:Key="PositionenValues" Type="{x:Type kampflogic:Position}" />
@@ -404,7 +405,7 @@
                 x:Name="grdSpielfeld"
                 Grid.Column="1"
                 Margin="0,24,0,0">
-                <wpfxc:ZoomControl
+                <karte:KarteZoomControl
                     x:Name="ArenaScrollViewer"
                     Grid.Column="1"
                     VerticalAlignment="Bottom"
@@ -412,8 +413,8 @@
                     LimitToContent="True"
                     MaxZoom="1.5"
                     MaxZoomDelta="2"
-                    MinZoom="0.05"
-                    Mode="Original"
+                    MinZoom="{Binding MinMapZoom}"
+                    ViewportMode="Original"
                     ModifierKeyPan="Shift"
                     ModifierKeyZoom="Control"
                     ModifierKeyZoomBox="Alt"
@@ -423,7 +424,87 @@
                     WheelZoomsAlone="True"
                     Zoom="{Binding MeisterZoom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ZoomDeltaMultiplier="50">
-                    <Grid x:Name="ArenaGridTop">
+                    <karte:KarteZoomControl.Template>
+                        <ControlTemplate TargetType="{x:Type karte:KarteZoomControl}">
+                            <Grid>
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="{TemplateBinding ClipToBounds}">
+                                    <wpfxc:ZoomContentPresenter x:Name="PART_Presenter" ClipToBounds="False"
+                                        Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        ContentStringFormat="{TemplateBinding ContentStringFormat}" />
+                                </Border>
+                                <Canvas>
+                                    <Border Background="#88C0C0C0" CornerRadius="5" Canvas.Left="20" Canvas.Top="20" Padding="5"
+                                            Visibility="{Binding HideZoom, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ToolTip="Mausrad: Zoom; Alt + Ziehen: Zoombereich; Ziehen: Verschieben">
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="{x:Type RadioButton}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="{x:Type RadioButton}">
+                                                                <Border x:Name="border" BorderBrush="Black" BorderThickness="1" Background="Silver"
+                                                                        CornerRadius="5" HorizontalAlignment="Center" Height="40" Width="40" Margin="2">
+                                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="border" Property="Background" Value="WhiteSmoke" />
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                        <Setter TargetName="border" Property="Background" Value="DarkGray" />
+                                                                        <Setter TargetName="border" Property="TextElement.FontWeight" Value="Bold" />
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <Slider AutoToolTipPrecision="1" AutoToolTipPlacement="BottomRight" HorizontalAlignment="Center"
+                                                    Height="150" LargeChange="1" Orientation="Vertical" SmallChange="0.1"
+                                                    Ticks="0.1 0.25 0.5 0.75 1 1.25 1.5 2" TickPlacement="BottomRight" TickFrequency="1">
+                                                <Slider.Maximum>
+                                                    <TemplateBinding Property="MaxZoom"><TemplateBinding.Converter><zoomConverters:DoubleToLog10Converter /></TemplateBinding.Converter></TemplateBinding>
+                                                </Slider.Maximum>
+                                                <Slider.Minimum>
+                                                    <TemplateBinding Property="MinZoom"><TemplateBinding.Converter><zoomConverters:DoubleToLog10Converter /></TemplateBinding.Converter></TemplateBinding>
+                                                </Slider.Minimum>
+                                                <Slider.Value>
+                                                    <Binding Path="Zoom" Mode="TwoWay" RelativeSource="{RelativeSource TemplatedParent}">
+                                                        <Binding.Converter><zoomConverters:DoubleToLog10Converter /></Binding.Converter>
+                                                    </Binding>
+                                                </Slider.Value>
+                                            </Slider>
+                                            <TextBlock FontWeight="Bold" HorizontalAlignment="Center"
+                                                       Text="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:F2\}x}" />
+                                            <RadioButton Content="1:1" GroupName="rbgZoomMode">
+                                                <RadioButton.IsChecked>
+                                                    <Binding Path="ViewportMode" Mode="TwoWay" RelativeSource="{RelativeSource TemplatedParent}" ConverterParameter="{x:Static wpfxc:ZoomControlModes.Original}">
+                                                        <Binding.Converter><zoomConverters:EqualityToBooleanConverter /></Binding.Converter>
+                                                    </Binding>
+                                                </RadioButton.IsChecked>
+                                            </RadioButton>
+                                            <RadioButton Content="Fill" GroupName="rbgZoomMode">
+                                                <RadioButton.IsChecked>
+                                                    <Binding Path="ViewportMode" Mode="TwoWay" RelativeSource="{RelativeSource TemplatedParent}" ConverterParameter="{x:Static wpfxc:ZoomControlModes.Fill}">
+                                                        <Binding.Converter><zoomConverters:EqualityToBooleanConverter /></Binding.Converter>
+                                                    </Binding>
+                                                </RadioButton.IsChecked>
+                                            </RadioButton>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border BorderBrush="{TemplateBinding ZoomBoxBorderBrush}" BorderThickness="{TemplateBinding ZoomBoxBorderThickness}"
+                                            Background="{TemplateBinding ZoomBoxBackground}" Height="{Binding ZoomBox.Height, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Width="{Binding ZoomBox.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Canvas.Left="{Binding ZoomBox.X, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Canvas.Top="{Binding ZoomBox.Y, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Opacity="{TemplateBinding ZoomBoxOpacity}" />
+                                </Canvas>
+                            </Grid>
+                        </ControlTemplate>
+                    </karte:KarteZoomControl.Template>
+                    <Grid x:Name="ArenaGridTop" Width="{Binding ArenaGridSize}" Height="{Binding ArenaGridSize}" ClipToBounds="True">
                         <Image
                             x:Name="imgbtnBGStoppen"
                             Width="{Binding BackgroundOffsetSize, UpdateSourceTrigger=PropertyChanged}"
@@ -448,8 +529,8 @@
                         </MediaElement>
                         <Image
                             x:Name="imgFog"
-                            Width="10000"
-                            Height="10000"
+                            Width="{Binding FogDisplayWidth}"
+                            Height="{Binding FogDisplayHeight}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Opacity="0.5"
@@ -458,8 +539,8 @@
                         <!--  ObjektListe.View  -->
                         <ListBox
                             x:Name="ArenaGrid"
-                            Width="10000"
-                            Height="10000"
+                            Width="{Binding ArenaGridSize}"
+                            Height="{Binding ArenaGridSize}"
                             AllowDrop="True"
                             DragOver="ArenaGrid_DragOver"
                             Drop="ArenaGrid_Drop"
@@ -859,12 +940,10 @@
                                                         Canvas.Left="{Binding CreatureXPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureYPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding CreatureWidthPic, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}">
+                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        RenderTransformOrigin="0.5,0.5">
                                                         <Border.RenderTransform>
-                                                            <RotateTransform 
-                                                                CenterX="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}" 
-                                                                CenterY="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}"
-                                                                Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
+                                                            <RotateTransform Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
                                                         </Border.RenderTransform>
                                                         <Border.Background>
                                                             <ImageBrush Opacity="{Binding Opacity}" Stretch="Fill" >
@@ -898,7 +977,11 @@
                                                         RadiusX="12"
                                                         RadiusY="12"
                                                         Stroke="#FF5D5757"
+                                                        RenderTransformOrigin="0.5,0.5"
                                                         ToolTip="{Binding Name}">
+                                                        <Rectangle.RenderTransform>
+                                                            <RotateTransform Angle="{Binding RotateFrameDegrees}" />
+                                                        </Rectangle.RenderTransform>
                                                     </Rectangle>
 
                                                     <!--  -Z-Level  -->
@@ -911,7 +994,11 @@
                                                         IsHitTestVisible="False"
                                                         Text="{Binding ZLevel}"
                                                         TextAlignment="Center"
-                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                                                        Visibility="{Binding DataContext.ShowZ, Converter={StaticResource BoolToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
 
                                                     <!--  Wunden  -->
                                                     <Image
@@ -921,6 +1008,9 @@
                                                         Height="40"
                                                         Margin="-35,30,0,0"
                                                         Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png">
+                                                        <Image.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </Image.RenderTransform>
                                                         <Image.Style>
                                                             <Style TargetType="{x:Type Image}">
                                                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -970,6 +1060,9 @@
                                                         FontStyle="Italic"
                                                         TextAlignment="Center"
                                                         TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </TextBlock.RenderTransform>
                                                         <TextBlock.Style>
                                                             <Style TargetType="{x:Type TextBlock}">
                                                                 <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
@@ -991,6 +1084,9 @@
                                                         FontWeight="Normal"
                                                         IsHitTestVisible="False"
                                                         TextAlignment="Center">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </TextBlock.RenderTransform>
                                                         <TextBlock.Style>
                                                             <Style TargetType="{x:Type TextBlock}">
                                                                 <Setter Property="Text" Value="{Binding KämpferTempName, FallbackValue=''}" />
@@ -1008,10 +1104,10 @@
 
                                                     <!--  Lebensbalken  -->
                                                     <ProgressBar
-                                                        Canvas.Left="{Binding CreatureX}"
-                                                        Canvas.Top="{Binding CreatureY}"
+                                                        Canvas.Left="{Binding FrameBounds.X}"
+                                                        Canvas.Top="{Binding FrameBounds.Y}"
                                                         Width="10"
-                                                        Height="{Binding CreatureHeight}"
+                                                        Height="{Binding FrameBounds.Height}"
                                                         Margin="-12,0,0,0"
                                                         HorizontalAlignment="Left"
                                                         VerticalAlignment="Top"
@@ -1030,7 +1126,11 @@
                                                         Height="40"
                                                         Margin="0,-32,0,0"
                                                         Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
-                                                        Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                                                        Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                        <Image.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </Image.RenderTransform>
+                                                    </Image>
 
                                                     <!--  Position  -->
                                                     <Image
@@ -1039,13 +1139,19 @@
                                                         Width="50"
                                                         Height="50"
                                                         Visibility="{Binding DataContext.ShowCreaturePos, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
-                                                        Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}" />
+                                                        Source="{Binding Position, Converter={StaticResource PositionToImageConverter1}, UpdateSourceTrigger=PropertyChanged}">
+                                                        <Image.RenderTransform>
+                                                            <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                        </Image.RenderTransform>
+                                                    </Image>
 
+                                                    <Canvas Canvas.Left="{Binding FrameBounds.X}"
+                                                            Canvas.Top="{Binding FrameBounds.Y}"
+                                                            Width="{Binding FrameBounds.Width}"
+                                                            Height="{Binding FrameBounds.Height}">
                                                     <!--  Angriff-Abwehraktionen  -->
                                                     <Grid
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Margin="{Binding MarginCreatureATPAaktionen}"
+                                                        Margin="{Binding FrameAttackDefenseMargin}"
                                                         HorizontalAlignment="Left">
                                                         <Slider 
                                                             Width="50"
@@ -1083,10 +1189,8 @@
 
                                                     <!--  Aktionsbuttons rechts  -->
                                                     <Grid
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureAktionsbuttonsPos}"
-                                                        Margin="{Binding MarginCreatureAktionsbuttons}"
+                                                        Height="{Binding FrameActionHeight}"
+                                                        Margin="{Binding FrameActionMargin}"
                                                         Background="Transparent">
                                                         <Grid.Style>
                                                             <Style TargetType="Grid">
@@ -1236,9 +1340,7 @@
 
                                                     <!-- Längerfristige Handlungen -->
                                                     <Grid
-                                                        Margin="{Binding MarginCreatureLangAkt}"
-                                                        Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                        Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
+                                                        Margin="{Binding FrameLongActionMargin}"
                                                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#CFE0E07C" >
                                                         <Grid.Style>
                                                             <Style TargetType="Grid">
@@ -1289,6 +1391,7 @@
                                                             FontSize="18" 
                                                             FontWeight="Bold" />
                                                     </Grid>
+                                                    </Canvas>
                                                     <Rectangle
                                                             Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
                                                             Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"
@@ -1297,8 +1400,13 @@
                                                             RadiusX="12"
                                                             RadiusY="12"
                                                             Opacity=".5"
+                                                            RenderTransformOrigin="0.5,0.5"
                                                             Visibility="{Binding ki.IstImKampf, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanToVisibilityConverter1}, ConverterParameter='imKampf'}"
-                                                            Fill="LightGray"/>
+                                                            Fill="LightGray">
+                                                        <Rectangle.RenderTransform>
+                                                            <RotateTransform Angle="{Binding RotateFrameDegrees}" />
+                                                        </Rectangle.RenderTransform>
+                                                    </Rectangle>
                                                 </Canvas>
 
                                                 <ControlTemplate.Triggers>
@@ -1346,6 +1454,9 @@
                                                             <Style TargetType="Path">
                                                                 <Setter Property="Opacity" Value="{Binding Opacity}" />
                                                                 <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsDistanceMeasurement}" Value="True">
+                                                                        <Setter Property="StrokeLineJoin" Value="Round" />
+                                                                    </DataTrigger>
                                                                     <DataTrigger Binding="{Binding Opacity}" Value=".02">
                                                                         <Setter Property="Opacity" Value=".2" />
                                                                     </DataTrigger>
@@ -1480,25 +1591,142 @@
 
                                 <!--  Datatemplate IMAGEOBJECT  -->
                                 <DataTemplate DataType="{x:Type model:ImageObject}">
+                                    <DataTemplate.Resources>
+                                        <Style x:Key="ImageResizeThumbStyle" TargetType="{x:Type Thumb}">
+                                            <Setter Property="Width" Value="10" />
+                                            <Setter Property="Height" Value="10" />
+                                            <Setter Property="Margin" Value="-5" />
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="BorderBrush" Value="Black" />
+                                            <Setter Property="BorderThickness" Value="1" />
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Border
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="5" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True" />
+                                                        <Condition Binding="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                        <Style x:Key="ImageRotationThumbStyle" TargetType="{x:Type Thumb}">
+                                            <Setter Property="Width" Value="16" />
+                                            <Setter Property="Height" Value="16" />
+                                            <Setter Property="Margin" Value="0,-28,0,0" />
+                                            <Setter Property="Background" Value="White" />
+                                            <Setter Property="BorderBrush" Value="Black" />
+                                            <Setter Property="BorderThickness" Value="1" />
+                                            <Setter Property="Cursor" Value="Hand" />
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Border
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="8">
+                                                            <TextBlock
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="Segoe UI Symbol"
+                                                                FontSize="12"
+                                                                Foreground="Black"
+                                                                Text="↻" />
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True" />
+                                                        <Condition Binding="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataTemplate.Resources>
                                     <Thumb DragDelta="Thumb_Drag" IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
                                         <Thumb.Template>
                                             <ControlTemplate TargetType="{x:Type Thumb}">
                                                 <Canvas IsHitTestVisible="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                    <Image
-                                                        x:Name="ImageObject1"
+                                                    <Grid
                                                         Canvas.Left="{Binding ImagePositionX}"
                                                         Canvas.Top="{Binding ImagePositionY}"
                                                         Width="{Binding ImageWidth}"
                                                         Height="{Binding ImageHeight}"
-                                                        VerticalAlignment="Top"
-                                                        Opacity="{Binding Opacity}"
-                                                        RenderTransformOrigin="0.5,0.5"
-                                                        Source="{Binding PictureUrl}"
-                                                        Stretch="Fill">
-                                                        <Image.RenderTransform>
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <Grid.RenderTransform>
                                                             <RotateTransform Angle="{Binding RotateAngle}" />
-                                                        </Image.RenderTransform>
-                                                    </Image>
+                                                        </Grid.RenderTransform>
+                                                        <Image
+                                                            x:Name="ImageObject1"
+                                                            Opacity="{Binding Opacity}"
+                                                            Source="{Binding PictureUrl}"
+                                                            Stretch="Fill" />
+                                                        <Rectangle Fill="Transparent" IsHitTestVisible="False" Stroke="Black" StrokeThickness="1">
+                                                            <Rectangle.Style>
+                                                                <Style TargetType="{x:Type Rectangle}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True" />
+                                                                                <Condition Binding="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Rectangle.Style>
+                                                        </Rectangle>
+                                                        <Border
+                                                            Width="1"
+                                                            Height="16"
+                                                            Margin="0,-22,0,0"
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Top"
+                                                            Background="Black"
+                                                            IsHitTestVisible="False">
+                                                            <Border.Style>
+                                                                <Style TargetType="{x:Type Border}">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True" />
+                                                                                <Condition Binding="{Binding DataContext.IsEditorModeEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True" />
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Visibility" Value="Visible" />
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                        </Border>
+                                                        <Thumb Style="{StaticResource ImageRotationThumbStyle}" HorizontalAlignment="Center" VerticalAlignment="Top" Tag="Rotate" DragStarted="ImageRotationThumb_DragStarted" DragDelta="ImageRotationThumb_DragDelta" DragCompleted="ImageRotationThumb_DragCompleted" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNWSE" HorizontalAlignment="Left" VerticalAlignment="Top" Tag="TopLeft" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Top" Tag="Top" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNESW" HorizontalAlignment="Right" VerticalAlignment="Top" Tag="TopRight" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeWE" HorizontalAlignment="Left" VerticalAlignment="Center" Tag="Left" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeWE" HorizontalAlignment="Right" VerticalAlignment="Center" Tag="Right" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNESW" HorizontalAlignment="Left" VerticalAlignment="Bottom" Tag="BottomLeft" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNS" HorizontalAlignment="Center" VerticalAlignment="Bottom" Tag="Bottom" DragDelta="ImageResizeThumb_DragDelta" />
+                                                        <Thumb Style="{StaticResource ImageResizeThumbStyle}" Cursor="SizeNWSE" HorizontalAlignment="Right" VerticalAlignment="Bottom" Tag="BottomRight" DragDelta="ImageResizeThumb_DragDelta" />
+                                                    </Grid>
                                                     <TextBlock
                                                         Canvas.Left="{Binding ZDisplayX}"
                                                         Canvas.Top="{Binding ZDisplayY}"
@@ -1679,7 +1907,7 @@
 
                         <s:SpielerPointer Margin="{Binding PointerMargin, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
-                </wpfxc:ZoomControl>
+                </karte:KarteZoomControl>
             </Grid>
         </Grid>
     </Grid>

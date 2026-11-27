@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Visual3D = System.Windows.Media.Media3D.Visual3D;
 using System.Windows.Media.Imaging;
 // Eigene Usings
 using MeisterGeister.Logic.Einstellung;
@@ -20,6 +21,8 @@ using System.Windows.Media.Animation;
 using MeisterGeister.View.Settings;
 using MeisterGeister.Logic.General;
 using MeisterGeister.ViewModel;
+using MeisterGeister.ViewModel.Base;
+using MeisterGeister.View.Menu.Logic;
 using System.ComponentModel;
 using Un4seen.Bass;
 
@@ -33,6 +36,7 @@ using MeisterGeister.ViewModel.Settings;
 using Q42.HueApi.Models.Groups;
 using Newtonsoft.Json;
 using Q42.HueApi.Models;
+using System.Diagnostics;
 
 namespace MeisterGeister.View
 {
@@ -62,19 +66,24 @@ namespace MeisterGeister.View
         #region //FELDER
 
         private bool isPopOut = true;
+        private readonly Dictionary<ToolViewModelBase, Window> floatingToolWindows = new Dictionary<ToolViewModelBase, Window>();
+        private readonly HashSet<ToolViewModelBase> floatingToolDrags = new HashSet<ToolViewModelBase>();
+        private Point tabDragStart;
+        private ToolViewModelBase tabDragTool;
 
         #endregion
 
         public MainView()
         {
+            App.ReportStartupProgress("Hauptfenster wird vorbereitet...");
             InitializeComponent();
 
             VM = MainViewModel.Instance;
             VM.PropertyChanged += VM_PropertyChanged;
+            VM.FloatingTools.CollectionChanged += FloatingTools_CollectionChanged;
 
             Application.Current.MainWindow = this;
-
-            Opacity = 0.5;
+            ContentRendered += MainView_ContentRendered;
 
             // MeisterGeisterID abrufen
             Guid mgID = Einstellungen.MeisterGeisterID;
@@ -280,32 +289,32 @@ namespace MeisterGeister.View
 
         private void MenuItemDereGlobus_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.dereglobus.org/");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("http://www.dereglobus.org/") { UseShellExecute = true });
         }
 
         private void MenuItemHerokonOnline_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.herokon-online.com/");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("http://www.herokon-online.com/") { UseShellExecute = true });
         }
 
         private void MenuItemHilfeHomepage_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.meistergeister.org/");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("http://www.meistergeister.org/") { UseShellExecute = true });
         }
 
         private void MenuItemHilfeForum_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://forum.meistergeister.org/");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("http://forum.meistergeister.org/") { UseShellExecute = true });
         }
 
         private void MenuItemHilfeFacebook_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.facebook.com/pages/MeisterGeister-f%C3%BCr-Das-Schwarze-Auge/303337406358382?sk=wall");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("https://www.facebook.com/pages/MeisterGeister-f%C3%BCr-Das-Schwarze-Auge/303337406358382?sk=wall") { UseShellExecute = true });
         }
 
         private void MenuItemHilfeTwitter_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://twitter.com/#!/MeisterGeister");
+            System.Diagnostics.Process.Start(new ProcessStartInfo("https://twitter.com/#!/MeisterGeister") { UseShellExecute = true });
         }
 
         private void MenuItemHilfeEMail_Click(object sender, RoutedEventArgs e)
@@ -318,7 +327,10 @@ namespace MeisterGeister.View
 
         private void MenuItemWeb_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(((MenuItem)sender).Tag.ToString());
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(((MenuItem)sender).Tag.ToString())
+            {
+                UseShellExecute = true
+            });
         }
 
         private void ButtonWürfel_Wx_Click(object sender, RoutedEventArgs e)
@@ -336,12 +348,19 @@ namespace MeisterGeister.View
             View.General.ViewHelper.OpenWürfelDialog("1W6");
         }
 
+        private void MainView_ContentRendered(object sender, EventArgs e)
+        {
+            ContentRendered -= MainView_ContentRendered;
+            App.CloseSplashScreen();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Regeledition prüfen und festlegen
             if (string.IsNullOrEmpty(Global.Regeledition))
             {
                 // noch keine Regeledition festgelegt, also abfragen...
+                App.CloseSplashScreen();
                 View.Windows.RegeleditionWindow regWin = new RegeleditionWindow();
                 regWin.Owner = this;
                 regWin.ShowDialog();
@@ -349,12 +368,6 @@ namespace MeisterGeister.View
                 Application.Current.Shutdown();
                 return;
             }
-            // wenn kein Jingle abgespielt wird, kann das Startup-Fenster spätestens jetzt geschlossen werden
-#if !(NO_JINGLE)
-            if (Einstellungen.JingleAbstellen)
-#endif
-            App.CloseSplashScreen();
-
 #if TEST
             MessageBox.Show("ACHTUNG: Dies ist eine interne Test-Version!\n"
                       + "\nSie ist nicht mit dem normalen Release-Zweig kompatibel und dient nur internen Testzwecken!", "Test-Version",
@@ -373,47 +386,192 @@ namespace MeisterGeister.View
 
         }
 
+        private void TabItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DependencyObject source = e.OriginalSource as DependencyObject;
+            if (source == null || FindVisualParent<Button>(source) != null)
+                return;
+
+            TabItem item = ItemsControl.ContainerFromElement(_tabControlMain, source) as TabItem;
+            tabDragTool = item == null ? null : item.DataContext as ToolViewModelBase;
+            if (tabDragTool != null)
+                tabDragStart = e.GetPosition(_tabControlMain);
+        }
+
         private void TabItem_PreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (e != null && e.Source != null && e.Source is TabItem
-                && Mouse.PrimaryDevice.LeftButton == MouseButtonState.Pressed)
-            {
-                TabItem item = (TabItem)(e.Source);
-                DragDrop.DoDragDrop(item, item, DragDropEffects.All);
-            }
+            if (tabDragTool == null || Mouse.PrimaryDevice.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            Point currentPosition = e.GetPosition(_tabControlMain);
+            if (Math.Abs(currentPosition.X - tabDragStart.X) < SystemParameters.MinimumHorizontalDragDistance
+                && Math.Abs(currentPosition.Y - tabDragStart.Y) < SystemParameters.MinimumVerticalDragDistance)
+                return;
+
+            ToolViewModelBase tool = tabDragTool;
+            tabDragTool = null;
+            DataObject data = new DataObject(typeof(ToolViewModelBase), tool);
+            DragDropEffects effect = DragDrop.DoDragDrop(_tabControlMain, data, DragDropEffects.Move);
+            if (effect == DragDropEffects.None && VM.OpenTools.Contains(tool))
+                VM.FloatTool(tool);
         }
 
         private void TabItem_Drop(object sender, DragEventArgs e)
         {
-            if (e != null && e.Source != null
-                && (e.Source is TabItem || e.Source is StackPanel || e.Source is Image || e.Source is TextBlock))
+            if (e.Data == null || !e.Data.GetDataPresent(typeof(ToolViewModelBase)))
+                return;
+
+            ToolViewModelBase tool = e.Data.GetData(typeof(ToolViewModelBase)) as ToolViewModelBase;
+            if (tool == null)
+                return;
+
+            DependencyObject source = e.OriginalSource as DependencyObject;
+            TabItem target = source == null ? null : ItemsControl.ContainerFromElement(_tabControlMain, source) as TabItem;
+            int targetIndex = target == null ? -1 : _tabControlMain.ItemContainerGenerator.IndexFromContainer(target);
+            if (VM.DockTool(tool, targetIndex) >= 0)
             {
-                TabItem target = null;
-                if (e.Source is TabItem)
-                    target = (TabItem)(e.Source);
-                else if (e.Source is StackPanel)
-                    target = (TabItem)((StackPanel)e.Source).Parent;
-                else if (e.Source is Image)
-                    target = (TabItem)((StackPanel)((Image)e.Source).Parent).Parent;
-                else if (e.Source is TextBlock)
-                    target = (TabItem)((StackPanel)((TextBlock)e.Source).Parent).Parent;
-                if (e.Data != null)
+                e.Effects = DragDropEffects.Move;
+                e.Handled = true;
+            }
+        }
+
+        private static T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
+        {
+            while (child != null)
+            {
+                if (child is T parent)
+                    return parent;
+
+                if (child is Visual || child is Visual3D)
                 {
-                    TabItemControl source = (TabItemControl)(e.Data.GetData(typeof(TabItemControl)));
-                    if (!source.Equals(target))
+                    child = VisualTreeHelper.GetParent(child);
+                }
+                else if (child is ContentElement contentElement)
+                {
+                    child = ContentOperations.GetParent(contentElement);
+                    if (child == null && contentElement is FrameworkContentElement frameworkContentElement)
+                        child = frameworkContentElement.Parent;
+                }
+                else
+                {
+                    child = LogicalTreeHelper.GetParent(child);
+                }
+            }
+            return null;
+        }
+
+        private void FloatingTools_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (ToolViewModelBase tool in e.OldItems)
+                {
+                    if (!floatingToolDrags.Contains(tool) && floatingToolWindows.TryGetValue(tool, out Window window))
                     {
-                        if (target != null && target.Parent != null && target.Parent is TabControl)
-                        {
-                            TabControl tab = (TabControl)(target.Parent);
-                            int sourceIndex = tab.Items.IndexOf(source);
-                            int targetIndex = tab.Items.IndexOf(target);
-                            tab.Items.Remove(source);
-                            tab.Items.Insert(targetIndex, source);
-                            tab.SelectedItem = source;
-                        }
+                        floatingToolWindows.Remove(tool);
+                        window.Close();
                     }
                 }
             }
+
+            if (e.NewItems != null)
+            {
+                foreach (ToolViewModelBase tool in e.NewItems)
+                    CreateFloatingToolWindow(tool);
+            }
+        }
+
+        private void CreateFloatingToolWindow(ToolViewModelBase tool)
+        {
+            Window window = new Window
+            {
+                Title = tool.Name,
+                Owner = this,
+                Width = 900,
+                Height = 650,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                DataContext = VM
+            };
+
+            DockPanel panel = new DockPanel();
+            Border header = new Border
+            {
+                Padding = new Thickness(8, 5, 8, 5),
+                Background = Brushes.LightGray
+            };
+            DockPanel.SetDock(header, Dock.Top);
+
+            StackPanel headerContent = new StackPanel { Orientation = Orientation.Horizontal };
+            TextBlock title = new TextBlock
+            {
+                Text = tool.Name,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(0, 0, 12, 0)
+            };
+            Button dockButton = new Button { Content = "Einreihen", Padding = new Thickness(6, 2, 6, 2) };
+            dockButton.Click += (s, e) => VM.DockTool(tool);
+            headerContent.Children.Add(title);
+            headerContent.Children.Add(dockButton);
+            header.Child = headerContent;
+            panel.Children.Add(header);
+
+            ContentControl content = new ContentControl
+            {
+                Content = tool,
+                ContentTemplateSelector = new ToolViewSelector()
+            };
+            panel.Children.Add(content);
+            Grid windowContent = new Grid();
+            windowContent.Children.Add(panel);
+            ContentControl busyOverlay = new ContentControl { Template = (ControlTemplate)FindResource("BusyStatusTemplate") };
+            busyOverlay.SetBinding(VisibilityProperty, new System.Windows.Data.Binding("IsBusyProgressVisible")
+            {
+                Converter = new System.Windows.Controls.BooleanToVisibilityConverter()
+            });
+            windowContent.Children.Add(busyOverlay);
+            window.Content = windowContent;
+
+            Point dragStart = new Point();
+            bool headerPressed = false;
+            header.PreviewMouseLeftButtonDown += (s, e) =>
+            {
+                if (FindVisualParent<Button>(e.OriginalSource as DependencyObject) == null)
+                {
+                    dragStart = e.GetPosition(header);
+                    headerPressed = true;
+                }
+            };
+            header.PreviewMouseLeftButtonUp += (s, e) => headerPressed = false;
+            header.PreviewMouseMove += (s, e) =>
+            {
+                if (!headerPressed || Mouse.PrimaryDevice.LeftButton != MouseButtonState.Pressed)
+                    return;
+
+                Point position = e.GetPosition(header);
+                if (Math.Abs(position.X - dragStart.X) < SystemParameters.MinimumHorizontalDragDistance
+                    && Math.Abs(position.Y - dragStart.Y) < SystemParameters.MinimumVerticalDragDistance)
+                    return;
+
+                headerPressed = false;
+                DataObject data = new DataObject(typeof(ToolViewModelBase), tool);
+                floatingToolDrags.Add(tool);
+                DragDrop.DoDragDrop(header, data, DragDropEffects.Move);
+                floatingToolDrags.Remove(tool);
+                if (!VM.FloatingTools.Contains(tool) && floatingToolWindows.TryGetValue(tool, out Window floatingWindow))
+                {
+                    floatingToolWindows.Remove(tool);
+                    floatingWindow.Close();
+                }
+            };
+            window.Closed += (s, e) =>
+            {
+                floatingToolWindows.Remove(tool);
+                if (VM.FloatingTools.Contains(tool))
+                    VM.DockTool(tool);
+            };
+
+            floatingToolWindows.Add(tool, window);
+            window.Show();
         }
 
         #region //EVENTS

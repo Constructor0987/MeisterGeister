@@ -15,10 +15,8 @@
                 <ImageBrush ImageSource="/Images/Texturen/pergament.png" />
             </StackPanel.Background>
             <TextBlock Text="MeisterGeister wird initialisiert..." HorizontalAlignment="Center" FontSize="32" FontWeight="Bold" FontFamily="/DSA MeisterGeister;component/Fonts/#Morpheus" />
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="Start-Jingle an-/abstellen?" FontSize="18" Margin="4" />
-                <TextBlock Name="_jingleStoppTextBlock" Text="Hier klicken." FontSize="18" Margin="4" Foreground="Blue" Cursor="Hand" MouseDown="_jingleStoppTextBlock_MouseDown" Opacity="0.8" />
-            </StackPanel>
+            <TextBlock Name="_statusTextBlock" Text="Programm wird gestartet..." HorizontalAlignment="Center" TextAlignment="Center" FontSize="18" Margin="8" TextWrapping="Wrap" />
+            <TextBlock Text="Den Start-Jingle kannst du in den Einstellungen an- oder abstellen." HorizontalAlignment="Center" FontSize="14" Margin="4" />
         </StackPanel>
         <Image Source="/Images/Logos/DsaFanprojekt_Logo.png" Height="60" Cursor="Wait" Margin="15" />
     </StackPanel>

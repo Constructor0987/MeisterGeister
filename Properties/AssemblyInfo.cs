@@ -51,8 +51,12 @@ using System.Windows;
 // Sie können alle Werte angeben oder die standardmäßigen Build- und Revisionsnummern 
 // übernehmen, indem Sie "*" eingeben:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.7.0.0")]
-[assembly: AssemblyFileVersion("2.7.0.0")]
+[assembly: AssemblyVersion("2.8.0.0")]
+[assembly: AssemblyFileVersion("2.8.0.0")]
+
+#if NET
+[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows7.0")]
+#endif
 
 // Dem Testprojekt den Zugriff auf die Interna erlauben.
 [assembly: InternalsVisibleTo("MeisterGeister_Tests")]

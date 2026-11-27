@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <DefineConstants>$(DefineConstants);NET10_WEB_TESTS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../Net/Server.cs" Link="Server.cs" />
+    <Compile Include="../../Net/Starter.cs" Link="Starter.cs" />
+    <Compile Include="../../Net/Web/RestModule.cs" Link="RestModule.cs" />
+    <Compile Include="../../Net/Web/DereGlobusModule.cs" Link="DereGlobusModule.cs" />
+  </ItemGroup>
+</Project>

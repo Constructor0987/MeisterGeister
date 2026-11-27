@@ -59,7 +59,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             {
                                 try
                                 {
-                                    Impromptu.InvokeMemberAction(o, "OnChanged", pi.Name);
+                                    Dynamitey.Dynamic.InvokeMemberAction(o, "OnChanged", pi.Name);
                                     //Impromptu.InvokeMemberAction(o, "PropertyChanged", o, new PropertyChangedEventArgs(pi.Name)); //geht so leider nicht, das wäre noch eleganter
                                     methodnames.Add(pi.Name);
                                 }
@@ -78,7 +78,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                 else
                 {
                     foreach (string method in cache[t][o.GetType()])
-                        Impromptu.InvokeMemberAction(o, "OnChanged", method);
+                        Dynamitey.Dynamic.InvokeMemberAction(o, "OnChanged", method);
                 }
             }
         }

@@ -45,12 +45,22 @@ namespace MeisterGeister
                 {
                     _contextMenuLink = new Service.MenuLinkService();
                 }
-
                 return _contextMenuLink;
             }
 
             set { _contextMenuLink = value; }
         }
+
+        public static void SetIsBusy(bool isBusy, string info, int? progress, System.Threading.CancellationTokenSource cancellation = null, string progressCount = null)
+        {
+            if (progress < 0 || progress > 100)
+                throw new ArgumentOutOfRangeException(nameof(progress));
+
+            SetIsBusy(isBusy, info);
+            if (MainVM != null)
+                MainVM.SetBusyProgress(isBusy, info, progress, cancellation, progressCount);
+        }
+
 
 
         #endregion //CONTEXTE

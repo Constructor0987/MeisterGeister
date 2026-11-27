@@ -33,7 +33,7 @@ namespace MeisterGeister.View.Bodenplan
         {
             InitializeComponent();
             Global.CurrentKampf.BodenplanView = this;
-            VM = new BattlegroundViewModel();
+            VM = Global.CurrentKampf.GetOrCreateBodenplanViewModel();
             
             AddPictureButtons();
             AddFogOfWar();
@@ -538,18 +538,89 @@ namespace MeisterGeister.View.Bodenplan
             }
         }
 
-        private void View_Unloaded(object sender, RoutedEventArgs e)
+        private ImageObject _rotatingImage;
+        private double _rotationLastPointerAngle;
+
+        private void ImageRotationThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
-            if (VM != null && VM.KampfWindow != null)
+            var thumb = sender as Thumb;
+            _rotatingImage = thumb?.DataContext as ImageObject;
+            if (_rotatingImage != null)
             {
-                VM.KampfWindow.Close();
+                _rotationLastPointerAngle = GetImagePointerAngle(_rotatingImage);
             }
-            if (VM != null && VM.IsShowIniKampf)
+        }
+
+        private void ImageRotationThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            var thumb = sender as Thumb;
+            var image = thumb?.DataContext as ImageObject;
+            if (image == null || image != _rotatingImage)
             {
-                VM.KampfWindow.Tag = true;
-                VM.KampfWindow.Close();
+                return;
             }
-            VM.Dispose();
+
+            var currentPointerAngle = GetImagePointerAngle(image);
+            var angleDelta = currentPointerAngle - _rotationLastPointerAngle;
+            if (angleDelta > 180)
+            {
+                angleDelta -= 360;
+            }
+            else if (angleDelta < -180)
+            {
+                angleDelta += 360;
+            }
+
+            image.RotateAngle += angleDelta;
+            _rotationLastPointerAngle = currentPointerAngle;
+            e.Handled = true;
+        }
+
+        private void ImageRotationThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            _rotatingImage = null;
+        }
+
+        private double GetImagePointerAngle(ImageObject image)
+        {
+            var pointerPosition = Mouse.GetPosition(ArenaGrid);
+            var centerX = image.ImagePositionX + image.ImageWidth / 2;
+            var centerY = image.ImagePositionY + image.ImageHeight / 2;
+            return Math.Atan2(pointerPosition.Y - centerY, pointerPosition.X - centerX) * (180 / Math.PI);
+        }
+
+        private void ImageResizeThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            var thumb = sender as Thumb;
+            var image = thumb?.DataContext as ImageObject;
+            var edge = thumb?.Tag as string;
+            if (image == null || edge == null)
+            {
+                return;
+            }
+
+            var resizeLeft = edge.Contains("Left");
+            var resizeRight = edge.Contains("Right");
+            var resizeTop = edge.Contains("Top");
+            var resizeBottom = edge.Contains("Bottom");
+
+            var oldWidth = image.ImageWidth;
+            var newWidth = Math.Max(10, oldWidth + (resizeRight ? e.HorizontalChange : resizeLeft ? -e.HorizontalChange : 0));
+            if (resizeLeft)
+            {
+                image.ImagePositionX += oldWidth - newWidth;
+            }
+            image.ImageWidth = newWidth;
+
+            var oldHeight = image.ImageHeight;
+            var newHeight = Math.Max(10, oldHeight + (resizeBottom ? e.VerticalChange : resizeTop ? -e.VerticalChange : 0));
+            if (resizeTop)
+            {
+                image.ImagePositionY += oldHeight - newHeight;
+            }
+            image.ImageHeight = newHeight;
+
+            e.Handled = true;
         }
 
         #region --- Tastatur abfragen ---
@@ -577,6 +648,7 @@ namespace MeisterGeister.View.Bodenplan
         private Cursor _kämpferCursor = null;
         private Point? _kämpferPoint = null;
         private bool _mouseClickedOnCreature = false;
+        private bool _movementControlPressed = false;
         private MenuItem _openMenuItem = null;
 
         [DllImport("User32.dll")]
@@ -622,8 +694,8 @@ namespace MeisterGeister.View.Bodenplan
                         try
                         {
                             RotateTransform aRotateTransform = new RotateTransform();
-                            aRotateTransform.CenterX = (VM.SelectedObject as BattlegroundCreature).RotateImageCenterXY;
-                            aRotateTransform.CenterY = (VM.SelectedObject as BattlegroundCreature).RotateImageCenterXY;
+                            aRotateTransform.CenterX = img.Width / 2;
+                            aRotateTransform.CenterY = img.Height / 2;
                             aRotateTransform.Angle = (VM.SelectedObject as BattlegroundCreature).RotateImageDegrees;
                             img.RenderTransform = aRotateTransform;
 
@@ -678,29 +750,10 @@ namespace MeisterGeister.View.Bodenplan
         {
             try
             {
-                if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogPixelData != null)
+                if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogImage != null)
                 {
                     VM.SelectedObject = null;
-                    WriteableBitmap wbmap = VM.FogImage;
-                    var newX = (int)VM.CurrentMousePositionX / 10;
-                    var newY = (int)VM.CurrentMousePositionY / 10;
-
-                    var w = 10 * VM.FogFreeSize + 1;
-                    var h = (10 * VM.FogFreeSize + 1) * 10 - 1;
-                    var leererBereich = new int[w * h];
-
-                    for (var i = 0; i < 100 * VM.FogFreeSize + 1; i++)
-                    {
-                        Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);
-                    }
-
-                    var ber = 1000;
-                    wbmap.WritePixels(new Int32Rect(newX, newY,
-                        newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
-                        newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
-                        VM.FogPixelData, ber, 0); // widthInByte
-
-                    VM.FogImage = wbmap;
+                    VM.PaintFog(e.GetPosition(ArenaGrid), false);
                 }
                 else
                 {
@@ -848,35 +901,14 @@ namespace MeisterGeister.View.Bodenplan
 
                 VM.FogFreimachen = (VM.useFog && Keyboard.Modifiers == ModifierKeys.Control);
 
-                if (VM.FogFreimachen && VM.FogPixelData != null)
+                if (VM.FogFreimachen && VM.FogImage != null)
                 {
                     VM.SelectedObject = null;
                     VM.CurrentMousePositionX = e.GetPosition(ArenaGrid).X;
                     VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
                     if (e.LeftButton == MouseButtonState.Pressed || e.RightButton == MouseButtonState.Pressed)
                     {
-                        WriteableBitmap wbmap = VM.FogImage;
-                        var newX = (int)VM.CurrentMousePositionX / 10;
-                        var newY = (int)VM.CurrentMousePositionY / 10;
-                        var w = 10 * VM.FogFreeSize + 1;
-                        var h = (10 * VM.FogFreeSize + 1) * 10;
-                        var leererBereich = new int[w * h];
-                        if (e.RightButton == MouseButtonState.Pressed)
-                        {
-                            leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
-                        }
-
-                        for (var i = 0; i < 100 * VM.FogFreeSize + 1; i++)
-                        {
-                            Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);
-                        }
-
-                        var ber = 1000;
-                        wbmap.WritePixels(new Int32Rect(newX, newY,
-                                newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
-                                newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
-                                VM.FogPixelData, ber, 0);
-                        VM.FogImage = wbmap;
+                        VM.PaintFog(e.GetPosition(ArenaGrid), e.RightButton == MouseButtonState.Pressed);
                     }
                     return;
                 }
@@ -918,6 +950,7 @@ namespace MeisterGeister.View.Bodenplan
                     if (VM.InitDnD)
                     {
                         VM.BewegungZuvor = 0;
+                        _movementControlPressed = false;
                         var x = (VM.SelectedObject as BattlegroundCreature).MidCreatureX + (VM.SelectedObject as BattlegroundCreature).CreatureWidth / 2;
                         var y = (VM.SelectedObject as BattlegroundCreature).MidCreatureY + (VM.SelectedObject as BattlegroundCreature).CreatureHeight / 2;
                         VM.CreateNewTempPathLine(x, y);
@@ -1080,6 +1113,12 @@ namespace MeisterGeister.View.Bodenplan
                         return;
                     }
 
+                    var resizeThumb = ((DependencyObject)e.OriginalSource).FindAnchestor<Thumb>();
+                    if (resizeThumb != null && resizeThumb.DataContext is ImageObject && resizeThumb.Tag is string)
+                    {
+                        return;
+                    }
+
                     ListBoxItem listboxItem = ((DependencyObject)e.OriginalSource).FindAnchestor<ListBoxItem>();
                     if (listboxItem != null)
                     {
@@ -1145,28 +1184,9 @@ namespace MeisterGeister.View.Bodenplan
                 e.Handled = true;
                 if (VM != null)
                 {                    
-                    if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogPixelData != null)
+                    if (VM.FogFreimachen && Keyboard.Modifiers == ModifierKeys.Control && VM.FogImage != null)
                     {
-                        WriteableBitmap wbmap = VM.FogImage;
-                        var newX = (int)VM.CurrentMousePositionX / 10;
-                        var newY = (int)VM.CurrentMousePositionY / 10;
-
-                        var w = 10 * VM.FogFreeSize + 1;
-                        var h = (10 * VM.FogFreeSize + 1) * 10 - 1;
-                        var leererBereich = Enumerable.Repeat(-0x01000000, w * h).ToArray();
-
-                        for (var i = 0; i < 100 * VM.FogFreeSize + 1; i++)
-                        {
-                            Array.ConstrainedCopy(leererBereich, 0, VM.FogPixelData, i * 1000, w * h);
-                        }
-
-                        var ber = 1000;
-                        wbmap.WritePixels(new Int32Rect(newX, newY,
-                            newX + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newX : 10 * VM.FogFreeSize + 1,
-                            newY + 10 * VM.FogFreeSize + 1 > 1000 ? 1000 - newY : 10 * VM.FogFreeSize + 1),
-                            VM.FogPixelData, ber, 0); // widthInByte
-
-                        VM.FogImage = wbmap;
+                        VM.PaintFog(e.GetPosition(ArenaGrid), true);
                         return;
                     }
 
@@ -1265,16 +1285,20 @@ namespace MeisterGeister.View.Bodenplan
             VM.CurrentMousePositionY = e.GetPosition(ArenaGrid).Y;
 
             //Mehrfachstrecken der Kämpfer
-            if (VM.SelectedObject != null && VM.SelectedObject.IsMoving && Keyboard.Modifiers == ModifierKeys.Control)
+            bool controlPressed = (e.KeyStates & DragDropKeyStates.ControlKey) != 0;
+            if (VM.SelectedObject != null && VM.SelectedObject.IsMoving &&
+                VM.SelectedTempObject is PathLine pathLine && controlPressed && !_movementControlPressed)
             {
-                var pathLine = (PathLine)VM.SelectedTempObject;
-                Point startPoint = pathLine.GetStartPoint;
+                Point startPoint = pathLine.CurrentSegmentStartPoint;
                 Point endPoint = pathLine.GetEndPoint;
-                VM.BewegungZuvor += VM.BerechneLänge(startPoint, endPoint);
-
-                VM.CreateNewTempPathLine(endPoint.X, endPoint.Y);
-                VM.CreateNewTempTextLabel(endPoint.X, endPoint.Y);
+                if (startPoint != endPoint)
+                {
+                    VM.BewegungZuvor += VM.BerechneLänge(startPoint, endPoint);
+                    pathLine.AddNewPointToSeries(endPoint);
+                    VM.CreateNewTempTextLabel(endPoint.X, endPoint.Y);
+                }
             }
+            _movementControlPressed = controlPressed;
         }
 
         private void ArenaGrid_Drop(object sender, DragEventArgs e)
@@ -1336,10 +1360,9 @@ namespace MeisterGeister.View.Bodenplan
             {
                 if (iItem != null)
                 {
-                    Point p = new Point(
-                        VM.CurrentMousePositionX,
-                        VM.CurrentMousePositionY);
-                    VM.CreateImageObject(iItem.Pfad, p);
+                    // CreateImageObject currently ignores its position argument.
+                    ImageObject image = VM.CreateImageObject(iItem.Pfad, new Point());
+                    CenterImageInViewport(ArenaScrollViewer, ArenaGrid, image);
                 }
                 (e.Source as ListBox).SelectedItem = null;
             }
@@ -1348,6 +1371,13 @@ namespace MeisterGeister.View.Bodenplan
                 ViewHelper.ShowError("Fehler beim Generieren der Bilddatei." + Environment.NewLine + "Bitte überprüfen, ob die Datei existiert:" + Environment.NewLine +
                   Ressources.Decoder(Ressources.GetFullApplicationPath() + iItem != null? iItem.Pfad: "Unbekannter Pfad"), ex);
             }
+        }
+
+        private static void CenterImageInViewport(FrameworkElement viewport, FrameworkElement map, ImageObject image)
+        {
+            Point center = viewport.TranslatePoint(new Point(viewport.ActualWidth / 2, viewport.ActualHeight / 2), map);
+            image.MoveObject(center.X - image.ImageWidth / 2 - image.ImagePositionX,
+                center.Y - image.ImageHeight / 2 - image.ImagePositionY, false);
         }
 
         public void VideoObject1_MediaOpened(object sender, RoutedEventArgs e)

@@ -145,4 +145,257 @@ namespace MeisterGeister.View.Karte
             VM.notZooming = false;
         }
     }
+
+    public class KarteZoomControl : ZoomControl
+    {
+        private bool updatingViewport;
+        private bool viewportTransaction;
+        private readonly Dictionary<DependencyProperty, BindingBase> suspendedBindings = new Dictionary<DependencyProperty, BindingBase>();
+        private static readonly DependencyProperty[] viewportProperties = { ZoomProperty, TranslateXProperty, TranslateYProperty };
+
+        public static readonly DependencyProperty ViewportModeProperty = DependencyProperty.Register(
+            nameof(ViewportMode), typeof(ZoomControlModes), typeof(KarteZoomControl),
+            new FrameworkPropertyMetadata(ZoomControlModes.Custom, ViewportModeChanged));
+
+        public ZoomControlModes ViewportMode
+        {
+            get { return (ZoomControlModes)GetValue(ViewportModeProperty); }
+            set { SetValue(ViewportModeProperty, value); }
+        }
+
+        static KarteZoomControl()
+        {
+            // Keep the library's property animations disabled; animate the rendered transforms instead.
+            ModeProperty.OverrideMetadata(typeof(KarteZoomControl),
+                new FrameworkPropertyMetadata(ZoomControlModes.Custom, null, (obj, value) => ZoomControlModes.Custom));
+            TranslateXProperty.OverrideMetadata(typeof(KarteZoomControl),
+                new FrameworkPropertyMetadata(0.0, ViewportValueChanged, (obj, value) => ((KarteZoomControl)obj).CoerceTranslation((double)value, true)));
+            TranslateYProperty.OverrideMetadata(typeof(KarteZoomControl),
+                new FrameworkPropertyMetadata(0.0, ViewportValueChanged, (obj, value) => ((KarteZoomControl)obj).CoerceTranslation((double)value, false)));
+            ZoomProperty.OverrideMetadata(typeof(KarteZoomControl),
+                new FrameworkPropertyMetadata(1.0, ViewportValueChanged));
+        }
+
+        private static void ViewportValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (KarteZoomControl)obj;
+            if (control.IsLoaded && !control.viewportTransaction)
+            {
+                control.SetCurrentValue(ViewportModeProperty, ZoomControlModes.Custom);
+                control.StopViewportAnimations();
+            }
+        }
+
+        public KarteZoomControl()
+        {
+            Loaded += (s, e) =>
+            {
+                if (suspendedBindings.Count > 0)
+                {
+                    foreach (var property in viewportProperties)
+                        if (suspendedBindings.TryGetValue(property, out BindingBase binding))
+                            BindingOperations.SetBinding(this, property, binding);
+                    suspendedBindings.Clear();
+                    SetViewport(Zoom, TranslateX, TranslateY);
+                }
+                StopViewportAnimations();
+            };
+            Unloaded += (s, e) =>
+            {
+                var values = viewportProperties.ToDictionary(property => property, property => GetValue(property));
+                foreach (var property in viewportProperties.Reverse())
+                {
+                    var binding = BindingOperations.GetBindingBase(this, property);
+                    if (binding != null)
+                    {
+                        suspendedBindings[property] = binding;
+                        BindingOperations.ClearBinding(this, property);
+                    }
+                }
+                foreach (var property in viewportProperties)
+                    SetCurrentValue(property, values[property]);
+            };
+        }
+
+        private static void ViewportModeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (KarteZoomControl)obj;
+            if (control.IsLoaded)
+                control.ApplyViewportMode();
+        }
+
+        public new void ZoomToFill()
+        {
+            if (ViewportMode == ZoomControlModes.Fill)
+                ApplyViewportMode();
+            else
+                SetCurrentValue(ViewportModeProperty, ZoomControlModes.Fill);
+        }
+
+        public new void ZoomToOriginal()
+        {
+            if (ViewportMode == ZoomControlModes.Original)
+                ApplyViewportMode();
+            else
+                SetCurrentValue(ViewportModeProperty, ZoomControlModes.Original);
+        }
+
+        private void ApplyViewportMode()
+        {
+            var presenter = GetTemplateChild("PART_Presenter") as ZoomContentPresenter;
+            if (presenter == null || presenter.ContentSize.Width <= 0 || presenter.ContentSize.Height <= 0)
+                return;
+
+            if (ViewportMode == ZoomControlModes.Custom)
+                return;
+
+            double zoom = ViewportMode == ZoomControlModes.Original ? 1 :
+                Math.Min(ActualWidth / presenter.ContentSize.Width, ActualHeight / presenter.ContentSize.Height);
+            SetViewport(zoom, -(presenter.ContentSize.Width - presenter.DesiredSize.Width) * zoom / 2,
+                -(presenter.ContentSize.Height - presenter.DesiredSize.Height) * zoom / 2);
+        }
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            if (ModifierMode == ZoomViewModifierMode.None &&
+                (WheelZoomsAlone || (Keyboard.Modifiers & ModifierKeyZoom) != 0))
+            {
+                e.Handled = true;
+                Point point = e.GetPosition(this);
+                var presenter = (ZoomContentPresenter)GetTemplateChild("PART_Presenter");
+                double factor = Math.Max(1 / MaxZoomDelta, Math.Min(MaxZoomDelta, 1 + e.Delta / 10000.0 * ZoomDeltaMultiplier));
+                double zoom = Math.Max(MinZoom, Math.Min(MaxZoom, Zoom * factor));
+                double ratio = zoom / Zoom;
+                double originX = presenter.DesiredSize.Width / 2;
+                double originY = presenter.DesiredSize.Height / 2;
+                SetCurrentValue(ViewportModeProperty, ZoomControlModes.Custom);
+                SetViewport(zoom, point.X - originX - (point.X - originX - TranslateX) * ratio,
+                    point.Y - originY - (point.Y - originY - TranslateY) * ratio);
+            }
+            base.OnPreviewMouseWheel(e);
+        }
+
+        private double CoerceTranslation(double value, bool horizontal)
+        {
+            var presenter = GetTemplateChild("PART_Presenter") as ZoomContentPresenter;
+            if (!LimitToContent || updatingViewport || presenter == null || !IsArrangeValid)
+                return value;
+
+            double content = horizontal ? presenter.ContentSize.Width : presenter.ContentSize.Height;
+            double viewport = horizontal ? ActualWidth : ActualHeight;
+            double origin = (horizontal ? presenter.DesiredSize.Width : presenter.DesiredSize.Height) / 2;
+            double offset = origin * (1 - Zoom);
+            if (content * Zoom <= viewport)
+                return (viewport - content * Zoom) / 2 - offset;
+
+            return Math.Max(viewport - content * Zoom - offset, Math.Min(-offset, value));
+        }
+
+        private void SetViewport(double zoom, double x, double y)
+        {
+            var presenter = (ZoomContentPresenter)GetTemplateChild("PART_Presenter");
+            var transforms = (TransformGroup)presenter.RenderTransform;
+            var scale = transforms.Children.OfType<ScaleTransform>().Single();
+            var translate = transforms.Children.OfType<TranslateTransform>().Single();
+            double oldZoom = scale.ScaleX;
+            double oldX = translate.X;
+            double oldY = translate.Y;
+
+            viewportTransaction = true;
+            try
+            {
+                updatingViewport = true;
+                SetCurrentValue(ZoomProperty, zoom);
+                SetCurrentValue(TranslateXProperty, x);
+                SetCurrentValue(TranslateYProperty, y);
+                updatingViewport = false;
+                CoerceValue(TranslateXProperty);
+                CoerceValue(TranslateYProperty);
+                foreach (var property in viewportProperties)
+                {
+                    SetCurrentValue(property, GetValue(property));
+                    GetBindingExpression(property)?.UpdateSource();
+                }
+            }
+            finally
+            {
+                updatingViewport = false;
+                viewportTransaction = false;
+            }
+
+            Animate(scale, ScaleTransform.ScaleXProperty, oldZoom, Zoom);
+            Animate(scale, ScaleTransform.ScaleYProperty, oldZoom, Zoom);
+            Animate(translate, TranslateTransform.XProperty, oldX, TranslateX);
+            Animate(translate, TranslateTransform.YProperty, oldY, TranslateY);
+        }
+
+        private void Animate(System.Windows.Media.Animation.Animatable target, DependencyProperty property, double from, double to)
+        {
+            target.BeginAnimation(property, null);
+            target.SetCurrentValue(property, to);
+            if (AnimationLength > TimeSpan.Zero)
+                target.BeginAnimation(property, new System.Windows.Media.Animation.DoubleAnimation(from, to, AnimationLength)
+                {
+                    FillBehavior = System.Windows.Media.Animation.FillBehavior.Stop
+                });
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            SynchronizeViewport();
+        }
+
+        protected override Size ArrangeOverride(Size arrangeBounds)
+        {
+            Size result = base.ArrangeOverride(arrangeBounds);
+            if (ViewportMode == ZoomControlModes.Fill)
+                ApplyViewportMode();
+            SynchronizeViewport();
+            return result;
+        }
+
+        private void StopViewportAnimations()
+        {
+            var presenter = GetTemplateChild("PART_Presenter") as ZoomContentPresenter;
+            if (presenter?.RenderTransform is TransformGroup transforms)
+            {
+                foreach (var transform in transforms.Children)
+                {
+                    if (transform is ScaleTransform scale)
+                    {
+                        scale.BeginAnimation(ScaleTransform.ScaleXProperty, null);
+                        scale.BeginAnimation(ScaleTransform.ScaleYProperty, null);
+                    }
+                    else if (transform is TranslateTransform translate)
+                    {
+                        translate.BeginAnimation(TranslateTransform.XProperty, null);
+                        translate.BeginAnimation(TranslateTransform.YProperty, null);
+                    }
+                }
+                SynchronizeViewport();
+            }
+        }
+
+        private void SynchronizeViewport()
+        {
+            var presenter = GetTemplateChild("PART_Presenter") as ZoomContentPresenter;
+            if (presenter == null || !(presenter.RenderTransform is TransformGroup transforms))
+                throw new InvalidOperationException("Das Kartenzoom-Template benoetigt PART_Presenter mit Zoom-Transformationen.");
+
+            foreach (var transform in transforms.Children)
+            {
+                if (transform is ScaleTransform scale)
+                {
+                    scale.ScaleX = Zoom;
+                    scale.ScaleY = Zoom;
+                }
+                else if (transform is TranslateTransform translate)
+                {
+                    translate.X = TranslateX;
+                    translate.Y = TranslateY;
+                }
+            }
+        }
+    }
 }

@@ -117,6 +117,9 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        [XmlIgnore]
+        public bool IsDistanceMeasurement { get; set; }
+
         public bool IsMoving
         {
             get { return _isMoving; }

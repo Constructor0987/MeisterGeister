@@ -123,6 +123,9 @@
             <Grid
                 Name="PlayerArenaGridTop"
                 Margin="{Binding PlayerOffsetGridMargin, UpdateSourceTrigger=PropertyChanged}"
+                Width="{Binding ArenaGridSize}"
+                Height="{Binding ArenaGridSize}"
+                ClipToBounds="True"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
                 <Image
@@ -147,8 +150,8 @@
                 </MediaElement>
                 <ListBox
                     Name="ArenaGrid2"
-                    Width="10000"
-                    Height="10000"
+                    Width="{Binding ArenaGridSize}"
+                    Height="{Binding ArenaGridSize}"
                     ItemsSource="{Binding BattlegroundObjects}"
                     SelectedItem="{Binding SelectedObject, Mode=TwoWay}"
                     SelectionMode="Single">
@@ -268,12 +271,10 @@
                                                         Canvas.Left="{Binding CreatureXPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Canvas.Top="{Binding CreatureYPic, UpdateSourceTrigger=PropertyChanged}"
                                                         Width="{Binding CreatureWidthPic, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}">
+                                                        Height="{Binding CreatureHeightPic, UpdateSourceTrigger=PropertyChanged}"
+                                                        RenderTransformOrigin="0.5,0.5">
                                                 <Border.RenderTransform>
-                                                    <RotateTransform 
-                                                    CenterX="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}" 
-                                                    CenterY="{Binding RotateImageCenterXY, UpdateSourceTrigger=PropertyChanged}"
-                                                    Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <RotateTransform Angle="{Binding RotateImageDegrees, UpdateSourceTrigger=PropertyChanged}" />
                                                 </Border.RenderTransform>
                                                 <Border.Background>
                                                     <ImageBrush Opacity="{Binding ki.Opacity_Spieler}" Stretch="Fill" >
@@ -307,7 +308,11 @@
                                                         RadiusX="12"
                                                         RadiusY="12"
                                                         Stroke="#FF5D5757"
+                                                        RenderTransformOrigin="0.5,0.5"
                                                         ToolTip="{Binding Name}">
+                                                <Rectangle.RenderTransform>
+                                                    <RotateTransform Angle="{Binding RotateFrameDegrees}" />
+                                                </Rectangle.RenderTransform>
                                             </Rectangle>
 
                                             <TextBlock
@@ -319,7 +324,11 @@
                                                 IsHitTestVisible="False"
                                                 Text="{Binding ZLevel}"
                                                 TextAlignment="Center"
-                                                Visibility="{Binding DataContext.ShowZ, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                Visibility="{Binding DataContext.ShowZ, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                <TextBlock.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </TextBlock.RenderTransform>
+                                            </TextBlock>
 
                                             <!--  HinweisText  -->
                                             <TextBlock
@@ -334,6 +343,9 @@
                                                 FontStyle="Italic"
                                                 TextAlignment="Center"
                                                 TextWrapping="Wrap">
+                                                <TextBlock.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </TextBlock.RenderTransform>
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Text" Value="{Binding HinweisText, UpdateSourceTrigger=PropertyChanged}" />
@@ -360,6 +372,9 @@
                                                 Opacity="{Binding ki.Opacity_Spieler}"
                                                 TextAlignment="Center"
                                                 Visibility="{Binding DataContext.ShowCreatureName, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                                                <TextBlock.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </TextBlock.RenderTransform>
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="Text" Value="{Binding KurzTempname}" />
@@ -377,10 +392,10 @@
 
                                             <!--  Lebensbalken  -->
                                             <ProgressBar
-                                                Canvas.Left="{Binding CreatureX}"
-                                                Canvas.Top="{Binding CreatureY}"
+                                                Canvas.Left="{Binding FrameBounds.X}"
+                                                Canvas.Top="{Binding FrameBounds.Y}"
                                                 Width="10"
-                                                Height="{Binding CreatureHeight}"
+                                                Height="{Binding FrameBounds.Height}"
                                                 Margin="-12,0,0,0"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
@@ -402,6 +417,9 @@
                                                 Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="/DSA%20MeisterGeister;component/Images/Icons/Krone.png"
                                                 Visibility="{Binding ki.IstAnführer, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                                                <Image.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </Image.RenderTransform>
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -427,6 +445,9 @@
                                                 Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="{Binding Position, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PositionToImageConverter1}}"
                                                 Visibility="{Binding DataContext.ShowCreaturePos, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                                                <Image.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </Image.RenderTransform>
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Style.Triggers>
@@ -447,6 +468,9 @@
                                                 Margin="-35,30,0,0"
                                                 Opacity="{Binding ki.Opacity_Spieler}"
                                                 Source="/DSA MeisterGeister;component/Images/Icons/Schaden.png">
+                                                <Image.RenderTransform>
+                                                    <TranslateTransform X="{Binding FrameOffsetX}" Y="{Binding FrameOffsetY}" />
+                                                </Image.RenderTransform>
                                                 <Image.Style>
                                                     <Style TargetType="Image">
                                                         <Setter Property="Visibility" Value="Collapsed" />
@@ -489,9 +513,9 @@
 
                                             <!-- Längerfristige Handlungen -->
                                             <Grid 
-                                                Margin="{Binding MarginCreatureLangAkt}"
-                                                Canvas.Left="{Binding CreatureX, UpdateSourceTrigger=PropertyChanged}"
-                                                Canvas.Top="{Binding CreatureY, UpdateSourceTrigger=PropertyChanged}"    
+                                                Margin="{Binding FrameLongActionMargin}"
+                                                Canvas.Left="{Binding FrameBounds.X}"
+                                                Canvas.Top="{Binding FrameBounds.Y}"
                                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="40" Height="20" Background="#FFE0E07C" >
                                                 <Grid.Style>
                                                     <Style TargetType="Grid">
@@ -565,7 +589,17 @@
                                                 Data="{Binding PathGeometryData}"
                                                 Opacity="{Binding Opacity}"
                                                 Stroke="{Binding ObjectColor}"
-                                                StrokeThickness="{Binding StrokeThickness}" />
+                                                StrokeThickness="{Binding StrokeThickness}">
+                                                <Path.Style>
+                                                    <Style TargetType="Path">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsDistanceMeasurement}" Value="True">
+                                                                <Setter Property="StrokeLineJoin" Value="Round" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
+                                            </Path>
                                             <TextBlock
                                                 Canvas.Left="{Binding ZDisplayX}"
                                                 Canvas.Top="{Binding ZDisplayY}"
@@ -774,8 +808,8 @@
                 </ListBox>
                 <Image
                     Name="imgFog2"
-                    Width="10000"
-                    Height="10000"
+                    Width="{Binding FogDisplayWidth}"
+                    Height="{Binding FogDisplayHeight}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Source="{Binding FogImage}"

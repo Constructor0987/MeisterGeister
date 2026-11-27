@@ -27,7 +27,9 @@ namespace MeisterGeister.View.AudioPlayer
 
         private void OnPlaylistNameUpdated(object sender, DataTransferEventArgs e)
         {
-            txblkName.Text = aPlaylist.Name;
+            if (aPlaylist == null)
+                return;
+
             imgIcon.Source = new BitmapImage(new Uri( 
                 (aPlaylist.Hintergrundmusik) ? "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/audio.png" : 
                 "pack://application:,,,/DSA MeisterGeister;component/Images/Icons/General/speaker.png")); 

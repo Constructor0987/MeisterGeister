@@ -2843,6 +2843,9 @@ namespace MeisterGeister.Model
                 var d = new Dictionary<Sonderfertigkeit, ICollection<string>>();
                 foreach (Held_Sonderfertigkeit hsf in Held_Sonderfertigkeit)
                 {
+                    // Verwaiste Einträge (Sonderfertigkeit nicht in DB gefunden / Navigation null) überspringen
+                    if (hsf?.Sonderfertigkeit == null)
+                        continue;
                     if (!d.ContainsKey(hsf.Sonderfertigkeit))
                     {
                         d.Add(hsf.Sonderfertigkeit, new List<string> { });
@@ -3444,7 +3447,7 @@ namespace MeisterGeister.Model
                     .Select(ha => new KämpferFernkampfwaffe(ha, true)));
                 try
                 {
-                    waffen.Sort((a, b) => ((KämpferFernkampfwaffe)a).AT.CompareTo((b)));
+                    waffen.Sort((a, b) => a.AT.CompareTo(b.AT));
                 }
                 catch (Exception)
                 { return waffen; }

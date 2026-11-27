@@ -190,7 +190,7 @@ namespace MeisterGeister.Model.Extensions
             foreach (System.Data.Entity.Core.Metadata.Edm.EdmMember keyMember in context.GetEntitySet(o.GetType()).ElementType.KeyMembers)
             {
                 //Impromptu ist schneller als Reflection
-                object keyValue = ImpromptuInterface.Impromptu.InvokeGet(o, keyMember.Name);
+                object keyValue = Dynamitey.Dynamic.InvokeGet(o, keyMember.Name);
                 key.Add(keyMember.Name, keyValue);
             }
             try
@@ -228,10 +228,10 @@ namespace MeisterGeister.Model.Extensions
         public static object GetShallowClone(this ObjectContext context, object entity)
         {
             Type entityType = ObjectContext.GetObjectType(entity.GetType());
-            object clone = ImpromptuInterface.Impromptu.InvokeConstructor(entityType); // Activator.CreateInstance(entity.GetType());
+            object clone = Dynamitey.Dynamic.InvokeConstructor(entityType); // Activator.CreateInstance(entity.GetType());
             foreach (System.Data.Entity.Core.Metadata.Edm.EdmMember member in context.GetEntitySet(entityType).ElementType.Members.Where(m => m.TypeUsage.EdmType is PrimitiveType))
             {
-                ImpromptuInterface.Impromptu.InvokeSet(clone, member.Name, ImpromptuInterface.Impromptu.InvokeGet(entity, member.Name));
+                Dynamitey.Dynamic.InvokeSet(clone, member.Name, Dynamitey.Dynamic.InvokeGet(entity, member.Name));
             }
             return clone;
         }
@@ -266,13 +266,13 @@ namespace MeisterGeister.Model.Extensions
             foreach (object item in localsourcelist)
             {
                 if (Object.ReferenceEquals(item, null) == false)
-                    ImpromptuInterface.Impromptu.InvokeMemberAction(targetlist, "Add", item);
+                    Dynamitey.Dynamic.InvokeMemberAction(targetlist, "Add", item);
                     //targetlist.PublicInvokeMethod("Add", item);
             }
 
             // Remove members not in sourcelist:
             foreach (object item in toremove)
-                ImpromptuInterface.Impromptu.InvokeMemberAction(targetlist, "Remove", item);
+                Dynamitey.Dynamic.InvokeMemberAction(targetlist, "Remove", item);
                 //targetlist.PublicInvokeMethod("Remove", item);
 
             // Expose removed items:

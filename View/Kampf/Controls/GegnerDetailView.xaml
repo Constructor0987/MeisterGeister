@@ -147,11 +147,11 @@
                                         <TextBlock Text="{Binding SelectedGegnerBase.TokenOversize, StringFormat={}{0:0.##} }" />
                                     </Slider.ToolTip>
                                 </Slider>
-                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" ToolTip="Breite der Figur als Vielfaches der Standardbreite">
                                     <Label Content="TokenX" />
                                     <ViewGeneral:IntBox Value="{Binding SelectedGegnerBase.TokenSizeX}" Width="60" ShowButtons="True" MinValue="1" MaxValue="5" />
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="-5,0,0,0" ToolTip="Höhe der Figur als Vielfaches der Standardhöhe">
                                     <Label Content="TokenY" />
                                     <ViewGeneral:IntBox Value="{Binding SelectedGegnerBase.TokenSizeY}" Width="60" ShowButtons="True" MinValue="1" MaxValue="5" />
                                 </StackPanel>

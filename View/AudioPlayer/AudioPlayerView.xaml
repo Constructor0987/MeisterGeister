@@ -485,7 +485,7 @@
                             </Expander>
 
                             <GridSplitter Name="grdsplitEditorList" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" ResizeDirection="Rows" Height="5" 
-                                Visibility="{Binding Path=IsChecked, ElementName=rbEditorEditPlaylist, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" />
+                                Visibility="{Binding rbEditorEditPlaylist, Converter={StaticResource BooleanInverseToVisibilityConverter1}}" />
 
                             <Expander Name="exKlangPList" HorizontalAlignment="Stretch" IsExpanded="True" ForceCursor="False" Grid.Row="1" Margin="0,-1,7,0" >
                                 <Expander.Header>
@@ -597,7 +597,7 @@
                                                             <DataTrigger Value="True">
                                                                 <DataTrigger.Binding>
                                                                     <MultiBinding Converter="{StaticResource MultiBooleanAndConverter1}">
-                                                                        <Binding ElementName="rbEditorEditPlaylist, Path=IsChecked, FallbackValue=True}" />
+                                                                        <Binding ElementName="rbEditorEditPlaylist" Path="IsChecked" FallbackValue="True" />
                                                                         <!--Converter="{StaticResource InvertedBoolenConverter1}"-->
                                                                         <Binding Path="PlaylistAZ" Converter="{StaticResource InvertedBoolenConverter1}" />
                                                                     </MultiBinding>
