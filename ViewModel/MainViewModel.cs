@@ -729,8 +729,8 @@ namespace MeisterGeister.ViewModel
             }
         }
 
-        LinearGradientBrush _alphaBrush = new LinearGradientBrush();
-        LinearGradientBrush alphaBrush
+        private LinearGradientBrush _alphaBrush = new LinearGradientBrush();
+        public LinearGradientBrush AlphaBrush
         {
             get { return _alphaBrush; }
             set { Set(ref _alphaBrush, value); }
@@ -743,7 +743,7 @@ namespace MeisterGeister.ViewModel
         {
             Color startColor = Color.FromArgb((byte)0, SelectedColor.R, SelectedColor.G, SelectedColor.B);
             Color endColor = Color.FromArgb((byte)255, SelectedColor.R, SelectedColor.G, SelectedColor.B);
-            alphaBrush = new LinearGradientBrush(startColor, endColor, new System.Windows.Point(0, 0), new System.Windows.Point(1, 0));
+            AlphaBrush = new LinearGradientBrush(startColor, endColor, new System.Windows.Point(0, 0), new System.Windows.Point(1, 0));
         }
 
         private double _hueLampeSaettigung = 255;

@@ -6479,6 +6479,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             foreach (Audio_Playlist aPlayList in AktKlangTheme.Audio_Playlist)
             {
                 boxThemeTheme boxTheme = new boxThemeTheme();
+                boxTheme.DataContext = aPlayList;
                 boxTheme.aPlaylist = aPlayList;
                 boxTheme.aTheme = AktKlangTheme;
                 boxTheme.btnRemove.Tag = aPlayList;
@@ -6497,6 +6498,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 Where(t => t.Audio_ThemeGUID != Guid.Parse("00000000-0000-0000-0000-00000000A11E")).OrderBy(t => t.Name))
             {
                 boxThemeTheme bxTheme = new boxThemeTheme();
+                bxTheme.DataContext = aUnterTheme;
                 bxTheme.txblkName.Text = aUnterTheme.Name;
                 bxTheme.Tag = aUnterTheme.Audio_ThemeGUID;
                 bxTheme.btnRemove.Tag = aUnterTheme;

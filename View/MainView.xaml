@@ -165,18 +165,16 @@
                                         Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=VM.OnBtnFavPlaylistClick}" CommandParameter="{Binding}">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Height="12" Margin="-1,-2" >
-                                                    <Image.Style>
-                                                        <Style TargetType="Image">
-                                                            <Setter Property="Source" Value="/Images/Icons/General/audio.png" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Audio_ThemeGUID, Converter={StaticResource IsNullOrEmptyConverter}}" Value="false" >
-                                                                    <Setter Property="Source" Value="/Images/Icons/General/copy.png" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Image.Style>
-                                                </Image>
+                                                <ContentControl Content="{Binding}">
+                                                    <ContentControl.Resources>
+                                                        <DataTemplate DataType="{x:Type model:Audio_Theme}">
+                                                            <Image Height="12" Margin="-1,-2" Source="/Images/Icons/General/copy.png" />
+                                                        </DataTemplate>
+                                                        <DataTemplate DataType="{x:Type model:Audio_Playlist}">
+                                                            <Image Height="12" Margin="-1,-2" Source="/Images/Icons/General/audio.png" />
+                                                        </DataTemplate>
+                                                    </ContentControl.Resources>
+                                                </ContentControl>
                                                 <TextBlock Text="{Binding Name}" />
                                             </StackPanel>
                                         </Button.Content>
@@ -613,7 +611,7 @@
 
                                 <StackPanel Grid.Row="3" Grid.Column="1" Margin="40,0,0,0">
                                     <Label Content="Sättigung" Padding="0,2,0,0"/>
-                                    <Border Background="{Binding alphaBrush}"
+                                    <Border Background="{Binding AlphaBrush}"
                                         BorderBrush="Black"
                                         Height="25"
                                         BorderThickness="2"
@@ -635,7 +633,7 @@
                                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,100,0">
                                     <Label Content="Helligkeit (0=aus)" Padding="0,2,0,0"/>
                                     <Border x:Name="BrightnessBorder"
-                                        Background="{Binding alphaBrush}"
+                                        Background="{Binding AlphaBrush}"
                                     BorderBrush="Black"
                                     Height="25"
                                     BorderThickness="2"
