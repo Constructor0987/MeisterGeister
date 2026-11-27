@@ -43,6 +43,26 @@ namespace MeisterGeister.Model.Service
             get { return Context.Rüstung.Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Ausrüstung.Name).ToList(); }
         }
 
+        public List<Model.Waffe> BasarWaffeListe
+        {
+            get { return Context.Waffe.Include("Ausrüstung").Include("Talent").Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy(w => w.Ausrüstung.Name).ToList(); }
+        }
+
+        public List<Model.Fernkampfwaffe> BasarFernkampfwaffeListe
+        {
+            get { return Context.Fernkampfwaffe.Include("Ausrüstung").Include("Talent").Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy(w => w.Ausrüstung.Name).ToList(); }
+        }
+
+        public List<Model.Schild> BasarSchildListe
+        {
+            get { return Context.Schild.Include("Ausrüstung").Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy(w => w.Ausrüstung.Name).ToList(); }
+        }
+
+        public List<Model.Rüstung> BasarRuestungListe
+        {
+            get { return Context.Rüstung.Include("Ausrüstung").Where(s => s.Ausrüstung.Ausrüstung_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy(w => w.Ausrüstung.Name).ToList(); }
+        }
+
         public List<Model.Munition> MunitionListe
         {
             get { return Context.Munition.Where(s => s.Munition_Setting.Any(a_s => a_s.Setting.Aktiv)).OrderBy((w) => w.Name).ToList(); }

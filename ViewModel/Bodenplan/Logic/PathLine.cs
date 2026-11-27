@@ -58,6 +58,17 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             set { Set(ref _getStartPoint, value); }
         }
 
+        [XmlIgnore]
+        public Point CurrentSegmentStartPoint
+        {
+            get
+            {
+                return _pathSegmentCollection.Count > 1
+                    ? ((LineSegment)_pathSegmentCollection[_pathSegmentCollection.Count - 2]).Point
+                    : _pathFigure.StartPoint;
+            }
+        }
+
         //Creates new path with p at start and endpoint
         public void CreateNewPath(Point p)
         {

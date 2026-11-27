@@ -1026,8 +1026,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                     else
                     if (längerfristig.Manöver.GetType() == typeof(Manöver.Zauber))
                     {
-                        mi.Manöver = new Manöver.Zauber(this,
-                            (Held_Zauber)(längerfristig.Manöver as Manöver.Zauber).Held_Zauber);
+                        mi.Manöver = ((Manöver.Zauber)längerfristig.Manöver).ErzeugeFolgeaktion(this);
                     }
                     //Nur 1 Aktion für das Würfeln der längerfriatige Handlung
                     mi.Start = längerfristig.End;

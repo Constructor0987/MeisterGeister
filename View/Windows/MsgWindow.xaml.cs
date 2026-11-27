@@ -26,9 +26,6 @@ namespace MeisterGeister.View.Windows
         /// </summary>
         public MsgWindow()
         {
-            //SplashScreen schließen, falls geöffnet
-            App.CloseSplashScreen();
-
             InitializeComponent();
             Title = "Systeminformationen";
             _textBoxMsg.Text = App.GetVersionStringLong() + "\n\n" + GetSysInfoString();
@@ -36,9 +33,6 @@ namespace MeisterGeister.View.Windows
 
         public MsgWindow(string header, string msg, bool showHilfe = true)
         {
-            //SplashScreen schließen, falls geöffnet
-            App.CloseSplashScreen();
-
             InitializeComponent();
             Title = header;
             if (showHilfe)
@@ -49,9 +43,6 @@ namespace MeisterGeister.View.Windows
 
         public MsgWindow(string header, string msg, Exception ex)
         {
-            //SplashScreen schließen, falls geöffnet
-            App.CloseSplashScreen();
-
             InitializeComponent();
             Title = header;
 

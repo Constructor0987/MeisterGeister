@@ -24,9 +24,11 @@ using System.Windows;
 using System.Windows.Input;
 using System.IO;
 using MeisterGeister.Logic.Einstellung;
+using MeisterGeister.Logic.General;
 using System.Globalization;
 using System.Xml;
 using System.Threading;
+using System.Threading.Tasks;
 //using NAudio.Wave;
 using MeisterGeister.ViewModel.Base;
 using Un4seen.Bass;
@@ -419,6 +421,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         
         public void OnAudioTabClose(object sender, EventArgs e)
         {
+            Einstellungen.EinstellungChanged -= Einstellungen_EinstellungChanged;
             KlangProgBarTimer.Stop();
             MusikProgBarTimer.Stop();
             for (int posObjGruppe = 0; posObjGruppe < _GrpObjecte.Count; posObjGruppe++)
@@ -465,8 +468,18 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             BGPlayer.BG.Add(new Musik());
             setStdPfad();
             StdPadAufC = stdPfad.Contains("c:\\") || stdPfad.Contains("C:\\");
+            Einstellungen.EinstellungChanged += Einstellungen_EinstellungChanged;
             Init();
             this.RequestClose += OnAudioTabClose;  
+        }
+
+        private void Einstellungen_EinstellungChanged(object sender, EinstellungChangedEventArgs e)
+        {
+            if (e.EinstellungName != nameof(Einstellungen.AudioVerzeichnis))
+                return;
+
+            setStdPfad();
+            StdPadAufC = stdPfad.Contains("c:\\") || stdPfad.Contains("C:\\");
         }
 
         #endregion
@@ -484,7 +497,9 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             AktualisiereHotKeys();
 
             UpdateHotkeyUsed();
+            LogInfo listenLog = Logger.PerformanceLogStart("Audio: Listen aufbauen");
             UpdateAlleListen();
+            Logger.PerformanceLogEnd(listenLog);
             Refresh();
 
             LbEditorMitGeräusche = true;
@@ -502,6 +517,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             MusikProgBarTimer.Tick += new EventHandler(MusikProgBarTimer_Tick);
             MusikProgBarTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
 
+            LogInfo playlistLog = Logger.PerformanceLogStart("Audio: erste Playlist laden");
             VisualGrpObj();
             if (AktKlangPlaylist == null)
             {
@@ -517,7 +533,8 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 AktKlangPlaylist = _GrpObjecte.FirstOrDefault(t => t.visuell).aPlaylist;
             }
             SelectedEditorItem = EditorListBoxItemListe.FirstOrDefault(t => t.APlaylist == AktKlangPlaylist);
-            firstshot = false;        
+            firstshot = false;
+            Logger.PerformanceLogEnd(playlistLog);
         }
 
         public void Refresh()
@@ -1635,10 +1652,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     
                     //Check Reihenfolge okay
                     bool neuaufbau = false;
-                    foreach (Audio_Playlist_Titel aPlayTitel in AktKlangPlaylist.Audio_Playlist_Titel) 
-                    { 
+                    var reihenfolgen = new HashSet<int>();
+                    foreach (Audio_Playlist_Titel aPlayTitel in AktKlangPlaylist.Audio_Playlist_Titel)
+                    {
                         //Doppelte Reihenfolgenummern
-                        if (AktKlangPlaylist.Audio_Playlist_Titel.Count(t => t.Reihenfolge == aPlayTitel.Reihenfolge) > 1)
+                        if (!reihenfolgen.Add(aPlayTitel.Reihenfolge))
                         {
                             sortPlaylist(AktKlangPlaylist, -1);
                             neuaufbau = true;
@@ -1683,7 +1701,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                             if (File.Exists(aPlaylistTitel.Audio_Titel.Pfad + "\\" + aPlaylistTitel.Audio_Titel.Datei))
                                 Global.ContextAudio.Update<Audio_Titel>(aPlaylistTitel.Audio_Titel);
                         }
-                        KlangNewRow(grpobj, aPlaylistTitel);
+                        KlangNewRow(grpobj, aPlaylistTitel, dateiBereitsGeprüft: true);
 
                         if (aPlaylistTitel.Aktiv &&
                             !grpobj.NochZuSpielen.Contains(aPlaylistTitel.Audio_TitelGUID))
@@ -2858,6 +2876,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public List<MusikZeile> mZeileErwPlayerGeräuscheNeuErstellen()
         {
+            bool inAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
             bool vorhanden = false;
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => !t.Hintergrundmusik))
@@ -2877,7 +2896,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 MusikZeile mZeileErw = ErwPlayerGeräuscheListItemListe != null ? ErwPlayerGeräuscheListItemListe.FirstOrDefault(t => t.VM.aPlaylist == aplylist) : null;
                 if (mZeileErw == null)
                 {
-                    mZeileErw = new MusikZeile();
+                    mZeileErw = new MusikZeile(inAnderemPfadSuchen);
                     mZeileErw.VM.grpobj = grpobj;
                     mZeileErw.VM.grpobj.wartezeitTimer.Tick += new EventHandler(mZeileErw.VM.wartezeitTimer_Tick);
                 }
@@ -2898,12 +2917,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         }
                 
         public List<MusikZeile> mZeileEditorMusikNeuErstellen()
-        {           
+        {
+            bool inAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Hintergrundmusik))
             {
                 //Hintergrund MusikZeilen - Items erstellen
-                MusikZeile mZeile = new MusikZeile();
+                MusikZeile mZeile = new MusikZeile(inAnderemPfadSuchen);
 
                 mZeile.tbtnCheck.Visibility = Visibility.Collapsed;
                 mZeile.tboxKategorie.Tag = mZeile.Tag;
@@ -2921,11 +2941,12 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public List<MusikZeile> mZeileErwPlayerMusikNeuErstellen()
         {
+            bool inAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
             List<MusikZeile> mZeileList = new List<MusikZeile>();
             foreach (Audio_Playlist aplylist in Global.ContextAudio.PlaylistListe.FindAll(t => t.Hintergrundmusik))
-            {                            
+            {
                 //Erweiterter-Player HintergrundMusikZeilen - Items erstellen
-                MusikZeile mZeileErw = new MusikZeile();
+                MusikZeile mZeileErw = new MusikZeile(inAnderemPfadSuchen);
                 mZeileErw.VM.GroßeAnsicht = PListGroßeAnsicht;
                 mZeileErw.VerticalContentAlignment = System.Windows.VerticalAlignment.Top;
                 mZeileErw.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left;
@@ -3413,52 +3434,87 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                 return _onBtnUpdateAll;
             }
         }
-        void BtnUpdateAll(object obj)
+        private bool updateAllRunning;
+        async void BtnUpdateAll(object obj)
         {
+            if (updateAllRunning) return;
             if (ViewHelper.ConfirmYesNoCancel("Überprüfung aller Titel der gesamten Musiksammlung",
-                "Wollen Sie alle Titel der gesammten Playlisten-Liste überprüfen lassen?" + Environment.NewLine + Environment.NewLine +
-                "Es kann unter umständen mehrere Minuten dauern,"+ Environment.NewLine +"bis der Forgang abgeschlossen ist.") != 2)
+                "Wollen Sie alle Titel der gesamten Playlisten-Liste überprüfen lassen?" + Environment.NewLine + Environment.NewLine +
+                "Es kann unter Umständen mehrere Minuten dauern, bis der Vorgang abgeschlossen ist.") != 2)
                 return;
-            Global.SetIsBusy(true, string.Format("Alle Playlisten werden überprüft ..."));
-            int pListAnz = 1;
-            int titelAnz = 1;
-            int titelChanged = 0;
-            int titelCheckedTotal = 0;
-            int titelNotChanged = 0;
-
-            foreach (Audio_Playlist aPlaylist in Global.ContextAudio.PlaylistListe)
+            updateAllRunning = true;
+            using (var cancellation = new CancellationTokenSource())
             {
-                string s = aPlaylist.Name.Substring(0, aPlaylist.Name.Length > 12 ? 12 : aPlaylist.Name.Length) + (aPlaylist.Name.Length > 12 ? ".." : "");
-                Global.SetIsBusy(true, string.Format("(" + pListAnz + "/" + Global.ContextAudio.PlaylistListe.Count + ") " + s + " wird überprüft"));
-
-                titelAnz = 1;
-                foreach (Audio_Playlist_Titel aPlaylistTitel in aPlaylist.Audio_Playlist_Titel)
+                var result = new AudioUpdateAllResult();
+                int playlistCount = 0;
+                bool cancelled = false;
+                Exception error = null;
+                try
                 {
-                    Global.SetIsBusy(true, string.Format("(" + pListAnz + "/" + Global.ContextAudio.PlaylistListe.Count + ") " + s + " (" + titelAnz + "/" + aPlaylist.Audio_Playlist_Titel.Count + ") wird überprüft"));
-                    if (!File.Exists(aPlaylistTitel.Audio_Titel.Pfad + "\\" + (aPlaylistTitel.Audio_Titel.Datei == null ? "" : aPlaylistTitel.Audio_Titel.Datei)))
+                    Global.SetIsBusy(true, "Playlisten werden geladen...", null, cancellation);
+                    await Dispatcher.Yield(DispatcherPriority.Background);
+                    var playlists = Global.ContextAudio.PlaylistListe;
+                    playlistCount = playlists.Count;
+                    var entries = new List<AudioUpdateAllEntry>();
+                    var titles = new Dictionary<Guid, Audio_Titel>();
+                    int playlistsLoaded = 0;
+                    foreach (var playlist in playlists)
                     {
-                        aPlaylistTitel.Audio_Titel = setTitelStdPfad(aPlaylistTitel.Audio_Titel);
-                        setTitelStdPfad_AufrufeHintereinander = 0;
-                        if (File.Exists(aPlaylistTitel.Audio_Titel.Pfad + "\\" + aPlaylistTitel.Audio_Titel.Datei))
+                        cancellation.Token.ThrowIfCancellationRequested();
+                        Global.SetIsBusy(true, "Playlist wird geladen: " + playlist.Name, null, cancellation,
+                            playlistsLoaded + " von " + playlistCount + " Playlisten geladen");
+                        foreach (var playlistTitle in playlist.Audio_Playlist_Titel)
                         {
-                            Global.ContextAudio.Update<Audio_Titel>(aPlaylistTitel.Audio_Titel);
-                            titelChanged++;
+                            var title = playlistTitle.Audio_Titel;
+                            titles[title.Audio_TitelGUID] = title;
+                            entries.Add(new AudioUpdateAllEntry { Id = title.Audio_TitelGUID, Playlist = playlist.Name, Path = title.Pfad, File = title.Datei });
+                            if (entries.Count % 100 == 0)
+                            {
+                                await Dispatcher.Yield(DispatcherPriority.Background);
+                                cancellation.Token.ThrowIfCancellationRequested();
+                            }
                         }
-                        else
-                            titelNotChanged++;
+                        playlistsLoaded++;
+                        await Dispatcher.Yield(DispatcherPriority.Background);
                     }
-                    titelAnz++;
-                    titelCheckedTotal++;
+                    cancellation.Token.ThrowIfCancellationRequested();
+                    Global.SetIsBusy(true, "Playlisten werden überprüft...", entries.Count == 0 ? 100 : 0, cancellation,
+                        "0 von " + entries.Count + " Titeln überprüft");
+                    var worker = new AudioUpdateAllWorker(stdPfad.ToArray(), AudioInAnderemPfadSuchen);
+                    var dispatcher = Application.Current.Dispatcher;
+                    await Task.Run(() => worker.Run(entries, result, (changes, status, progress) =>
+                        dispatcher.Invoke(() =>
+                        {
+                            foreach (var change in changes)
+                            {
+                                var title = titles[change.Id];
+                                title.Pfad = change.Path;
+                                title.Datei = change.File;
+                            }
+                            if (changes.Count > 0) Global.ContextAudio.Save();
+                            if (!cancellation.IsCancellationRequested)
+                                Global.SetIsBusy(true, status, progress, cancellation,
+                                    result.Checked + " von " + entries.Count + " Titeln überprüft");
+                        }, DispatcherPriority.Background), cancellation.Token));
+                    cancelled = cancellation.IsCancellationRequested;
                 }
-                pListAnz++;
+                catch (OperationCanceledException) when (cancellation.IsCancellationRequested) { cancelled = true; }
+                catch (Exception ex) { error = ex; }
+                finally
+                {
+                    Global.SetIsBusy(false, null, null);
+                    updateAllRunning = false;
+                }
+                if (error != null)
+                {
+                    ViewHelper.ShowError("Die Überprüfung wurde wegen eines Fehlers beendet. Bereits gespeicherte Änderungen bleiben erhalten.", error);
+                    return;
+                }
+                ViewHelper.Popup((cancelled ? "Der Vorgang wurde abgebrochen." : "Der Vorgang wurde abgeschlossen.") + Environment.NewLine + Environment.NewLine +
+                    "In " + playlistCount + " Playlisten wurden " + result.Checked + " Titel überprüft." + Environment.NewLine + Environment.NewLine +
+                    result.Changed + " Titel wurden auf den korrekten Pfad verwiesen." + Environment.NewLine +
+                    result.NotFound + " Titel konnten nicht gefunden werden. Bereits gespeicherte Änderungen bleiben erhalten.");
             }
-
-            Global.SetIsBusy(false);
-            ViewHelper.Popup("Der Vorgang wurde abgeschlossen." + Environment.NewLine + Environment.NewLine +
-                "Es wurde insgesamt " + Global.ContextAudio.PlaylistListe.Count + " Playlisten mit " + titelCheckedTotal + " Titel überprüft." +
-                Environment.NewLine + Environment.NewLine +
-                "Davon wurden " + titelChanged + " Titel auf den korrenten Pfad verwiesen." + Environment.NewLine +
-                titelNotChanged + " Titel konnten nicht gefunden werden.");
         }
 
         private Base.CommandBase _onBtnDeleteAll = null;
@@ -4732,7 +4788,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
         /// </summary>
         public void FilterEditorPlaylistListe()
         {
-            FilteredEditorListBoxItemListe = EditorListBoxItemListe.AsParallel()
+            FilteredEditorListBoxItemListe = EditorListBoxItemListe
                 .Where(t => (t.APlaylist.Hintergrundmusik == LbEditorMitMusik && LbEditorMitMusik == true) ||
                         (!t.APlaylist.Hintergrundmusik == LbEditorMitGeräusche && LbEditorMitGeräusche == true)).ToList();
 
@@ -7490,7 +7546,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             }
         }
 
-        public void KlangNewRow(GruppenObjekt grpobj, Audio_Playlist_Titel playlisttitel)
+        public void KlangNewRow(GruppenObjekt grpobj, Audio_Playlist_Titel playlisttitel, bool dateiBereitsGeprüft = false)
         {
             string songdatei = playlisttitel.Audio_Titel.Pfad + "\\" + playlisttitel.Audio_Titel.Datei;
             if (grpobj == null)
@@ -7508,7 +7564,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             {
                 klZeile.audioZeileVM = LbEditorAudioZeilenListe.First(t => t.aPlayTitel.Audio_Titel.Datei == playlisttitel.Audio_Titel.Datei);//aPlayTitel == playlisttitel);
                 klZeile.audioZeileVM.grpobj = grpobj;
-                if (AudioInAnderemPfadSuchen &&
+                if (!dateiBereitsGeprüft && AudioInAnderemPfadSuchen &&
                     !File.Exists(klZeile.aPlaylistTitel.Audio_Titel.Pfad + "\\" + (klZeile.aPlaylistTitel.Audio_Titel.Datei == null ? "" : klZeile.aPlaylistTitel.Audio_Titel.Datei)))
                 {
                     klZeile.aPlaylistTitel.Audio_Titel = setTitelStdPfad(klZeile.aPlaylistTitel.Audio_Titel);
@@ -7618,12 +7674,14 @@ namespace MeisterGeister.ViewModel.AudioPlayer
 
         public void setStdPfad()
         {
-            char[] charsToTrim = { '\\' };
-            if (stdPfad.Count > 0) stdPfad.RemoveRange(0, stdPfad.Count);
-            stdPfad.AddRange(MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis.Split(new Char[] { '|' }));
-            stdPfad = ohneDoppelte(stdPfad);
-            if (String.Join("|", stdPfad) != MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis)
-                MeisterGeister.Logic.Einstellung.Einstellungen.AudioVerzeichnis = String.Join("|", stdPfad);
+            string audioVerzeichnis = Einstellungen.AudioVerzeichnis;
+            List<string> standardPfade = ohneDoppelte(audioVerzeichnis.Split(new Char[] { '|' }).ToList());
+            stdPfad.Clear();
+            stdPfad.AddRange(standardPfade);
+
+            string bereinigterAudioVerzeichnis = String.Join("|", stdPfad);
+            if (bereinigterAudioVerzeichnis != audioVerzeichnis)
+                Einstellungen.AudioVerzeichnis = bereinigterAudioVerzeichnis;
         }
 
         public void UpdateHotkeyUsed()
@@ -8352,7 +8410,6 @@ namespace MeisterGeister.ViewModel.AudioPlayer
             EditorListBoxItemListe = lbiPlaylistListNeuErstellen();
 
             MusikListItemListe = mZeileEditorMusikNeuErstellen();
-            ErwPlayerMusikListItemListe = mZeileErwPlayerMusikNeuErstellen();
             ErwPlayerGeräuscheListItemListe = mZeileErwPlayerGeräuscheNeuErstellen();
             ErwPlayerThemeListe = ThemeErwPlayerListeNeuErstellen();
 
@@ -8906,11 +8963,11 @@ namespace MeisterGeister.ViewModel.AudioPlayer
                     {
                         if (pfad != "C:\\" && Directory.Exists(pfad))
                         {
-                            string[] pfad_datei = Directory.GetFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories);
-                            if (pfad_datei.Length > 0)
+                            string pfad_datei = Directory.EnumerateFiles(pfad.TrimEnd(charsToTrim), gesuchteDatei, SearchOption.AllDirectories).FirstOrDefault();
+                            if (pfad_datei != null)
                             {
-                                aTitel.Pfad = System.IO.Path.GetDirectoryName(pfad_datei[0]);
-                                aTitel.Datei = System.IO.Path.GetFileName(pfad_datei[0]);                                
+                                aTitel.Pfad = System.IO.Path.GetDirectoryName(pfad_datei);
+                                aTitel.Datei = System.IO.Path.GetFileName(pfad_datei);
                                 aTitel = setTitelStdPfad(aTitel);
                                 setTitelStdPfad_AufrufeHintereinander = 0;
                                 return aTitel;

@@ -1790,7 +1790,7 @@ namespace MeisterGeister.ViewModel.Settings
                 return new EinstellungItemDouble(e);
             }
 
-            return Impromptu.InvokeConstructor(typeof(EinstellungItemGeneric<>).MakeGenericType(e.Type), e);
+            return Dynamitey.Dynamic.InvokeConstructor(typeof(EinstellungItemGeneric<>).MakeGenericType(e.Type), e);
         }
 
         protected Model.Einstellung einstellung = null;

@@ -75,6 +75,16 @@ namespace MeisterGeister.ViewModel.Kampf.Logic.Manöver
             Literatur = zauber.Zauber.Literatur;
         }
 
+        public Zauber ErzeugeFolgeaktion(KämpferInfo ausführender)
+        {
+            if (held_zauber != null)
+                return new Zauber(ausführender, held_zauber);
+            if (gegnerBase_zauber != null)
+                return new Zauber(ausführender, gegnerBase_zauber);
+
+            throw new InvalidOperationException("Das Zaubermanöver hat keine Zauberquelle.");
+        }
+
         protected override void Init()
         {
             base.Init();

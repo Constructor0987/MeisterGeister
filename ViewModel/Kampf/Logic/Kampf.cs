@@ -238,8 +238,7 @@ namespace MeisterGeister.ViewModel.Kampf.Logic
                             else
                             if (mi.Manöver.GetType() == typeof(Manöver.Zauber))
                             {
-                                minfo.Manöver = new Manöver.Zauber(mi.Manöver.Ausführender,
-                                    (Held_Zauber)(mi.Manöver as Manöver.Zauber).Held_Zauber);
+                                minfo.Manöver = ((Manöver.Zauber)mi.Manöver).ErzeugeFolgeaktion(mi.Manöver.Ausführender);
                             }
                             //Nur 1 Aktion für das Würfeln der längerfristige Handlung
                             minfo.Start = mi.End;

@@ -32,7 +32,7 @@ namespace MeisterGeister.View.Windows
 
         private void ImageMeisterGeister_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.meistergeister.org/");
+            Process.Start(new ProcessStartInfo("http://www.meistergeister.org/") { UseShellExecute = true });
         }
 
         private void ImageUlisses_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

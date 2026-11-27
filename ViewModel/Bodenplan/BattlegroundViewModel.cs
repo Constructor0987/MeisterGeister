@@ -27,6 +27,42 @@ namespace MeisterGeister.ViewModel.Bodenplan
     public class BattlegroundViewModel : Base.ViewModelBase, IDisposable
     {
         public const int ARENA_GRID_RESOLUTION = 10000;
+        private const int FOG_MAP_UNITS_PER_PIXEL = 10;
+
+        private bool _grosseMap;
+        public bool GrosseMap
+        {
+            get { return _grosseMap; }
+            set
+            {
+                if (_grosseMap == value)
+                    return;
+
+                if (value && FogImage != null)
+                    ExpandFogForMap(ARENA_GRID_RESOLUTION * 10);
+
+                if (Set(ref _grosseMap, value))
+                {
+                    OnChanged(nameof(ArenaGridSize));
+                    OnChanged(nameof(MinMapZoom));
+                    if (!value)
+                    {
+                        if (PlayerGridOffsetX >= ArenaGridSize || PlayerGridOffsetY <= -ArenaGridSize)
+                        {
+                            PlayerGridOffsetX = 0;
+                            PlayerGridOffsetY = 0;
+                        }
+                        MeisterZoomTransX = 0;
+                        MeisterZoomTransY = 0;
+                        if (MeisterZoom < MinMapZoom)
+                            MeisterZoom = MinMapZoom;
+                    }
+                }
+            }
+        }
+
+        public int ArenaGridSize { get { return ARENA_GRID_RESOLUTION * (GrosseMap ? 10 : 1); } }
+        public double MinMapZoom { get { return GrosseMap ? 0.005 : 0.05; } }
 
         // *Hintergrundfarbe
         // *ZLevel bei initialisierung fix
@@ -297,7 +333,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ObjectColor = new SolidColorBrush(Colors.DarkBlue),
                 StrokeThickness = th,
                 Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : .2,
-                IsNew = true
+                IsNew = true,
+                IsDistanceMeasurement = true
             };
             SelectedTempObject = pathline;
             BattlegroundObjects.Add(pathline);
@@ -325,7 +362,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 ObjectColor = new SolidColorBrush(LinealColor),
                 StrokeThickness = 10,
                 Opacity = .2,
-                IsNew = true
+                IsNew = true,
+                IsDistanceMeasurement = true
             };
             SelectedTempObject = pathline;
             BattlegroundObjects.Add(pathline);
@@ -338,6 +376,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = new TextLabel("0 Schritt", x1, y1)
             {
                 IsNew = true,
+                IsDistanceMeasurement = true,
                 LabelWidth = 200,
                 Opacity = (SelectedObject as BattlegroundCreature).ki.IstUnsichtbar ? .02 : 1
             };
@@ -349,6 +388,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = new TextLabel("0 Schritt", x1, y1)
             {
                 IsNew = true,
+                IsDistanceMeasurement = true,
                 LabelWidth = 200,
                 Opacity = 1
             };
@@ -501,7 +541,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
         {
             var pathLine = (PathLine)SelectedTempObject;
             var endPoint = new Point(x2, y2);
-            Point startPoint = pathLine.GetStartPoint;
+            Point startPoint = pathLine.CurrentSegmentStartPoint;
 
             pathLine.ChangeLastPoint(endPoint);
 
@@ -679,7 +719,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             var label = BattlegroundObjects.Last(x => x.GetType() == typeof(TextLabel)) as TextLabel;
             label.LabelPositionX = (startPoint.X + endPoint.X - label.LabelWidth) / 2;
             label.LabelPositionY = (startPoint.Y + endPoint.Y - label.LabelHeight) / 2;
-            label.TextInLabel = (BerechneLänge(startPoint, endPoint) + BewegungZuvor).ToString() + " Schritt";
+            label.TextInLabel = Math.Round(BerechneLänge(startPoint, endPoint) + BewegungZuvor,1).ToString() + " Schritt";
             Global.CurrentKampf.LabelInfo = "Strg-Taste klicken für Richtungswechsel";
         }
 
@@ -899,8 +939,18 @@ namespace MeisterGeister.ViewModel.Bodenplan
         public WriteableBitmap FogImage
         {
             get { return _fogImage; }
-            set { Set(ref _fogImage, value); }
+            set
+            {
+                if (Set(ref _fogImage, value))
+                {
+                    OnChanged(nameof(FogDisplayWidth));
+                    OnChanged(nameof(FogDisplayHeight));
+                }
+            }
         }
+
+        public double FogDisplayWidth { get { return FogImage == null ? 0 : FogImage.PixelWidth * FOG_MAP_UNITS_PER_PIXEL; } }
+        public double FogDisplayHeight { get { return FogImage == null ? 0 : FogImage.PixelHeight * FOG_MAP_UNITS_PER_PIXEL; } }
 
         public string FogImageFilename
         {
@@ -939,12 +989,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 Set(ref _fogOffsetY, value);
                 OffsetBackgroudMargin = new Thickness(_fogOffsetX, _fogOffsetY, -_fogOffsetX - 20000, -_fogOffsetY - 20000);
             }
-        }
-
-        public int[] FogPixelData
-        {
-            get { return _fogPixelData; }
-            set { Set(ref _fogPixelData, value); }
         }
 
         public double FontSize
@@ -1266,7 +1310,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             set
             {
                 Set(ref _useFog, value);
-                if (value && FogPixelData == null)
+                if (value && FogImage == null)
                 {
                     CreateFogOfWar();
                 }
@@ -1288,7 +1332,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
         private double _fogOffsetSize = ARENA_GRID_RESOLUTION;
         private double _fogOffsetX = 0;
         private double _fogOffsetY = 0;
-        private int[] _fogPixelData;
         private double _fontSize = 14;
         private string _infoText = null;
         private double _iniHeightStart = 0;
@@ -1519,6 +1562,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                     ((Gegner)kämpfer).Token = ((Gegner)kämpfer).GegnerBase.Token;
                     ((Gegner)kämpfer).TokenOversize = ((Gegner)kämpfer).GegnerBase.TokenOversize;
                 }
+                ((Gegner)kämpfer).ObserveTokenSize();
                 ((Gegner)kämpfer).LoadBattlegroundPortrait(((Gegner)kämpfer).Token?? ((Gegner)kämpfer).Bild, false);
                 BattlegroundObjects.Add(((Gegner)kämpfer));
 
@@ -1559,6 +1603,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             FogOffsetY = 0;
             FogImageFilename = null;
             useFog = false;
+            GrosseMap = false;
             
         
             RemoveCreatureAll();
@@ -1917,8 +1962,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 }
                 if (tm != null)
                 {
-                    tm.MarkerPositionX = (bgc as Wesen).MidCreatureX - tm.TurnMarkerDurchmesser / 2 + (bgc as Wesen).CreatureWidthPic / 2;
-                    tm.MarkerPositionY = (bgc as Wesen).MidCreatureY - tm.TurnMarkerDurchmesser / 2 + (bgc as Wesen).CreatureHeightPic / 2;
+                    tm.MarkerPositionX = bgc.MidCreatureX - tm.TurnMarkerDurchmesser / 2 + bgc.CreatureWidth / 2;
+                    tm.MarkerPositionY = bgc.MidCreatureY - tm.TurnMarkerDurchmesser / 2 + bgc.CreatureHeight / 2;
                     tm.Visible = Visibility.Visible;
                 }
             }
@@ -2041,13 +2086,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
         }
 
         public void Down()
-        { PlayerGridOffsetY = PlayerGridOffsetY - 80 > -ARENA_GRID_RESOLUTION ? PlayerGridOffsetY - 80 : -ARENA_GRID_RESOLUTION; }
+        { PlayerGridOffsetY = PlayerGridOffsetY - 80 > -ArenaGridSize ? PlayerGridOffsetY - 80 : -ArenaGridSize; }
 
         public void Left()
         { PlayerGridOffsetX = PlayerGridOffsetX - 80 > 0 ? PlayerGridOffsetX - 80 : 0; }
 
         public void Right()
-        { PlayerGridOffsetX = PlayerGridOffsetX + 80 <= ARENA_GRID_RESOLUTION ? PlayerGridOffsetX + 80 : ARENA_GRID_RESOLUTION; }
+        { PlayerGridOffsetX = PlayerGridOffsetX + 80 <= ArenaGridSize ? PlayerGridOffsetX + 80 : ArenaGridSize; }
 
         public void Up()
         { PlayerGridOffsetY = PlayerGridOffsetY + 80 <= 0 ? PlayerGridOffsetY + 80 : 0; }
@@ -2131,6 +2176,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             ClearBattleground();
 
             var bg = new BattlegroundXMLLoadSave();
+            ObservableCollection<double> lstSettings = bg.LoadSettingsFromXML(filename);
+            GrosseMap = lstSettings.Count > 23 && lstSettings[23] == 1;
             ObservableCollection<BattlegroundBaseObject> ocloaded = bg.LoadMapFromXML(filename, LoadWithoutPictures);
 
             foreach (BattlegroundBaseObject element in ocloaded)
@@ -2213,21 +2260,13 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 BitmapSource bitmapSource = new FormatConvertedBitmap(originalImage, PixelFormats.Bgra32, null, 0);
                 var wbmap = new WriteableBitmap(bitmapSource);
 
-                var h = wbmap.PixelHeight;
-                var w = wbmap.PixelWidth;
-                FogPixelData = new int[w * h];
-                var widthInByte = 4 * w;
                 (bg1 as ImageObject).ZLevel = 103;
-
-                wbmap.CopyPixels(FogPixelData, widthInByte, 0);
-                System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
-                var img = (System.Drawing.Image)bm;
                 FogImage = wbmap;
+                ExpandFogForMap(ArenaGridSize);
                 useFog = true;
                 (bg1 as BattlegroundBaseObject).IsVisible = false;
             }
 
-            ObservableCollection<double> lstSettings = bg.LoadSettingsFromXML(filename);
             if (lstSettings.Count == 0)
             {
                 return;
@@ -2350,6 +2389,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
             lstSettings.Add(BackgroundColor.G);
             lstSettings.Add(BackgroundColor.R);
             lstSettings.Add(ShowCreaturePos ? 1 : 0);
+            lstSettings.Add(GrosseMap ? 1 : 0);
 
             var bg = new BattlegroundXMLLoadSave();
             bg.SaveMapToXML(BattlegroundObjects, filename, SaveWithoutPictures, lstSettings, GiveFeedback);
@@ -2640,19 +2680,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
 
         private readonly List<BattlegroundBaseObject> stickyHeroesTempList = new List<BattlegroundBaseObject>();
 
-        private System.Drawing.Bitmap BitmapFromWriteableBitmap(WriteableBitmap writeBmp)
-        {
-            System.Drawing.Bitmap bmp;
-            using (var outStream = new MemoryStream())
-            {
-                BitmapEncoder enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(writeBmp));
-                enc.Save(outStream);
-                bmp = new System.Drawing.Bitmap(outStream);
-            }
-            return bmp;
-        }
-
         private BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap wbm)
         {
             var bmImage = new BitmapImage();
@@ -2680,15 +2707,8 @@ namespace MeisterGeister.ViewModel.Bodenplan
             BitmapSource bitmapSource = new FormatConvertedBitmap(originalImage, PixelFormats.Bgra32, null, 0);
             var wbmap = new WriteableBitmap(bitmapSource);
 
-            var h = wbmap.PixelHeight;
-            var w = wbmap.PixelWidth;
-            FogPixelData = new int[w * h];
-            var widthInByte = 4 * w;
-
-            wbmap.CopyPixels(FogPixelData, widthInByte, 0);
-            System.Drawing.Bitmap bm = BitmapFromWriteableBitmap(wbmap);
-            var img = (System.Drawing.Image)bm;
             FogImage = wbmap;
+            ExpandFogForMap(ArenaGridSize);
             Nullable<int> i = null;
             while (File.Exists(Ressources.GetFullApplicationPathForPictures() + "Fog-of-War" + i + ".png"))
             {
@@ -2708,6 +2728,16 @@ namespace MeisterGeister.ViewModel.Bodenplan
             io.IsFogPicture = true;
             io.ZLevel = 103;
             io.IsVisible = false;
+        }
+
+        private void ExpandFogForMap(int mapSize)
+        {
+            FogImage = FogMap.Expand(FogImage, mapSize / FOG_MAP_UNITS_PER_PIXEL);
+        }
+
+        public void PaintFog(Point position, bool covered)
+        {
+            FogMap.Paint(FogImage, position, FogFreeSize, FOG_MAP_UNITS_PER_PIXEL, covered);
         }
 
         private void CreateThumbnail(string filename, BitmapSource image5)
@@ -3024,9 +3054,6 @@ namespace MeisterGeister.ViewModel.Bodenplan
                 {
                     if (SelectedObject is BattlegroundCreature)
                     {
-                        ((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;
-                        //((Wesen)SelectedObject).TokenOversize = value;
-                        //((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;// .ki.Kämpfer.TokenSizeMod = value;
                         if (SelectedObject is Held)
                         {
                             ((Held)SelectedObject).TokenOversize = value;
@@ -3038,6 +3065,7 @@ namespace MeisterGeister.ViewModel.Bodenplan
                             ((Gegner)SelectedObject).TokenOversize = value;
                             Global.ContextHeld.Update<Gegner>((SelectedObject as Gegner));
                         }
+                        ((BattlegroundCreature)SelectedObject).TokenOversizeMod = value;
                     }
                 }
                 Set(ref _tokenOverszízeMod, value);

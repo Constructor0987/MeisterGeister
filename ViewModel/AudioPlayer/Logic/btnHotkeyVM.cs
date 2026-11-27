@@ -525,8 +525,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         public Audio_Titel setTitelStdPfad(Audio_Titel aTitel)
         {
-            if (stdPfad.Count == 0)
-                setStdPfad();
+            setStdPfad();
             char[] charsToTrim = { '\\' };
             //Check Titel -> Pfad vorhanden ansonsten Standard-Pfad hinzufügen
             if (File.Exists(aTitel.Pfad + "\\" + aTitel.Datei))

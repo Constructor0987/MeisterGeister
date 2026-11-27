@@ -28,7 +28,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
     {
         #region //---- FELDER ----
 
-        private bool InAnderemPfadSuchen = Einstellungen.AudioInAnderemPfadSuchen;
+        private readonly bool InAnderemPfadSuchen;
         private MusikZeileModel _model;
         private BackgroundWorker _worker;
         private int _iterations = 50;
@@ -325,8 +325,13 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         #region //---- KONSTRUKTOR ----
 
-        public MusikZeileVM()
+        public MusikZeileVM() : this(Einstellungen.AudioInAnderemPfadSuchen)
         {
+        }
+
+        public MusikZeileVM(bool inAnderemPfadSuchen)
+        {
+            InAnderemPfadSuchen = inAnderemPfadSuchen;
             // Event-Handler zur DependentProperty-Notification
             PropertyChanged += DependentProperty.PropagateINotifyProperyChanged;
 
@@ -826,6 +831,7 @@ namespace MeisterGeister.ViewModel.AudioPlayer.Logic
 
         public Audio_Titel setTitelStdPfad(Audio_Titel aTitel)
         {
+            setStdPfad();
             char[] charsToTrim = { '\\' };
             //Check Titel -> Pfad vorhanden ansonsten Standard-Pfad hinzufügen
             if (//System.IO.Path.IsPathRooted(System.IO.Path.GetDirectoryName(aTitel.Pfad + "\\" + aTitel.Datei)) &&

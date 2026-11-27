@@ -64,8 +64,8 @@ Die Datei 'ImpromptuInterface.dll' unterliegt der Apache License (siehe 'License
 Voraussetzungen
 ******************************************
 
-Microsoft .NET Framework 4.5.2
-https://www.microsoft.com/de-DE/download/details.aspx?id=42642
+Windows mit .NET 10 Desktop Runtime; zum Erstellen wird das .NET 10 SDK benötigt.
+Die Lösung baut das .NET-10-Projekt. Der Portierungsstand und bekannte Einschränkungen sind in `Docs/NET10-Migration.md` beschrieben.
 
 Microsoft SQL Server Compact 4.0 SP1
 http://www.microsoft.com/de-de/download/details.aspx?id=30709
@@ -75,8 +75,7 @@ Windows Media Player ab Version 10 (für Audio-Funktionen).
 Microsoft Access Database Engine 2010 (für Import von Heldenblatt.ch-Dateien)
 http://www.microsoft.com/de-de/download/details.aspx?id=13255
 
-Das .NET Framework ist eine Plattform für Microsoft Windows Betriebssysteme. 
-Unter Linux funktioniert DSA MeisterGeister leider auf absehbare Zeit nicht, da die Linux-Portierung Mono einige zentrale Komponenten nicht unterstützt.
+DSA MeisterGeister verwendet WPF und Windows Forms und unterstützt daher kein Linux.
 
 
 ******************************************

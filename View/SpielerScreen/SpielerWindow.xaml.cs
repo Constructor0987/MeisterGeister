@@ -231,14 +231,13 @@ namespace MeisterGeister.View.SpielerScreen
             }
             catch { }
         }
-
         public static void SetVideo(string pfad, ViewModel.SpielerScreen.SpielerScreenControlViewModel vm, Stretch stretch = Stretch.Uniform)
         {
             try
             {
                 var video = new MediaElement()
-                { 
-                    Stretch = stretch 
+                {
+                    Stretch = stretch
                 };
 
                 video.BeginInit();

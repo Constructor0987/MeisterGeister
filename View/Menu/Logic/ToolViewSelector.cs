@@ -18,6 +18,7 @@ namespace MeisterGeister.View.Menu.Logic
             if (!(item is ToolViewModelBase) || item == null)
                 return base.SelectTemplate(item, container);
             Tool t = (item as ToolViewModelBase).Tool;
+            App.ReportStartupProgress(string.Format("Oberfläche {0} wird geladen...", t.Name));
             var template = CreateTemplate(t.ViewModelType, t.ViewType);
             return template;
         }

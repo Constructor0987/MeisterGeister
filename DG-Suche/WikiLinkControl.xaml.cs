@@ -27,7 +27,7 @@ namespace DgSuche
         private void ImageWiki_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Tag != null && Tag.ToString().Trim() != string.Empty)
-                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/wiki/" + Tag.ToString());
+                System.Diagnostics.Process.Start("http://www.wiki-aventurica.de/index.php?title=" + Tag.ToString());
             else
                 MessageBox.Show("Kein Eintrag ausgewählt.", "Wiki-Aventurica");
         }

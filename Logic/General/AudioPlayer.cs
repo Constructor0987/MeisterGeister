@@ -22,7 +22,6 @@ namespace MeisterGeister.Logic.General
                     _player = new MediaPlayer();
                 }
                 _player.MediaFailed += new EventHandler<ExceptionEventArgs>(Player_MediaFailed);
-                _player.MediaEnded += new EventHandler(Player_JingleEnded);
 
                 _player.Open(new Uri(url));
                 _player.Play();
@@ -42,11 +41,6 @@ namespace MeisterGeister.Logic.General
                 errWin.ShowDialog();
                 errWin.Close();
             }
-        }
-
-        static void Player_JingleEnded(object sender, EventArgs e)
-        {
-            App.CloseSplashScreen();
         }
 
         private static bool IsMediaPlayerAvailable = true;

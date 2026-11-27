@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -36,6 +37,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         private double _creatureWidthPic = 80;
         private double _creatureX = 5000;
         private double _tokenOversizeMod = 1;
+        private GegnerBase _observedGegnerBase;
 
         //1200;
         private double _creatureY = 5000;
@@ -102,6 +104,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _creatureAktionsbuttonsPos = value;
                 OnChanged(nameof(CreatureAktionsbuttonsPos));
+                OnChanged(nameof(FrameActionHeight));
             }
         }
 
@@ -142,13 +145,13 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         public double CreatureHeight
         {
             get { return _creatureHeight; }
-            set { Set(ref _creatureHeight, value); }
+            set { if (Set(ref _creatureHeight, value)) OnFrameBoundsChanged(); }
         }
 
         public double CreatureWidth
         {
             get { return _creatureWidth; }
-            set { Set(ref _creatureWidth, value); }
+            set { if (Set(ref _creatureWidth, value)) OnFrameBoundsChanged(); }
         }
 
         public double CreatureHeightPic
@@ -197,6 +200,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 CalculateSightArea();
                 OnChanged(nameof(CreatureX));
                 OnChanged(nameof(CreatureXPic));
+                OnFrameBoundsChanged();
             }
         }
 
@@ -210,6 +214,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 //CalculateSightArea();  //TODO: only on CreatureX Move, cause of too much calculations per pixelmove.
                 OnChanged(nameof(CreatureY));
                 OnChanged(nameof(CreatureYPic));
+                OnFrameBoundsChanged();
             }
         }
 
@@ -228,6 +233,75 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
         {
             get { return _rotateImageDegrees; }
             set { Set(ref _rotateImageDegrees, value); }
+        }
+
+        private double _rotateFrameDegrees;
+        public double RotateFrameDegrees
+        {
+            get { return _rotateFrameDegrees; }
+            set { if (Set(ref _rotateFrameDegrees, value)) OnFrameBoundsChanged(); }
+        }
+
+        public Rect FrameBounds
+        {
+            get
+            {
+                double radians = RotateFrameDegrees * Math.PI / 180;
+                double cosine = Math.Abs(Math.Cos(radians));
+                double sine = Math.Abs(Math.Sin(radians));
+                double width = CreatureWidth * cosine + CreatureHeight * sine;
+                double height = CreatureWidth * sine + CreatureHeight * cosine;
+                return new Rect(CreatureX + (CreatureWidth - width) / 2,
+                    CreatureY + (CreatureHeight - height) / 2, width, height);
+            }
+        }
+
+        public double FrameOffsetX => FrameBounds.X - CreatureX;
+        public double FrameOffsetY => FrameBounds.Y - CreatureY;
+
+        public Thickness FrameActionMargin => new Thickness(
+            MarginCreatureAktionsbuttons.Left + FrameBounds.Width - CreatureWidth,
+            MarginCreatureAktionsbuttons.Top, MarginCreatureAktionsbuttons.Right, MarginCreatureAktionsbuttons.Bottom);
+        public double FrameActionHeight => Math.Max(0, CreatureAktionsbuttonsPos + FrameBounds.Height - CreatureHeight);
+        public Thickness FrameLongActionMargin => new Thickness(
+            MarginCreatureLangAkt.Left + FrameBounds.Width - CreatureWidth,
+            MarginCreatureLangAkt.Top + FrameBounds.Height - CreatureHeight,
+            MarginCreatureLangAkt.Right, MarginCreatureLangAkt.Bottom);
+        public Thickness FrameAttackDefenseMargin => new Thickness(
+            MarginCreatureATPAaktionen.Left, MarginCreatureATPAaktionen.Top + FrameBounds.Height - CreatureHeight,
+            MarginCreatureATPAaktionen.Right, MarginCreatureATPAaktionen.Bottom);
+
+        private void OnFrameBoundsChanged()
+        {
+            OnChanged(nameof(FrameBounds));
+            OnChanged(nameof(FrameOffsetX));
+            OnChanged(nameof(FrameOffsetY));
+            OnChanged(nameof(FrameActionMargin));
+            OnChanged(nameof(FrameActionHeight));
+            OnChanged(nameof(FrameLongActionMargin));
+            OnChanged(nameof(FrameAttackDefenseMargin));
+        }
+
+        public static double GetLegacyFrameRotation(int sightLineSektor, double imageRotation)
+        {
+            if (imageRotation != 0)
+                return imageRotation;
+
+            switch (sightLineSektor)
+            {
+                case 0: return -62;
+                case 2: return 62;
+                case 3: return 118;
+                case 4: return 180;
+                case 5: return -118;
+                case 6: return -90;
+                case 7: return 90;
+                case 8: return 45;
+                case 9: return 135;
+                case 10: return -135;
+                case 11: return -45;
+                default: return 0;
+            }
         }
 
 
@@ -257,6 +331,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _marginCreatureAktionsbuttons = value;
                 OnChanged(nameof(MarginCreatureAktionsbuttons));
+                OnChanged(nameof(FrameActionMargin));
             }
         }
         public Thickness MarginCreatureLangAkt
@@ -267,6 +342,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _marginCreatureLangAkt = value;
                 OnChanged(nameof(MarginCreatureLangAkt));
+                OnChanged(nameof(FrameLongActionMargin));
             }
         }
 
@@ -278,6 +354,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             {
                 _marginCreatureATPAaktionen = value;
                 OnChanged(nameof(MarginCreatureATPAaktionen));
+                OnChanged(nameof(FrameAttackDefenseMargin));
             }
         }
 
@@ -327,14 +404,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
-    //    private double _rotateImageCenterXY = 40;
-        public double RotateImageCenterXY
-        {
-            get { return TokenOversizeMod * 40; }// _rotateImageCenterXY;
-      //      set { Set(ref _rotateImageCenterXY, value); }
-        }
-
-        public double TokenOversizeMod
+    public double TokenOversizeMod
         {
             get { return _tokenOversizeMod; }
             set
@@ -342,10 +412,6 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
                 _tokenOversizeMod = value;
                 ScalePicture(ObjectSize);
                 OnChanged(nameof(TokenOversizeMod));
-                OnChanged(nameof(CreatureXPic));
-                OnChanged(nameof(CreatureYPic));
-                OnChanged(nameof(RotateImageCenterXY));
-              //  RotateImageCenterXY = 40 * value;
             }
         }
         public string PortraitFileName
@@ -407,6 +473,7 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             var _a = currentMousePos.X - (CreatureX + CreatureWidth / 2);
             var _b = currentMousePos.Y - (CreatureY + CreatureHeight / 2);
             var _alpha = Math.Atan2(_a, _b) * (180 / Math.PI);
+            RotateFrameDegrees = -_alpha;
             if (this.BattleToken != this.ki.Kämpfer.Bild )
                 RotateImageDegrees =-_alpha;
 
@@ -707,21 +774,47 @@ namespace MeisterGeister.ViewModel.Bodenplan.Logic
             }
         }
 
+        public void ObserveTokenSize()
+        {
+            var gegnerBase = (this as Gegner)?.GegnerBase;
+            if (_observedGegnerBase == gegnerBase)
+                return;
+
+            if (_observedGegnerBase != null)
+                PropertyChangedEventManager.RemoveHandler(_observedGegnerBase, OnGegnerBaseTokenSizeChanged, string.Empty);
+            _observedGegnerBase = gegnerBase;
+            if (_observedGegnerBase != null)
+                PropertyChangedEventManager.AddHandler(_observedGegnerBase, OnGegnerBaseTokenSizeChanged, string.Empty);
+        }
+
+        private void OnGegnerBaseTokenSizeChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == nameof(GegnerBase.TokenSizeX) || e.PropertyName == nameof(GegnerBase.TokenSizeY))
+                ScalePicture(ObjectSize);
+        }
+
         public void ScalePicture(double factor)
         {
-            CreatureHeight = _imageOriginalHeigth * factor;
-            CreatureWidth = _imageOriginalWidth * factor;
+            var gegnerBase = (this as Gegner)?.GegnerBase;
+            int sizeX = gegnerBase?.TokenSizeX > 0 ? gegnerBase.TokenSizeX.Value : 1;
+            int sizeY = gegnerBase?.TokenSizeY > 0 ? gegnerBase.TokenSizeY.Value : 1;
+            CreatureHeight = _imageOriginalHeigth * factor * sizeY;
+            CreatureWidth = _imageOriginalWidth * factor * sizeX;
             double overS = (this is Held) ? 
                 ((Held)this).TokenOversize ?? TokenOversizeMod : 
                 ((Gegner)this).TokenOversize ?? TokenOversizeMod;
             CreatureHeightPic = CreatureHeight * overS;
             CreatureWidthPic = CreatureWidth * overS;
+            OnChanged(nameof(CreatureXPic));
+            OnChanged(nameof(CreatureYPic));
             MarginCreatureAktionsbuttons = new Thickness() { Left = CreatureWidth, Top = -31, Right = 0, Bottom = 0 };
             CreatureAktionsbuttonsPos = Math.Max(112, 30 + CreatureHeight + 2 * factor);
             MarginCreatureLangAkt = new Thickness() { Left = CreatureWidth-40, Top = CreatureHeight-20, Right = 6, Bottom = 0 };
 
-            MarginCreatureATPAaktionen = new Thickness() { Left = -15, Top = CreatureWidth, Right = 16, Bottom = 0 };
+            MarginCreatureATPAaktionen = new Thickness() { Left = -15, Top = CreatureHeight, Right = 16, Bottom = 0 };
             SightAreaLength = CreatureWidth + 40;
+            if (IsAnDerReihe && Global.CurrentKampf?.BodenplanViewModel != null)
+                Global.CurrentKampf.BodenplanViewModel.SetMarkerPos(this as Wesen);
         }
 
         private void CreateSightArea()

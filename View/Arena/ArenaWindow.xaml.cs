@@ -50,8 +50,13 @@ namespace MeisterGeister.View.Arena
 
             _kampfVieModel = kampfVM;
 
+#if NET
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TextWriterTraceListener(System.Console.Out));
+#else
             Debug.Listeners.Clear();
-            Debug.Listeners.Add(new TextWriterTraceListener(System.Console.Out));           
+            Debug.Listeners.Add(new TextWriterTraceListener(System.Console.Out));
+#endif
 
             ResizeMode = System.Windows.ResizeMode.CanResize;            
 

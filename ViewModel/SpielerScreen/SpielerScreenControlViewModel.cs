@@ -507,7 +507,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 return onIsInSlideShowAll;
             }
         }
-
         private Base.CommandBase onVideoMuting = null;
         public Base.CommandBase OnVideoMuting
         {
@@ -765,7 +764,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             SearchOption dirOption = SearchOption.TopDirectoryOnly;
             if (IsUnterordnerEinbeziehen)
                 dirOption = SearchOption.AllDirectories;
-
             List<MediaItem> fileList = new List<MediaItem>();
 
             // Bilder
@@ -870,7 +868,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
                 OnChanged("PointerMarginSpieler");
             }
         }
-
         private void VideoMuting(object sender = null)
         {
             VideoIsMuted = !VideoIsMuted;
@@ -983,7 +980,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         }
 
         private Base.CommandBase onShowMap = null;
-
         public Base.CommandBase OnShowMap
         {
             get
@@ -1046,7 +1042,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
         }
 
         public bool IsVideo { get; set; }
-
         public bool IsImage
         {
             get
@@ -1064,7 +1059,6 @@ namespace MeisterGeister.ViewModel.SpielerScreen
             _name = dirTags + Path.GetFileNameWithoutExtension(file);
             IsInSlideShow = true;
             IsVideo = isVideo;
-
             SetSuchtext();
         }
 

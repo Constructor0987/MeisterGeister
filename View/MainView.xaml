@@ -9,7 +9,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MeisterGeister.View.MainView" 
         Height="650" Width="1045" Closing="Window_Closing" KeyDown="Window_KeyDown" 
         Loaded="Window_Loaded" Title="DSA MeisterGeister" Closed="Window_Closed" WindowStartupLocation="CenterScreen"
-        TextOptions.TextFormattingMode="Display">
+        AllowDrop="True" Drop="TabItem_Drop" TextOptions.TextFormattingMode="Display">
     <Window.Resources>
         <ViewGeneral:IsEqualOrGreaterThanVisibleConverter x:Key="IsEqualOrGreaterThanVisibleConverter1"/>
         <Storyboard x:Key="MenuPopOut" x:Name="PopIn">
@@ -63,6 +63,33 @@
         <ViewGeneral:HUEGroupNoToNameConverter x:Key="HUEGroupNoToNameConverter1"/>
         <ViewGeneral:IsNullOrEmptyConverter x:Key="IsNullOrEmptyConverter"/>
         <ViewGeneral:IsEqualOrGreaterThanConverter x:Key="IsEqualOrGreaterThanConverter1"/>
+        <ControlTemplate x:Key="BusyStatusTemplate" TargetType="ContentControl">
+            <Grid Background="#80000000">
+                <Grid Width="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="BusyStatusBorder" Padding="16" Background="{DynamicResource Background1}" BorderBrush="Gray" BorderThickness="1" CornerRadius="4"
+                            Visibility="{Binding IsBusyProgressVisible, Converter={StaticResource BooleanToVisibilityConverter1}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding BusyProgressText}" TextWrapping="Wrap" Margin="0,0,24,8" />
+                            <ProgressBar Height="18" Minimum="0" Maximum="100" Value="{Binding BusyProgress, Mode=OneWay}" IsIndeterminate="{Binding IsBusyProgressIndeterminate}" />
+                            <TextBlock Text="{Binding BusyProgressCount}" HorizontalAlignment="Center" Margin="0,4,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding BusyProgressCount}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="X" Width="24" Height="24" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Margin="0,4,4,0" ToolTip="Vorgang abbrechen" Command="{Binding CancelBusyCommand}" Cursor="Hand" ForceCursor="True"
+                            Visibility="{Binding CanCancelBusy, Converter={StaticResource BooleanToVisibilityConverter1}}" />
+                </Grid>
+            </Grid>
+        </ControlTemplate>
         <Style x:Key="ImageEnabled" TargetType="Image">
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -199,7 +226,7 @@
                         </ColumnDefinition.Style>
                     </ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TabControl Drop="TabItem_Drop" PreviewMouseMove="TabItem_PreviewMouseMove" 
+                <TabControl AllowDrop="True" Drop="TabItem_Drop" PreviewMouseLeftButtonDown="TabItem_PreviewMouseLeftButtonDown" PreviewMouseMove="TabItem_PreviewMouseMove"
                             x:Name="_tabControlMain" IsSynchronizedWithCurrentItem="True" ViewGeneral:TabContent.IsCached="True"
                             ViewGeneral:TabContent.TemplateSelector="{StaticResource ToolViewSelector}" Margin="0,4,0,-4" Grid.ColumnSpan="2">
                     <TabControl.Style>
@@ -376,7 +403,7 @@
                                                                 <MenuItem.Header>
                                                                     <TextBlock Text="MeisterGeister in Archiven..." VerticalAlignment="Center" />
                                                                 </MenuItem.Header>
-                                                                <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="​http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
+                                                                <MenuItem Height="28" Click="MenuItemWeb_Click" Tag="http://www.orkenspalter.de/filebase/index.php/File/49-MeisterGeister/">
                                                                     <MenuItem.Header>
                                                                         <TextBlock Text="Download bei Orkenspalter" VerticalAlignment="Center" />
                                                                     </MenuItem.Header>
@@ -692,6 +719,8 @@
                     </Grid>
                 </Expander>
             </Grid>
+            <ContentControl Grid.ColumnSpan="2" Panel.ZIndex="100" Template="{StaticResource BusyStatusTemplate}"
+                            Visibility="{Binding IsBusyProgressVisible, Converter={StaticResource BooleanToVisibilityConverter1}}" />
         </Grid>
 
     </DockPanel>

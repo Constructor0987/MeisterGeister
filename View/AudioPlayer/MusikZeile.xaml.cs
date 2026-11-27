@@ -43,10 +43,14 @@ namespace MeisterGeister.View.AudioPlayer
         /// </summary>
         private string _suchtext = string.Empty;
 
-        public MusikZeile()
+        public MusikZeile() : this(MeisterGeister.Logic.Einstellung.Einstellungen.AudioInAnderemPfadSuchen)
+        {
+        }
+
+        public MusikZeile(bool inAnderemPfadSuchen)
         {
             InitializeComponent();
-            VM = new VM.MusikZeileVM();
+            VM = new VM.MusikZeileVM(inAnderemPfadSuchen);
 
             _suchtext = tblkTitel.Text.ToLower() + tboxKategorie.Text.ToLower();
         }

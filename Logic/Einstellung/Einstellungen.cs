@@ -742,6 +742,12 @@ namespace MeisterGeister.Logic.Einstellung
             {
                 foreach (Model.Einstellung e in Global.ContextHeld.Liste<Model.Einstellung>())
                 {
+                    Model.Einstellung source = DefaultValues[e.Name];
+                    if (e.Typ == source.Typ && e.Kontext == source.Kontext &&
+                        e.Kategorie == source.Kategorie && e.Name == source.Name &&
+                        e.Beschreibung == source.Beschreibung)
+                        continue;
+
                     CopyDefaultValues(e.Name, e);
                     Global.ContextHeld.Update<Model.Einstellung>(e);
                 }

@@ -266,15 +266,25 @@ namespace MeisterGeister.Model.Service
         #endregion
 
         #region De-/Serialize
+        private static DataContractSerializer CreateSerializer(Type type)
+        {
+            return new DataContractSerializer(type, new DataContractSerializerSettings
+            {
+                MaxItemsInObjectGraph = int.MaxValue,
+                PreserveObjectReferences = true,
+                DataContractResolver = new ProxyDataContractResolver()
+            });
+        }
+
         public static T DeserializeObject<T>(Stream stream) where T : class
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(T), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
+            DataContractSerializer serializer = CreateSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
 
         public static T DeserializeObject<T>(string xml) where T : class
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(T), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
+            DataContractSerializer serializer = CreateSerializer(typeof(T));
             XmlTextReader reader = new XmlTextReader(new StringReader(xml));
             return (T)serializer.ReadObject(reader);
         }
@@ -292,7 +302,7 @@ namespace MeisterGeister.Model.Service
         
         public static void SerializeObject<T>(Stream stream, T o) where T : class
         {
-            DataContractSerializer serializer = new DataContractSerializer(o.GetType(), null, int.MaxValue, false, true, null, new ProxyDataContractResolver());
+            DataContractSerializer serializer = CreateSerializer(o.GetType());
             serializer.WriteObject(stream, o);
         }
 

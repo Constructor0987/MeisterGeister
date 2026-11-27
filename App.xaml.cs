@@ -27,10 +27,7 @@ namespace MeisterGeister {
     /// Interaktionslogik für "App.xaml"
     /// </summary>
     public partial class App : Application {
-        /// <summary>
-        /// Startup-Fenster, das während der Initialisierung und des Abspielens des Jingles angezeigt wird.
-        /// </summary>
-        static StartupWindow _splashScreen = new StartupWindow();
+        private static StartupWindow _splashScreen;
 
         public static object SqlCompactVersion = "-";
 
@@ -47,7 +44,12 @@ namespace MeisterGeister {
 
 
         public App() {
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CreateSpecificCulture("de-DE").IetfLanguageTag)));
 
+#if NET
+            System.Data.Common.DbProviderFactories.RegisterFactory("System.Data.SqlServerCe.4.0", SqlCeProviderFactory.Instance);
+#endif
             // Überprüfen, ob MeisterGeister bereits läuft
             Process proc = Process.GetCurrentProcess();
             int count = Process.GetProcesses().Where(p => p.ProcessName == proc.ProcessName).Count();
@@ -69,18 +71,17 @@ namespace MeisterGeister {
             // ShutdownMode
             ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
 
+            ShowSplashScreen();
+            ReportStartupProgress("Startumgebung wird geprüft...");
+
             // Prüfen, ob MG von einem Netzlaufwerk gestartet wird
             if (CheckNetzlaufwerk())
                 return;
 
-#if !DEBUG
-            // Startup-Fenster anzeigen (schließt sich automatisch)
-            _splashScreen.Show();
-#endif
-
             // Windows-Forms-Controls Windows-Theme aktivieren
             System.Windows.Forms.Application.EnableVisualStyles();
 
+            ReportStartupProgress("Datenbank wird vorbereitet...");
             // Prüfen, ob Datenbank vorhanden ist
             if (!File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf")) {
                 // Es handelt sich vermutlich um eine Neuinstallation:
@@ -118,6 +119,9 @@ namespace MeisterGeister {
             }
 
             // SQL-Server Compact Version prüfen
+#if NET
+            SqlCompactVersion = typeof(SqlCeConnection).Assembly.GetName().Version.ToString();
+#else
             SqlCompactVersion = "-";
             SqlCompactVersion = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v4.0", "Version", "-");
             string sqlCompactVersionNeeded = "4.0.8"; //4.0.8482.1 oder 4.0.8876.1
@@ -132,7 +136,9 @@ namespace MeisterGeister {
                 Shutdown();
                 return;
             }
+#endif
 
+            ReportStartupProgress("Datenbankversion wird geprüft...");
             //Version der Datenbank überprüfen und upgraden.
             try {
                 SqlCeUpgrade.Run(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Daten\DatabaseDSA.sdf");
@@ -197,6 +203,7 @@ namespace MeisterGeister {
                 return;
             }
 
+            ReportStartupProgress("Anwendung wird vorbereitet...");
             InitializeComponent();
 
             try {
@@ -209,15 +216,14 @@ namespace MeisterGeister {
                 MsgWindow errWin = new MsgWindow("Audio Fehler", "Beim Abspielen des Start-Jingles ist ein Fehler aufgetreten.", ex);
                 Nullable<bool> dialogResult = errWin.ShowDialog();
                 errWin.Close();
-                Application.Current.MainWindow.Opacity = 1;
             }
 
-            Logger.PerformanceLogEnd(log);
-
             // Restliche Daten aus Datenbank laden
+            ReportStartupProgress("Daten und Einstellungen werden geladen...");
             LoadDataFromDatabase();
 
             QueueAsyncJobs();
+            Logger.PerformanceLogEnd(log);
         }
 
         private void QueueAsyncJobs()
@@ -510,23 +516,53 @@ namespace MeisterGeister {
             return version;
         }
 
-        internal static void CloseSplashScreen() {
-            if (_splashScreen != null) {
-                _splashScreen.KillMe();
-                _splashScreen = null;
-            }
+        private static void ShowSplashScreen()
+        {
+            var ready = new System.Threading.Tasks.TaskCompletionSource<StartupWindow>();
+            var thread = new Thread(() =>
+            {
+                try
+                {
+                    var splash = new StartupWindow();
+                    splash.Show();
+                    ready.SetResult(splash);
+                }
+                catch (Exception ex)
+                {
+                    ready.SetException(ex);
+                    return;
+                }
+
+                System.Windows.Threading.Dispatcher.Run();
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
+            thread.Start();
+            _splashScreen = ready.Task.GetAwaiter().GetResult();
         }
 
-        protected override void OnStartup(StartupEventArgs e) {
-            base.OnStartup(e);
+        internal static void ReportStartupProgress(string message)
+        {
+            var splash = _splashScreen;
+            if (splash != null)
+                splash.Dispatcher.BeginInvoke(new Action(() => splash.SetStatus(message)));
+        }
 
-            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CreateSpecificCulture("de-DE").IetfLanguageTag)));
-
+        internal static void CloseSplashScreen()
+        {
+            var splash = _splashScreen;
+            _splashScreen = null;
+            if (splash != null)
+                splash.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    splash.Close();
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.InvokeShutdown();
+                }));
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
+            CloseSplashScreen();
             Global.CleanUp();
             base.OnExit(e);
         }

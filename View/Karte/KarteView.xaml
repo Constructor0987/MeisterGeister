@@ -30,14 +30,14 @@
     </UserControl.Resources>
     <Border BorderThickness="0" BorderBrush="Gray" Background="White">
         <Grid Background="Transparent" >
-            <wpfxc:ZoomControl x:Name="MapScrollViewer" Background="#FF367536" 
+            <Karte:KarteZoomControl x:Name="MapScrollViewer" Background="#FF367536"
                                MaxZoom="3" MinZoom="0.09" MaxZoomDelta="3" ZoomDeltaMultiplier="50"
                                Mode="Custom" TranslateX="{Binding TranslateX, Mode=TwoWay}" TranslateY="{Binding TranslateY, Mode=TwoWay}"
                                Zoom="{Binding Zoom, Mode=TwoWay}" 
                                LimitToContent="True" WheelZoomsAlone="True" PanWithoutModifier="True"
                                ModifierKeyPan="Shift" ModifierKeyZoom="Control" ModifierKeyZoomBox="Alt"
                                VerticalAlignment="Bottom" Loaded="UserControl_Loaded" Style="{DynamicResource ZoomControlStyle1}">
-                <wpfxc:ZoomControl.Resources>
+                <Karte:KarteZoomControl.Resources>
                     <Style x:Key="ZoomControlStyle1" TargetType="{x:Type wpfxc:ZoomControl}">
                         <Setter Property="Template">
                             <Setter.Value>
@@ -137,7 +137,7 @@
                                                     <TextBlock FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Zoom, RelativeSource={RelativeSource TemplatedParent}, StringFormat=\{0:F2\}x}" />
                                                     <RadioButton Content="1:1" GroupName="rbgZoomMode">
                                                         <RadioButton.IsChecked>
-                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
+                                                            <Binding Path="ViewportMode" RelativeSource="{RelativeSource TemplatedParent}">
                                                                 <Binding.ConverterParameter>
                                                                     <wpfxc:ZoomControlModes>Original</wpfxc:ZoomControlModes>
                                                                 </Binding.ConverterParameter>
@@ -149,7 +149,7 @@
                                                     </RadioButton>
                                                     <RadioButton Content="Fill" GroupName="rbgZoomMode">
                                                         <RadioButton.IsChecked>
-                                                            <Binding Path="Mode" RelativeSource="{RelativeSource TemplatedParent}">
+                                                            <Binding Path="ViewportMode" RelativeSource="{RelativeSource TemplatedParent}">
                                                                 <Binding.ConverterParameter>
                                                                     <wpfxc:ZoomControlModes>Fill</wpfxc:ZoomControlModes>
                                                                 </Binding.ConverterParameter>
@@ -188,7 +188,7 @@
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                </wpfxc:ZoomControl.Resources>
+                </Karte:KarteZoomControl.Resources>
                 <Canvas x:Name="mapCanvas" Width="{Binding SelectedKarte.Breite}" Height="{Binding SelectedKarte.Höhe}" >
                     <Canvas.ContextMenu>
                         <ContextMenu x:Name="contextMenu" General:TrackBehavior.TrackOpenLocation="True">
@@ -429,7 +429,7 @@
                         </ItemsControl.ItemContainerStyle>
                     </ItemsControl>
                 </Canvas>
-            </wpfxc:ZoomControl>
+            </Karte:KarteZoomControl>
             <Border Padding="0"
                     CornerRadius="5"
                     Background="#88C0C0C0"

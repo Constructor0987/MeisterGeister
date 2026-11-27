@@ -202,7 +202,9 @@ namespace MeisterGeister.Daten
             File.Delete("sqlceme35.dll");
             File.Delete("sqlceqp35.dll");
             File.Delete("sqlcese35.dll");
+#if !NET
             File.Delete("System.Data.SqlServerCe.dll");
+#endif
             // PlugIn-DLLs aufräumen
             File.Delete("DSAToolPlugin.dll");
             if (Directory.Exists("PlugIns"))

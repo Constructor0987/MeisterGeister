@@ -309,7 +309,6 @@ namespace MeisterGeister
             object toolObject = null;
             if(IsSubclassOfRawGeneric(typeof(SingletonToolViewModelBase<>), ViewModelType))
             {
-                var staticContext = InvokeContext.CreateStatic;
                 toolObject = ViewModelType.GetProperty("Instance", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.FlattenHierarchy).GetValue(null, null);
             }
             else

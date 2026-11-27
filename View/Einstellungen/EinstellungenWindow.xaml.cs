@@ -161,9 +161,6 @@ namespace MeisterGeister.View.Settings
 
                 var lastButton = lbStandardPfade.Items[lbStandardPfade.Items.Count - 1] as ListboxItemBtn;
                 SetStandardPfadItemEvents(lastButton);
-
-                ViewHelper.Popup("Die Änderungen können erst beim nächten Starten des Audio-Tools übernommen werden." + Environment.NewLine +
-                    "Falls das Audio-Tool geöffnet ist, schließen Sie es und öffnen es erneut, um die Standard-Pfad entsprechend zu setzen.");
             }
         }
 
@@ -193,8 +190,6 @@ namespace MeisterGeister.View.Settings
 
             ((ListBox)lbiBtn.Parent).Items.Remove(lbiBtn);
             setStdPfad();
-            ViewHelper.Popup("Die Änderungen können erst beim nächten Starten des Audio-Tools übernommen werden." + Environment.NewLine +
-                "Falls das Audio-Tool geöffnet ist, schließen Sie es und öffnen es erneut, um die Standard-Pfad entsprechend zu setzen.");
         }
 
         private void CheckBoxEinstellungItem_CheckedChanged(object sender, RoutedEventArgs e)

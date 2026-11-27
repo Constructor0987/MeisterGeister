@@ -255,11 +255,8 @@ namespace MeisterGeister.ViewModel.Helden
                 SelectedHeld = h;
 
                 MainViewModel.Instance.SelectedHeld = h;
-                    // Liste aktualisieren!
-                    heldListe = null;
-                OnChanged(nameof(HeldListe));
-
-                MainViewModel.Instance.InvalidateHelden();
+                    MainViewModel.Instance.InvalidateHelden();
+                    HeldListe.Refresh();
 #if !DEBUG
                 }
                 catch (Exception ex)
@@ -269,12 +266,6 @@ namespace MeisterGeister.ViewModel.Helden
 #endif
                
                 Global.SetIsBusy(false);
-
-                if (ViewHelper.Confirm("Neustart erforderlich", "Ungeachtet von der Anzeigeliste der Helden, sollte unbedingt die Software neu gestartet werden, um die Helden korrekt zu laden.\r\n\r\n" +
-                    "Wenn noch mehr Änderungen der Heldenliste durchgeführt werden soll, kann das Neustarten danach erfolgen.\r\n\r\nSoll die Software jetzt beendet werden?"))
-                {
-                    Application.Current.Shutdown();
-                }
             }
         }
 
@@ -409,7 +400,7 @@ namespace MeisterGeister.ViewModel.Helden
             }
             }
             //Liste aktualisieren
-            MainViewModel.Instance.Helden.Add(importHeld);
+            MainViewModel.Instance.InvalidateHelden();
             HeldListe.Refresh();
             MainViewModel.Instance.HeldenGruppe.Refresh();
             SortHeldListe();
